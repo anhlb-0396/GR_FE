@@ -9,7 +9,7 @@ import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 
 import AppLayouts from "./ui/AppLayouts";
-import Homepage from "./ui/Homepage";
+import Homepage from "./pages/Homepage";
 
 const queryClient = new QueryClient();
 const theme = createTheme();

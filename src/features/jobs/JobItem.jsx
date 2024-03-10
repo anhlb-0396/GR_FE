@@ -1,4 +1,6 @@
-import { Grid, Avatar } from "@mui/material";
+import { Grid, Avatar, Stack, Chip, Typography, Paper } from "@mui/material";
+import PaidOutlinedIcon from "@mui/icons-material/PaidOutlined";
+import PeopleAltRoundedIcon from "@mui/icons-material/PeopleAltRounded";
 
 const job = {
   id: 1,
@@ -23,37 +25,154 @@ const job = {
     "https://cdn-new.topcv.vn/unsafe/140x/filters:format(webp)/https://static.topcv.vn/company_logos/cong-ty-co-phan-chung-khoan-vps-5ff1a3dc0a075.jpg",
 };
 
-function JobItem() {
+function JobItem({ company }) {
   return (
-    <Grid container sx={{ bgcolor: "beige", borderRadius: "10px" }} xs={12}>
-      <Grid item xs={2}>
-        <Avatar
-          alt="Ava"
-          variant="rounded"
-          src={job.business_logo}
-          sx={{ width: "100%", objectFit: "cover", height: "100%" }}
-        />
-      </Grid>
-      <Grid item xs={8}>
-        <Grid container>
-          <Grid item xs={12}>
-            <h3>{job.title}</h3>
+    // <Grid container sx={{ borderRadius: "10px", height: "auto" }} xs={12}>
+    //   <Grid
+    //     item
+    //     xs={2}
+    //     sx={{
+    //       display: "flex",
+    //       alignItems: "center",
+    //       justifyContent: "center",
+    //     }}
+    //   >
+    //     <Avatar
+    //       alt={job.business_name}
+    //       src={job.business_logo}
+    //       sx={{ width: "80%", height: "auto", objectFit: "cover" }}
+    //       variant="rounded"
+    //     />
+    //   </Grid>
+    //   <Grid item xs={8}>
+    //     <Grid container rowGap={1}>
+    //       <Grid item xs={12}>
+    //         <Typography variant="h6">{job.title}</Typography>
+    //         <Typography variant="caption" fontWeight="400">
+    //           {job.business_name}
+    //         </Typography>
+    //       </Grid>
+
+    //       <Grid item xs={12} container sx={{ mt: "1rem" }}>
+    //         <Stack
+    //           direction="row"
+    //           spacing={1}
+    //           flexWrap="wrap"
+    //           width="20rem"
+    //           rowGap="5px"
+    //         >
+    //           <Chip label="Clickable" size="small" />
+    //           <Chip label="Clickable" size="small" />
+    //           <Chip label="Clickable" size="small" />
+    //           <Chip label="Clickable" size="small" />
+    //           <Chip label="Clickable" size="small" />
+    //           <Chip label="Clickable" size="small" />
+    //           <Chip label="Clickable" size="small" />
+    //           <Chip label="Clickable" size="small" />
+    //         </Stack>
+    //       </Grid>
+    //     </Grid>
+    //   </Grid>
+    //   <Grid item xs={2} bgcolor={"green"}>
+    //     <p>Deadline</p>
+    //   </Grid>
+    // </Grid>
+
+    <Paper elevation={2} sx={{ borderRadius: "10px", p: "1rem", m: "0 auto" }}>
+      <Grid container sx={{ borderRadius: "10px", height: "auto" }} xs={12}>
+        <Grid
+          item
+          xs={2}
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Avatar
+            alt={company.business_name}
+            src={company.business_logo}
+            sx={{ width: "80%", height: "auto", objectFit: "cover" }}
+            variant="rounded"
+          />
+        </Grid>
+        <Grid item xs={8}>
+          <Grid container rowGap={1}>
+            <Grid item xs={12}>
+              <Typography variant="h6">{company.title}</Typography>
+              <Typography variant="caption" fontWeight="400">
+                {company.business_name}
+              </Typography>
+            </Grid>
+
+            <Grid item xs={12} container sx={{ mt: "1rem" }}>
+              <Stack
+                direction="row"
+                spacing={1}
+                flexWrap="wrap"
+                width={{ xs: "100%", sm: "80%" }}
+                rowGap="5px"
+              >
+                <Chip label="Clickable" size="small" />
+                <Chip label="Clickable" size="small" />
+                <Chip label="Clickable" size="small" />
+                <Chip label="Clickable" size="small" />
+                <Chip label="Clickable" size="small" />
+                <Chip label="Clickable" size="small" />
+                <Chip label="Clickable" size="small" />
+                <Chip label="Clickable" size="small" />
+                <Chip label="Clickable" size="small" />
+                <Chip label="Clickable" size="small" />
+                <Chip label="Clickable" size="small" />
+                <Chip label="Clickable" size="small" />
+                <Chip label="Clickable" size="small" />
+              </Stack>
+            </Grid>
           </Grid>
-          <Grid item xs={12}>
-            <p>{job.business_name}</p>
+        </Grid>
+
+        <Grid
+          container
+          item
+          xs={2}
+          direction="column"
+          justifyContent="space-between"
+          spacing={1}
+        >
+          <Grid item container sx={{ mt: "1rem" }} rowGap="10px">
+            <Grid item container>
+              <PaidOutlinedIcon fontSize="small" />
+              <Typography variant="caption" sx={{ ml: 1 }}>
+                {company.salary}
+              </Typography>
+            </Grid>
+
+            <Grid item container>
+              <PeopleAltRoundedIcon fontSize="small" />
+              <Typography variant="caption" sx={{ ml: 1 }}>
+                Number: {company.recruitment_number}
+              </Typography>
+            </Grid>
           </Grid>
-          <Grid item xs={12}>
-            <p>{job.province}</p>
-          </Grid>
-          <Grid item xs={12}>
-            <p>{job.salary}</p>
+
+          <Grid
+            item
+            sx={{
+              backgroundColor: "red",
+              borderRadius: "5px",
+              padding: "5px",
+              textAlign: "center",
+            }}
+          >
+            {" "}
+            {/* Add background color, padding, border radius, and center text */}
+            <Typography variant="body2" sx={{ color: "#fff" }}>
+              12/11/2022
+            </Typography>
           </Grid>
         </Grid>
       </Grid>
-      <Grid item xs={2}>
-        <p>Deadline</p>
-      </Grid>
-    </Grid>
+    </Paper>
   );
 }
 

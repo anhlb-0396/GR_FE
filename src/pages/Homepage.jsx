@@ -1,12 +1,14 @@
 import JobList from "../features/jobs/JobList";
-import JobSearchInput from "./JobSearchInput";
+import JobSearchInput from "../ui/JobSearchInput";
+import AppPagination from "../ui/AppPagination";
 
 function Homepage() {
   return (
-    <div>
+    <>
       <JobSearchInput></JobSearchInput>
       <JobList></JobList>
-    </div>
+      <AppPagination></AppPagination>
+    </>
   );
 }
 

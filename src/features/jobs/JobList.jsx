@@ -1,14 +1,14 @@
-import { Grid } from "@mui/material";
-
+import { Grid, Paper } from "@mui/material";
 import JobItem from "./JobItem";
+import { companies } from "../../data/data-companies";
 
 function JobList() {
+  console.log(companies);
   return (
-    <Grid container xs spacing={2} rowGap={2} width="60%" margin="10px auto">
-      <JobItem></JobItem>
-      <JobItem></JobItem>
-      <JobItem></JobItem>
-      <JobItem></JobItem>
+    <Grid container xs spacing={2} rowGap={4} margin="10px auto">
+      {companies.map((company) => (
+        <JobItem company={company}></JobItem>
+      ))}
     </Grid>
   );
 }

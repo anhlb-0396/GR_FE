@@ -1,11 +1,15 @@
 import { Outlet } from "react-router-dom";
+import { Container } from "@mui/material";
 import Header from "./Header";
+import MainContent from "./MainContent";
 
 function AppLayouts() {
   return (
     <>
       <Header></Header>
-      <Outlet></Outlet>
+      <MainContent>
+        <Outlet></Outlet>
+      </MainContent>
     </>
   );
 }

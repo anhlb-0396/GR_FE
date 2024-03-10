@@ -1,7 +1,4 @@
-import Typography from "@mui/material/Typography";
-import Grid from "@mui/material/Grid";
-import Autocomplete from "@mui/material/Autocomplete";
-import TextField from "@mui/material/TextField";
+import { Typography, Grid, Autocomplete, TextField } from "@mui/material";
 
 const testData = [
   { label: "The Shawshank Redemption", year: 1994 },
@@ -14,7 +11,7 @@ const testData = [
 
 function JobSearchInput() {
   return (
-    <Grid container sx={{ py: "4%" }} spacing={2}>
+    <Grid container sx={{ py: "4%" }} spacing={2} bgcolor="grey">
       <Grid container item justifyContent="center">
         <Typography variant="h5" sx={{ fontWeight: 700, textAlign: "center" }}>
           Find your next job
