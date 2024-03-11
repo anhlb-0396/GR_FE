@@ -31,7 +31,7 @@ function Comments() {
               <MoreVertIcon />
             </IconButton>
           }
-          title="Shrimp and Chorizo Paella"
+          title="Lê Bảo Anh"
           subheader="September 14, 2016"
         />
         <CardContent>

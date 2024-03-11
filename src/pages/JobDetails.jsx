@@ -14,6 +14,9 @@ import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import SendIcon from "@mui/icons-material/Send";
 import Comments from "../ui/Comments";
+import { CardGiftcard } from "@mui/icons-material";
+import RelatedJobItem from "../ui/RelatedJobItem";
+import JobList from "../features/jobs/JobList";
 
 const job = {
   id: 1,
@@ -165,14 +168,25 @@ function JobDetails() {
               }}
             ></Typography>
           </Grid>
+
+          <Typography
+            variant="h4"
+            fontWeight="bold"
+            textAlign="center"
+            color="primary"
+          >
+            Công việc liên quan
+          </Typography>
+
+          <Grid item container gap="10px">
+            <JobList></JobList>
+          </Grid>
         </Grid>
 
         <Divider orientation="vertical" flexItem></Divider>
 
         <Grid item xs={12} md={3}>
-          <Grid item container direction="column" gap={2}>
-            FOR COMPANY
-          </Grid>
+          <Grid item container direction="column" gap={2}></Grid>
 
           <Divider>
             <Typography variant="h5">Bình luận</Typography>
