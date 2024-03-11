@@ -15,7 +15,6 @@ import AccessTimeFilledIcon from "@mui/icons-material/AccessTimeFilled";
 import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
 import SendIcon from "@mui/icons-material/Send";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
-import LocalAtmIcon from "@mui/icons-material/LocalAtm";
 
 function JobItem({ company }) {
   return (

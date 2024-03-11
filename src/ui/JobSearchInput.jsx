@@ -1,4 +1,10 @@
-import { Typography, Grid, Autocomplete, TextField } from "@mui/material";
+import {
+  Typography,
+  Grid,
+  Autocomplete,
+  TextField,
+  Button,
+} from "@mui/material";
 
 const testData = [
   { label: "The Shawshank Redemption", year: 1994 },
@@ -11,13 +17,13 @@ const testData = [
 
 function JobSearchInput() {
   return (
-    <Grid container sx={{ py: "4%" }} spacing={2} bgcolor="grey">
+    <Grid container sx={{ py: "4%" }} spacing={2} gap={3}>
       <Grid container item justifyContent="center">
         <Typography variant="h5" sx={{ fontWeight: 700, textAlign: "center" }}>
           Find your next job
         </Typography>
       </Grid>
-      <Grid container item xs={12}>
+      <Grid container item xs={12} spacing={2}>
         <Grid item xs={3}>
           <Autocomplete
             variant="outlined"
@@ -27,6 +33,32 @@ function JobSearchInput() {
             options={testData}
             renderInput={(params) => <TextField {...params} label="Search" />}
           />
+        </Grid>
+
+        <Grid item xs={3}>
+          <Autocomplete
+            variant="outlined"
+            size="small"
+            disablePortal
+            id="combo-box-demo"
+            options={testData}
+            renderInput={(params) => <TextField {...params} label="Search" />}
+          />
+        </Grid>
+
+        <Grid item xs={3}>
+          <Autocomplete
+            variant="outlined"
+            size="small"
+            disablePortal
+            id="combo-box-demo"
+            options={testData}
+            renderInput={(params) => <TextField {...params} label="Search" />}
+          />
+        </Grid>
+
+        <Grid item xs={3}>
+          <Button variant="">Search</Button>
         </Grid>
       </Grid>
     </Grid>
