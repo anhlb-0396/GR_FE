@@ -1,16 +1,16 @@
+import { Box } from "@mui/material";
 import { Outlet } from "react-router-dom";
-import { Container } from "@mui/material";
 import Header from "./Header";
-import MainContent from "./MainContent";
+import Main from "./Main";
 
 function AppLayouts() {
   return (
-    <>
+    <Box sx={{ width: "100%" }}>
       <Header></Header>
-      <MainContent>
-        <Outlet></Outlet>
-      </MainContent>
-    </>
+      <Main>
+        <Outlet />
+      </Main>
+    </Box>
   );
 }
 

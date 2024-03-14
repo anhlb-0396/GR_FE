@@ -8,7 +8,7 @@ function AppPagination() {
         variant="outlined"
         shape="rounded"
         sx={{ mt: "2rem" }}
-        color="error"
+        color="primary"
         size="large"
       />
     </Grid>

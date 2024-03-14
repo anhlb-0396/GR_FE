@@ -7,12 +7,10 @@ import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
-// import "@fontsource/inter";
 
-import AppLayouts from "./ui/AppLayouts";
 import Homepage from "./pages/Homepage";
 import JobDetails from "./pages/JobDetails";
-import AppLayoutsFix from "./ui/AppLayoutsFix";
+import AppLayouts from "./ui/AppLayouts";
 
 const queryClient = new QueryClient();
 const theme = createTheme();
@@ -27,8 +25,6 @@ function App() {
           <Routes>
             <Route element={<AppLayouts></AppLayouts>}>
               <Route path="/" element={<Homepage></Homepage>} />
-            </Route>
-            <Route element={<AppLayoutsFix></AppLayoutsFix>}>
               <Route path="/jobs" element={<JobDetails></JobDetails>} />
             </Route>
           </Routes>

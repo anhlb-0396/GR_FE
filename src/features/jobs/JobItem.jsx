@@ -8,19 +8,22 @@ import {
   Button,
   IconButton,
 } from "@mui/material";
-import PeopleAltRoundedIcon from "@mui/icons-material/PeopleAltRounded";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
-import WorkIcon from "@mui/icons-material/Work";
-import AccessTimeFilledIcon from "@mui/icons-material/AccessTimeFilled";
-import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
-import SendIcon from "@mui/icons-material/Send";
-import BookmarkIcon from "@mui/icons-material/Bookmark";
 
-function JobItem({ company }) {
+import {
+  PeopleAltRounded as PeopleAltRoundedIcon,
+  LocationOn as LocationOnIcon,
+  Work as WorkIcon,
+  AccessTimeFilled as AccessTimeFilledIcon,
+  AccountBalance as AccountBalanceIcon,
+  Send as SendIcon,
+  Bookmark as BookmarkIcon,
+} from "@mui/icons-material";
+
+function JobItem({ job }) {
   return (
     <Paper elevation={3} sx={{ borderRadius: "8px", p: "1rem", m: "0 auto" }}>
       <Grid container sx={{ borderRadius: "10px", height: "auto" }} xs={12}>
-        {/* Company Image */}
+        {/* job Image */}
         <Grid
           item
           xs={2}
@@ -31,8 +34,8 @@ function JobItem({ company }) {
           }}
         >
           <Avatar
-            alt={company.business_name}
-            src={company.business_logo}
+            alt={job.Company.name}
+            src={job.Company.logo}
             sx={{ width: "80%", height: "auto", objectFit: "cover" }}
             variant="rounded"
           />
@@ -42,9 +45,9 @@ function JobItem({ company }) {
         <Grid item xs={8}>
           <Grid container rowGap={1}>
             <Grid item xs={12}>
-              <Typography variant="h6">{company.title}</Typography>
+              <Typography variant="h6">{job.title}</Typography>
               <Typography variant="caption" fontWeight="400">
-                {company.business_name}
+                {job.Company.name}
               </Typography>
             </Grid>
 
@@ -57,32 +60,28 @@ function JobItem({ company }) {
               >
                 <Chip
                   icon={<LocationOnIcon />}
-                  label={company.location}
+                  label={job.Company.location}
                   size="small"
                 />
 
-                <Chip
-                  icon={<WorkIcon />}
-                  label={company.industry}
-                  size="small"
-                />
-                <Chip icon={<WorkIcon />} label={company.field} size="small" />
+                <Chip icon={<WorkIcon />} label={job.industry} size="small" />
+                <Chip icon={<WorkIcon />} label={job.field} size="small" />
 
                 <Chip
                   icon={<AccessTimeFilledIcon />}
-                  label={company.internship_type}
+                  label={job.working_type}
                   size="small"
                 />
 
                 <Chip
                   icon={<PeopleAltRoundedIcon />}
-                  label={`${company.recruitment_number} người`}
+                  label={`${job.recruitment_number} người`}
                   size="small"
                 />
 
                 <Chip
                   icon={<AccountBalanceIcon />}
-                  label={company.internship_method}
+                  label={job.working_method}
                   size="small"
                 />
               </Stack>
@@ -101,11 +100,23 @@ function JobItem({ company }) {
               <BookmarkIcon />
             </IconButton>
 
+            <Chip
+              icon={<AccessTimeFilledIcon />}
+              label={job.expired_date}
+              variant="outlined"
+              color="error"
+              size="small"
+            />
+
             <Button
               size="small"
               variant="contained"
               endIcon={<SendIcon />}
-              sx={{ fontSize: 12, bgcolor: "error.light", color: "white" }}
+              sx={{
+                fontSize: { xs: 7, md: 12 },
+                bgcolor: "primary",
+                color: "white",
+              }}
             >
               Ứng tuyển
             </Button>

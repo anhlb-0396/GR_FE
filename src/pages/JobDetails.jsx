@@ -14,8 +14,7 @@ import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import SendIcon from "@mui/icons-material/Send";
 import Comments from "../ui/Comments";
-import { CardGiftcard } from "@mui/icons-material";
-import RelatedJobItem from "../ui/RelatedJobItem";
+
 import JobList from "../features/jobs/JobList";
 
 const job = {
