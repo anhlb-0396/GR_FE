@@ -1,3 +1,6 @@
+import { format } from "date-fns";
+import { useNavigate } from "react-router-dom";
+
 import {
   Grid,
   Avatar,
@@ -17,12 +20,23 @@ import {
   AccountBalance as AccountBalanceIcon,
   Send as SendIcon,
   Bookmark as BookmarkIcon,
+  PunchClock as PunchClockIcon,
+  Paid as PaidIcon,
 } from "@mui/icons-material";
 
+import { changeCurrency } from "../../utils/helpers";
+
 function JobItem({ job }) {
+  const navigate = useNavigate();
+
   return (
     <Paper elevation={3} sx={{ borderRadius: "8px", p: "1rem", m: "0 auto" }}>
-      <Grid container sx={{ borderRadius: "10px", height: "auto" }} xs={12}>
+      <Grid
+        container
+        item
+        sx={{ borderRadius: "10px", height: "auto" }}
+        xs={12}
+      >
         {/* job Image */}
         <Grid
           item
@@ -42,7 +56,7 @@ function JobItem({ job }) {
         </Grid>
 
         {/* Job Information */}
-        <Grid item xs={8}>
+        <Grid item xs={7} md={8}>
           <Grid container rowGap={1}>
             <Grid item xs={12}>
               <Typography variant="h6">{job.title}</Typography>
@@ -84,13 +98,27 @@ function JobItem({ job }) {
                   label={job.working_method}
                   size="small"
                 />
+
+                <Chip
+                  icon={<PunchClockIcon />}
+                  label={`${job.working_experience} năm kinh nghiệm`}
+                  size="small"
+                />
+
+                <Chip
+                  icon={<PaidIcon />}
+                  label={`${changeCurrency(job.min_salary)} - ${changeCurrency(
+                    job.max_salary
+                  )} triệu`}
+                  size="small"
+                />
               </Stack>
             </Grid>
           </Grid>
         </Grid>
 
         {/* Action */}
-        <Grid container item xs={2}>
+        <Grid container item xs={3} md={2}>
           <Stack
             justifyContent="space-between"
             alignItems="flex-end"
@@ -102,9 +130,9 @@ function JobItem({ job }) {
 
             <Chip
               icon={<AccessTimeFilledIcon />}
-              label={job.expired_date}
+              label={`Hạn ${format(new Date(job.expired_date), "dd/MM/yyyy")}`}
               variant="outlined"
-              color="error"
+              color="default"
               size="small"
             />
 
@@ -113,10 +141,11 @@ function JobItem({ job }) {
               variant="contained"
               endIcon={<SendIcon />}
               sx={{
-                fontSize: { xs: 7, md: 12 },
+                fontSize: { xs: 10, md: 12 },
                 bgcolor: "primary",
                 color: "white",
               }}
+              onClick={() => navigate(`/jobs/${job.id}`)}
             >
               Ứng tuyển
             </Button>

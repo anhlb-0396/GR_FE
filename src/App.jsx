@@ -25,7 +25,7 @@ function App() {
           <Routes>
             <Route element={<AppLayouts></AppLayouts>}>
               <Route path="/" element={<Homepage></Homepage>} />
-              <Route path="/jobs" element={<JobDetails></JobDetails>} />
+              <Route path="/jobs/:id" element={<JobDetails></JobDetails>} />
             </Route>
           </Routes>
         </BrowserRouter>
