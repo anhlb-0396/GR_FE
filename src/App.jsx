@@ -11,9 +11,27 @@ import "@fontsource/roboto/700.css";
 import Homepage from "./pages/Homepage";
 import JobDetails from "./pages/JobDetails";
 import AppLayouts from "./ui/AppLayouts";
+import Resume from "./features/resumes/Resume";
+
+import DATA from "./features/resumes/TEMPLATE";
 
 const queryClient = new QueryClient();
-const theme = createTheme();
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "rgba(53, 162, 235, 1)",
+    },
+    error: {
+      main: "rgba(255, 99, 132, 1)",
+    },
+    success: {
+      main: "rgba(75, 192, 192, 1)",
+    },
+    warning: {
+      main: "rgba(255, 206, 86, 0.7)",
+    },
+  },
+});
 
 function App() {
   return (
@@ -26,6 +44,10 @@ function App() {
             <Route element={<AppLayouts></AppLayouts>}>
               <Route path="/" element={<Homepage></Homepage>} />
               <Route path="/jobs/:id" element={<JobDetails></JobDetails>} />
+              <Route
+                path="/users/cv"
+                element={<Resume profile={DATA.profile}></Resume>}
+              />
             </Route>
           </Routes>
         </BrowserRouter>

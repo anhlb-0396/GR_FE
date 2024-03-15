@@ -124,7 +124,7 @@ function JobItem({ job }) {
             alignItems="flex-end"
             sx={{ width: "100%", p: 0 }}
           >
-            <IconButton aria-label="bookmarks" size="small">
+            <IconButton aria-label="bookmarks" size="small" color="error">
               <BookmarkIcon />
             </IconButton>
 
@@ -132,7 +132,7 @@ function JobItem({ job }) {
               icon={<AccessTimeFilledIcon />}
               label={`Hạn ${format(new Date(job.expired_date), "dd/MM/yyyy")}`}
               variant="outlined"
-              color="default"
+              color="error"
               size="small"
             />
 
