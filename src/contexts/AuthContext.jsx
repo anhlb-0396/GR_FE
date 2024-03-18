@@ -1,40 +1,47 @@
+import axios from "axios";
 import { createContext, useContext, useReducer } from "react";
+import { useLocalStorageState } from "../hooks/useLocalStorageState";
+
+const BASE_URL = "http://localhost:3001/api/users";
 
 const AuthContext = createContext();
 
-const initialState = {
-  user: null,
-  isAuthenticated: false,
-};
-
-function reducer(state, action) {
-  switch (action.type) {
-    case "login":
-      return { ...state, user: action.payload, isAuthenticated: true };
-    case "logout":
-      return { ...state, user: null, isAuthenticated: false };
-    default:
-      throw new Error("Unknown action");
-  }
-}
-
 function AuthProvider({ children }) {
-  const [{ user, isAuthenticated }, dispatch] = useReducer(
-    reducer,
-    initialState
+  const [currentUser, setCurrentUser] = useLocalStorageState(
+    "currentUser",
+    null
   );
+  const [token, setToken] = useLocalStorageState("token", null);
 
-  function login(email, password) {
-    if (email === FAKE_USER.email && password === FAKE_USER.password)
-      dispatch({ type: "login", payload: FAKE_USER });
-  }
+  const isAuthenticated = token && currentUser;
 
-  function logout() {
-    dispatch({ type: "logout" });
-  }
+  const handleLogin = async (gmail, password) => {
+    try {
+      const response = await axios.post(`${BASE_URL}/login`, {
+        gmail,
+        password,
+      });
+
+      if (response.data.status === "fail") {
+        throw new Error(response.data.message);
+      }
+
+      setCurrentUser(response.data.data.currentUser);
+      setToken(response.data.token);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleLogout = () => {
+    setCurrentUser(null);
+    setToken(null);
+  };
 
   return (
-    <AuthContext.Provider value={{ user, isAuthenticated, login, logout }}>
+    <AuthContext.Provider
+      value={{ currentUser, isAuthenticated, handleLogin, handleLogout, token }}
+    >
       {children}
     </AuthContext.Provider>
   );
