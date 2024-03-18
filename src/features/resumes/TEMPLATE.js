@@ -6,8 +6,6 @@ import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import TwitterIcon from "@mui/icons-material/Twitter";
-import SnapchatIcon from "@mui/icons-material/Twitter";
-import PinterestIcon from "@mui/icons-material/Twitter";
 
 // Data object that contains all of the data for the template.
 const data = {
@@ -41,8 +39,6 @@ const data = {
       { icon: InstagramIcon },
       { icon: LinkedInIcon },
       { icon: TwitterIcon },
-      { icon: SnapchatIcon },
-      { icon: PinterestIcon },
     ],
     education: [
       {
@@ -87,46 +83,6 @@ const data = {
         title: "Lifeguard",
         date: "Summers 20xx – 20xx",
         description: "YMCA, Lowell, MA",
-      },
-    ],
-  },
-
-  posts: {
-    name: "Sara Friends",
-    avatar: "https://mui.com/static/images/avatar/1.jpg",
-    background_image: "https://source.unsplash.com/random?wallpapers",
-    post_data: [
-      {
-        id: 1,
-        timestamp: "2 hours ago",
-        description: "Enjoying a sunny day at the beach!",
-        image: "https://source.unsplash.com/random?wallpapers",
-      },
-      {
-        id: 2,
-        timestamp: "5 hours ago",
-        description: "Just finished reading this amazing book.",
-        type: "note",
-      },
-      {
-        id: 3,
-        timestamp: "2 hours ago",
-        description: "Enjoying a sunny day at the beach!",
-        image: "https://source.unsplash.com/random?wallpapers",
-      },
-      {
-        id: 4,
-        timestamp: "5 hours ago",
-        description: "Just finished reading this amazing book.",
-        type: "note",
-      },
-      {
-        id: 5,
-        author: "John Doe",
-        avatar: "/path-to-avatar1.jpg",
-        timestamp: "2 hours ago",
-        description: "Enjoying a sunny day at the beach!",
-        image: "https://source.unsplash.com/random?wallpapers",
       },
     ],
   },

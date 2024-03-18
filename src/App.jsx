@@ -12,6 +12,7 @@ import Homepage from "./pages/Homepage";
 import JobDetails from "./pages/JobDetails";
 import AppLayouts from "./ui/AppLayouts";
 import Resume from "./features/resumes/Resume";
+import Login from "./features/authentication/Login";
 
 import DATA from "./features/resumes/TEMPLATE";
 
@@ -44,6 +45,8 @@ function App() {
             <Route element={<AppLayouts></AppLayouts>}>
               <Route path="/" element={<Homepage></Homepage>} />
               <Route path="/jobs/:id" element={<JobDetails></JobDetails>} />
+              <Route path="/login" element={<Login></Login>} />
+              <Route path="/signup" element={<Login></Login>} />
               <Route
                 path="/users/cv"
                 element={<Resume profile={DATA.profile}></Resume>}
