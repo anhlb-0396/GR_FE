@@ -3,8 +3,11 @@ import { useForm } from "react-hook-form";
 import { useJobs } from "../../features/jobs/useJobs";
 import CustomAutoComplete from "./CustomAutoComplete";
 import TitleText from "./TitleText";
+import provinces from "../../data/provincesData";
+import { useNavigate } from "react-router-dom";
 
 function JobSearchInput() {
+  const navigate = useNavigate();
   const { isLoading, isError, error, jobs } = useJobs();
   const { control, handleSubmit, setValue } = useForm();
 
@@ -14,10 +17,14 @@ function JobSearchInput() {
   const uniqueIndustries = [...new Set(jobs.map((job) => job.industry))];
   const uniqueFields = [...new Set(jobs.map((job) => job.field))];
   const uniqueCompanyNames = [...new Set(jobs.map((job) => job.Company.name))];
-  const uniqueLocations = [...new Set(jobs.map((job) => job.Company.location))];
 
   const onSubmit = (data) => {
-    console.log(data);
+    const queryString = Object.entries(data)
+      .filter((el) => !!el[1])
+      .map((el) => el.join("="))
+      .join("&");
+
+    navigate(`?${queryString}`);
   };
 
   return (
@@ -42,7 +49,7 @@ function JobSearchInput() {
             control={control}
             size={2.5}
             setValue={setValue}
-            options={uniqueLocations}
+            options={provinces}
             label="Địa điểm"
           />
 

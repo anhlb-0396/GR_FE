@@ -1,12 +1,17 @@
 import { Typography } from "@mui/material";
 
-function TitleText({ children }) {
+function TitleText({
+  children,
+  textAlign = "center",
+  variant = "h4",
+  color = "primary",
+}) {
   return (
     <Typography
-      variant="h4"
+      variant={variant}
       fontWeight="bold"
-      textAlign="center"
-      color="primary"
+      textAlign={textAlign}
+      color={color}
     >
       {children}
     </Typography>

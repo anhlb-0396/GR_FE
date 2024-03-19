@@ -10,7 +10,7 @@ import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 
 import Homepage from "./pages/Homepage";
-import JobDetails from "./pages/JobDetails";
+import JobDetails from "./features/jobs/JobDetails";
 import AppLayouts from "./ui/layouts/AppLayouts";
 import Resume from "./features/resumes/Resume";
 import Login from "./features/authentication/Login";

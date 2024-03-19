@@ -14,14 +14,15 @@ import {
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import SendIcon from "@mui/icons-material/Send";
-import Comments from "../ui/Comments";
+import Comments from "../../ui/Comments";
 
-import { changeCurrency } from "../utils/helpers";
+import { changeCurrency } from "../../utils/helpers";
 import PaidIcon from "@mui/icons-material/Paid";
 
-import JobList from "../features/jobs/JobList";
-import { useJob } from "../features/jobs/useJob";
+import JobList from "./JobList";
+import { useJob } from "./useJob";
 import { isBefore } from "date-fns";
+import TitleText from "../../ui/inputs/TitleText";
 
 const images = [
   "https://dxwd4tssreb4w.cloudfront.net/image/cbc2ef0d57c22790520b1a970314cfe9",
@@ -42,13 +43,10 @@ function JobDetails() {
         <Grid item xs={12} md={8} container flexDirection="column" rowGap={4}>
           <Grid item container rowGap={2}>
             <Grid item container direction="column" gap={2}>
-              <Typography variant="h4" sx={{ fontWeight: "500" }}>
-                {job.title}
-              </Typography>
-
-              <Typography variant="h5" sx={{ fontWeight: "300" }}>
+              <TitleText textAlign="left">{job.title}</TitleText>
+              <TitleText textAlign="left" variant="title">
                 {job.Company.name}
-              </Typography>
+              </TitleText>
 
               <Grid container gap={2}>
                 <Chip
@@ -156,6 +154,8 @@ function JobDetails() {
             </Typography>
             <Typography
               dangerouslySetInnerHTML={{ __html: job.description }}
+              variant="body2"
+              color="text.secondary"
               sx={{
                 mt: 4,
                 p: 3,

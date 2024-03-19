@@ -12,6 +12,16 @@ export async function fetchJobs() {
   return response.data.data.jobs;
 }
 
+export async function fetchJobsWithQueries(queryString) {
+  const response = await axios.get(`${BASE_URL}/jobs?${queryString}`);
+
+  if (response.data.status >= 400) {
+    throw new Error(response.data.message);
+  }
+
+  return response.data.data.jobs;
+}
+
 export async function fetchJobById(id) {
   const response = await axios.get(`${BASE_URL}/jobs/${id}`);
 

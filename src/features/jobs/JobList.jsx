@@ -1,15 +1,37 @@
-import { useState } from "react";
-import { Grid, Box } from "@mui/material";
-import { Oval } from "react-loader-spinner";
+import { useEffect, useState } from "react";
+import { Grid } from "@mui/material";
+// import { Oval } from "react-loader-spinner";
 import JobItem from "./JobItem";
 import AppPagination from "../../ui/AppPagination";
-import { useJobs } from "./useJobs";
+import { useJobsQuery } from "./useJobsQuery";
+import { useLocation } from "react-router-dom";
 
 const JOB_PER_PAGE = 5;
 
 function JobList() {
-  const { jobs, isLoading, isError, error } = useJobs();
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+
+  // Iterate over each parameter
+  const queryParams = {};
+  for (const [key, value] of searchParams) {
+    queryParams[key] = decodeURIComponent(value);
+  }
+
+  const queryString = Object.entries(queryParams)
+    .filter((el) => !!el[1])
+    .map((el) => el.join("="))
+    .join("&");
+
+  const { jobs, isLoading, isError, error, refetch } = useJobsQuery(
+    queryString || ""
+  );
   const [currentPage, setCurrentPage] = useState(1);
+
+  useEffect(() => {
+    // Refetch jobs whenever the queryString changes
+    refetch();
+  }, [queryString, refetch]);
 
   if (!jobs) return null;
 
@@ -21,6 +43,10 @@ function JobList() {
   const handleChange = (event, value) => {
     setCurrentPage(value);
   };
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   if (isError) {
     return <div>{error.message}</div>;
