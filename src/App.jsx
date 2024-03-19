@@ -14,6 +14,7 @@ import JobDetails from "./features/jobs/JobDetails";
 import AppLayouts from "./ui/layouts/AppLayouts";
 import Resume from "./features/resumes/Resume";
 import Login from "./features/authentication/Login";
+import Register from "./features/authentication/Register";
 
 import DATA from "./features/resumes/TEMPLATE";
 
@@ -51,7 +52,7 @@ function App() {
                 <Route path="/" element={<Homepage></Homepage>} />
                 <Route path="/jobs/:id" element={<JobDetails></JobDetails>} />
                 <Route path="/login" element={<Login></Login>} />
-                {/* <Route path="/signup" element={<Login></Login>} /> */}
+                <Route path="/signup" element={<Register></Register>} />
                 <Route
                   path="/users/cv"
                   element={<Resume profile={DATA.profile}></Resume>}

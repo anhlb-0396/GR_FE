@@ -1,34 +1,36 @@
+import { useEffect } from "react";
+import { useForm, Controller } from "react-hook-form";
+import { Link as MuiLink } from "@mui/material";
+import {
+  Container,
+  Box,
+  Typography,
+  TextField,
+  Grid,
+  Button,
+  FormControlLabel,
+  Checkbox,
+} from "@mui/material";
 import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
 import { useAuth } from "../../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
 
 function Login() {
   const { handleLogin, isAuthenticated } = useAuth();
   const navigate = useNavigate();
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
-  useEffect(
-    function () {
-      if (isAuthenticated) navigate("/");
-    },
-    [isAuthenticated, navigate]
-  );
+  useEffect(() => {
+    if (isAuthenticated) navigate("/");
+  }, [isAuthenticated, navigate]);
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    const data = new FormData(event.currentTarget);
-    await handleLogin(data.get("email"), data.get("password"));
+  const onSubmit = async (data) => {
+    await handleLogin(data.email, data.password);
     navigate("/");
   };
 
@@ -50,27 +52,64 @@ function Login() {
           Sign in
         </Typography>
 
-        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email Address"
+        <Box
+          component="form"
+          onSubmit={handleSubmit(onSubmit)}
+          noValidate
+          sx={{ mt: 1 }}
+        >
+          <Controller
             name="email"
-            autoComplete="email"
-            autoFocus
+            control={control}
+            rules={{
+              required: "Email is required",
+              minLength: {
+                value: 8,
+                message: "Email must be at least 8 characters",
+              },
+            }}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                margin="normal"
+                required
+                fullWidth
+                id="email"
+                label="Email Address"
+                autoComplete="email"
+                autoFocus
+                error={!!errors.email}
+                helperText={errors.email ? errors.email.message : ""}
+              />
+            )}
           />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
+
+          <Controller
             name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
+            control={control}
+            rules={{
+              required: "Password is required",
+              minLength: {
+                value: 8,
+                message: "Password must be at least 8 characters",
+              },
+            }}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label="Password"
+                type="password"
+                autoComplete="current-password"
+                error={!!errors.password}
+                helperText={errors.password ? errors.password.message : ""}
+              />
+            )}
           />
+
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
@@ -87,15 +126,15 @@ function Login() {
 
           <Grid container>
             <Grid item xs>
-              <Link href="#" variant="body2">
+              <MuiLink href="#" variant="body2">
                 Forgot password?
-              </Link>
+              </MuiLink>
             </Grid>
 
             <Grid item>
-              <Link href="#" variant="body2">
+              <MuiLink href="#" variant="body2">
                 {"Don't have an account? Sign Up"}
-              </Link>
+              </MuiLink>
             </Grid>
           </Grid>
         </Box>

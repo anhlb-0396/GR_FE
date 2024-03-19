@@ -16,7 +16,7 @@ import TravelExploreIcon from "@mui/icons-material/TravelExplore";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 
-const pages = ["Products", "Pricing", "Blog"];
+const pages = ["Tạo CV", "Tìm việc làm", "Đánh giá"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 function ResponsiveAppBar() {
@@ -165,7 +165,27 @@ function ResponsiveAppBar() {
             </Box>
           )}
 
-          {!isAuthenticated && <div>SIGN IN</div>}
+          {!isAuthenticated && (
+            <Box sx={{ flexGrow: 0 }}>
+              <Button
+                component={Link}
+                to="/login"
+                color="inherit"
+                sx={{ my: 2, color: "white" }}
+              >
+                Đăng nhập
+              </Button>
+
+              <Button
+                component={Link}
+                to="/signup"
+                color="inherit"
+                sx={{ my: 2, color: "white" }}
+              >
+                Đăng kí
+              </Button>
+            </Box>
+          )}
         </Toolbar>
       </Container>
     </AppBar>

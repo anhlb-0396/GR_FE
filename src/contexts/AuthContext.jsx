@@ -33,6 +33,26 @@ function AuthProvider({ children }) {
     }
   };
 
+  const handleSignup = async (gmail, password, confirmPassword, name) => {
+    try {
+      const response = await axios.post(`${BASE_URL}/signup`, {
+        gmail,
+        password,
+        confirmPassword,
+        name,
+      });
+
+      if (response.data.status === "error") {
+        throw new Error(response.data.message);
+      }
+
+      setCurrentUser(response.data.data.currentUser);
+      setToken(response.data.token);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const handleLogout = () => {
     setCurrentUser(null);
     setToken(null);
@@ -40,7 +60,14 @@ function AuthProvider({ children }) {
 
   return (
     <AuthContext.Provider
-      value={{ currentUser, isAuthenticated, handleLogin, handleLogout, token }}
+      value={{
+        currentUser,
+        isAuthenticated,
+        handleLogin,
+        handleLogout,
+        token,
+        handleSignup,
+      }}
     >
       {children}
     </AuthContext.Provider>
