@@ -14,7 +14,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
 function Login() {
-  const { handleLogin, handleLogout, isAuthenticated } = useAuth();
+  const { handleLogin, isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
   useEffect(
@@ -45,9 +45,11 @@ function Login() {
         <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
           <LockOutlinedIcon />
         </Avatar>
+
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
+
         <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
           <TextField
             margin="normal"
@@ -73,6 +75,7 @@ function Login() {
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
           />
+
           <Button
             type="submit"
             fullWidth
@@ -81,12 +84,14 @@ function Login() {
           >
             Sign In
           </Button>
+
           <Grid container>
             <Grid item xs>
               <Link href="#" variant="body2">
                 Forgot password?
               </Link>
             </Grid>
+
             <Grid item>
               <Link href="#" variant="body2">
                 {"Don't have an account? Sign Up"}

@@ -9,8 +9,8 @@ import { useForm, Controller } from "react-hook-form";
 import { useJobs } from "../../features/jobs/useJobs";
 
 function JobSearchInput() {
-  const { handleSubmit, register, reset, control } = useForm();
   const { isLoading, isError, error, jobs } = useJobs();
+  const { control, handleSubmit, setValue } = useForm();
 
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>{error.message}</div>;
@@ -40,16 +40,24 @@ function JobSearchInput() {
 
         <Grid container item xs={12} spacing={2} flexWrap="wrap">
           <Grid item xs={2.5}>
-            <Autocomplete
-              {...register("companyName")}
-              variant="outlined"
-              size="small"
-              disablePortal
-              options={uniqueCompanyNames}
-              renderInput={(params) => (
-                <TextField {...params} label="Tên công ty" />
+            <Controller
+              name="companyName"
+              control={control}
+              defaultValue=""
+              render={({ field }) => (
+                <Autocomplete
+                  {...field}
+                  variant="outlined"
+                  size="small"
+                  disablePortal
+                  options={uniqueCompanyNames}
+                  onChange={(event, value) => setValue("companyName", value)}
+                  renderInput={(params) => (
+                    <TextField {...params} label="Tên công ty" />
+                  )}
+                />
               )}
-            />
+            ></Controller>
           </Grid>
 
           <Grid item xs={2.5}>
@@ -97,7 +105,7 @@ function JobSearchInput() {
               size="small"
               disablePortal
               id="combo-box-demo"
-              options={["Full-time", "Part-time", "Remote"]}
+              options={["fulltime", "partime", "remote"]}
               renderInput={(params) => (
                 <TextField {...params} label="Loại hình" />
               )}
