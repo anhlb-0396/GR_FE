@@ -30,6 +30,7 @@ function JobList() {
 
   useEffect(() => {
     // Refetch jobs whenever the queryString changes
+    setCurrentPage(1);
     refetch();
   }, [queryString, refetch]);
 
@@ -49,7 +50,7 @@ function JobList() {
   }
 
   if (isError) {
-    return <div>{error.message}</div>;
+    return <div>CANNOT GET DATA</div>;
   }
 
   return (
