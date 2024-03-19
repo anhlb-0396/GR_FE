@@ -11,7 +11,7 @@ import "@fontsource/roboto/700.css";
 
 import Homepage from "./pages/Homepage";
 import JobDetails from "./pages/JobDetails";
-import AppLayouts from "./ui/AppLayouts";
+import AppLayouts from "./ui/layouts/AppLayouts";
 import Resume from "./features/resumes/Resume";
 import Login from "./features/authentication/Login";
 
@@ -31,6 +31,9 @@ const theme = createTheme({
     },
     warning: {
       main: "rgba(255, 206, 86, 0.7)",
+    },
+    info: {
+      main: "rgba(195, 141, 224, 0.7)",
     },
   },
 });

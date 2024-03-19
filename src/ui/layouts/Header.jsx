@@ -14,7 +14,7 @@ import MenuItem from "@mui/material/MenuItem";
 import TravelExploreIcon from "@mui/icons-material/TravelExplore";
 
 import { Link } from "react-router-dom";
-import { useAuth } from "../contexts/AuthContext";
+import { useAuth } from "../../contexts/AuthContext";
 
 const pages = ["Products", "Pricing", "Blog"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];

@@ -1,12 +1,8 @@
-import {
-  Typography,
-  Grid,
-  Autocomplete,
-  TextField,
-  Button,
-} from "@mui/material";
-import { useForm, Controller } from "react-hook-form";
+import { Grid, Button } from "@mui/material";
+import { useForm } from "react-hook-form";
 import { useJobs } from "../../features/jobs/useJobs";
+import CustomAutoComplete from "./CustomAutoComplete";
+import TitleText from "./TitleText";
 
 function JobSearchInput() {
   const { isLoading, isError, error, jobs } = useJobs();
@@ -28,102 +24,63 @@ function JobSearchInput() {
     <form onSubmit={handleSubmit(onSubmit)}>
       <Grid container sx={{ py: "4%" }} spacing={2} gap={3}>
         <Grid container item justifyContent="center" xs={12}>
-          <Typography
-            variant="h4"
-            fontWeight="bold"
-            textAlign="center"
-            color="primary"
-          >
-            Tìm kiếm công việc phù hợp
-          </Typography>
+          <TitleText>Tìm kiếm công việc</TitleText>
         </Grid>
 
         <Grid container item xs={12} spacing={2} flexWrap="wrap">
-          <Grid item xs={2.5}>
-            <Controller
-              name="companyName"
-              control={control}
-              defaultValue=""
-              render={({ field }) => (
-                <Autocomplete
-                  {...field}
-                  variant="outlined"
-                  size="small"
-                  disablePortal
-                  options={uniqueCompanyNames}
-                  onChange={(event, value) => setValue("companyName", value)}
-                  renderInput={(params) => (
-                    <TextField {...params} label="Tên công ty" />
-                  )}
-                />
-              )}
-            ></Controller>
-          </Grid>
+          <CustomAutoComplete
+            name="companyName"
+            control={control}
+            size={2.5}
+            setValue={setValue}
+            options={uniqueCompanyNames}
+            label="Tên công ty"
+          />
 
-          <Grid item xs={2.5}>
-            <Autocomplete
-              variant="outlined"
-              size="small"
-              disablePortal
-              id="combo-box-demo"
-              options={uniqueLocations}
-              renderInput={(params) => (
-                <TextField {...params} label="Địa điểm" />
-              )}
-            />
-          </Grid>
+          <CustomAutoComplete
+            name="location"
+            control={control}
+            size={2.5}
+            setValue={setValue}
+            options={uniqueLocations}
+            label="Địa điểm"
+          />
 
-          <Grid item xs={2}>
-            <Autocomplete
-              variant="outlined"
-              size="small"
-              disablePortal
-              id="combo-box-demo"
-              options={uniqueFields}
-              renderInput={(params) => (
-                <TextField {...params} label="Lĩnh vực" />
-              )}
-            />
-          </Grid>
+          <CustomAutoComplete
+            name="field"
+            control={control}
+            size={2}
+            setValue={setValue}
+            options={uniqueFields}
+            label="Lĩnh vực"
+          />
 
-          <Grid item xs={2}>
-            <Autocomplete
-              variant="outlined"
-              size="small"
-              disablePortal
-              id="combo-box-demo"
-              options={uniqueIndustries}
-              renderInput={(params) => (
-                <TextField {...params} label="Ngành nghề" />
-              )}
-            />
-          </Grid>
+          <CustomAutoComplete
+            name="industry"
+            control={control}
+            size={2}
+            setValue={setValue}
+            options={uniqueIndustries}
+            label="Ngành nghề"
+          />
 
-          <Grid item xs={1.5}>
-            <Autocomplete
-              variant="outlined"
-              size="small"
-              disablePortal
-              id="combo-box-demo"
-              options={["fulltime", "partime", "remote"]}
-              renderInput={(params) => (
-                <TextField {...params} label="Loại hình" />
-              )}
-            />
-          </Grid>
+          <CustomAutoComplete
+            name="workingMethod"
+            control={control}
+            size={1.5}
+            setValue={setValue}
+            options={["offline", "remote", "hybrid"]}
+            label="Hình thức"
+          />
 
-          <Grid item xs={1.5}>
-            <Autocomplete
-              variant="outlined"
-              size="small"
-              disablePortal
-              id="combo-box-demo"
-              options={["Online", "Offline"]}
-              renderInput={(params) => (
-                <TextField {...params} label="Hình thức " />
-              )}
-            />
-          </Grid>
+          <CustomAutoComplete
+            name="workingType"
+            control={control}
+            size={1.5}
+            setValue={setValue}
+            options={["fulltime", "partime"]}
+            label="Loại hình"
+          />
 
           <Grid item xs={3}>
             <Button variant="contained" sx={{ color: "white" }} type="submit">
