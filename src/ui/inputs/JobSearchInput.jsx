@@ -38,7 +38,8 @@ function JobSearchInput() {
           <CustomAutoComplete
             name="companyName"
             control={control}
-            size={2.5}
+            xs={6}
+            md={3}
             setValue={setValue}
             options={uniqueCompanyNames}
             label="Tên công ty"
@@ -47,7 +48,8 @@ function JobSearchInput() {
           <CustomAutoComplete
             name="location"
             control={control}
-            size={2.5}
+            xs={6}
+            md={2}
             setValue={setValue}
             options={provinces}
             label="Địa điểm"
@@ -56,7 +58,8 @@ function JobSearchInput() {
           <CustomAutoComplete
             name="field"
             control={control}
-            size={2}
+            xs={6}
+            md={2}
             setValue={setValue}
             options={uniqueFields}
             label="Lĩnh vực"
@@ -65,7 +68,8 @@ function JobSearchInput() {
           <CustomAutoComplete
             name="industry"
             control={control}
-            size={2}
+            xs={6}
+            md={2}
             setValue={setValue}
             options={uniqueIndustries}
             label="Ngành nghề"
@@ -74,7 +78,8 @@ function JobSearchInput() {
           <CustomAutoComplete
             name="workingMethod"
             control={control}
-            size={1.5}
+            xs={6}
+            md={1.5}
             setValue={setValue}
             options={["offline", "remote", "hybrid"]}
             label="Hình thức"
@@ -83,7 +88,8 @@ function JobSearchInput() {
           <CustomAutoComplete
             name="workingType"
             control={control}
-            size={1.5}
+            xs={6}
+            md={1.5}
             setValue={setValue}
             options={["fulltime", "partime"]}
             label="Loại hình"

@@ -6,11 +6,12 @@ function CustomAutoComplete({
   control,
   setValue,
   options,
-  size = 3,
+  xs = 3,
+  md = 2.5,
   label,
 }) {
   return (
-    <Grid item xs={size}>
+    <Grid item xs={xs} md={md}>
       <Controller
         name={name}
         control={control}

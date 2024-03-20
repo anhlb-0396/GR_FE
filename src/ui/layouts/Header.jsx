@@ -16,13 +16,18 @@ import TravelExploreIcon from "@mui/icons-material/TravelExplore";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 
-const pages = ["Tạo CV", "Tìm việc làm", "Đánh giá"];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+const pages = [
+  { title: "Tạo CV", link: "/users/cv/create" },
+  { title: "Xem CV", link: "/users/cv" },
+  { title: "Tìm việc làm", link: "/" },
+  { title: "Đánh giá", link: "/" },
+];
+const settings = ["Profile", "Account", "Dashboard"];
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const { currentUser, isAuthenticated } = useAuth();
+  const { currentUser, isAuthenticated, handleLogout } = useAuth();
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -40,7 +45,7 @@ function ResponsiveAppBar() {
   };
 
   return (
-    <AppBar position="static">
+    <AppBar position="sticky">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <TravelExploreIcon
@@ -94,8 +99,14 @@ function ResponsiveAppBar() {
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
+                <MenuItem key={page.title} onClick={handleCloseNavMenu}>
+                  <Typography
+                    component={Link}
+                    to={page.link}
+                    textAlign="center"
+                  >
+                    {page.title}
+                  </Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -121,14 +132,17 @@ function ResponsiveAppBar() {
           >
             JOBFIND
           </Typography>
+
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
               <Button
-                key={page}
+                component={Link}
+                to={page.link}
+                key={page.title}
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: "white", display: "block" }}
               >
-                {page}
+                {page.title}
               </Button>
             ))}
           </Box>
@@ -161,6 +175,10 @@ function ResponsiveAppBar() {
                     <Typography textAlign="center">{setting}</Typography>
                   </MenuItem>
                 ))}
+
+                <MenuItem key={"logout"} onClick={handleLogout}>
+                  <Typography textAlign="center">Đăng xuất</Typography>
+                </MenuItem>
               </Menu>
             </Box>
           )}

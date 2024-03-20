@@ -8,6 +8,7 @@ import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
+import DATA from "./features/resumes/TEMPLATE";
 
 import Homepage from "./pages/Homepage";
 import JobDetails from "./features/jobs/JobDetails";
@@ -15,8 +16,8 @@ import AppLayouts from "./ui/layouts/AppLayouts";
 import Resume from "./features/resumes/Resume";
 import Login from "./features/authentication/Login";
 import Register from "./features/authentication/Register";
-
-import DATA from "./features/resumes/TEMPLATE";
+import Resumepage from "./pages/Resumepage";
+import { UserCVProvider } from "./contexts/UserCVContext";
 
 const queryClient = new QueryClient();
 const theme = createTheme({
@@ -56,6 +57,14 @@ function App() {
                 <Route
                   path="/users/cv"
                   element={<Resume profile={DATA.profile}></Resume>}
+                />
+                <Route
+                  path="/users/cv/create"
+                  element={
+                    <UserCVProvider>
+                      <Resumepage profile={DATA.profile}></Resumepage>
+                    </UserCVProvider>
+                  }
                 />
               </Route>
             </Routes>

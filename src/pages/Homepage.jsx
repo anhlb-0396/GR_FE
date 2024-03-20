@@ -5,7 +5,7 @@ import Chart from "../ui/charts/Chart";
 
 function Homepage() {
   return (
-    <Box sx={{ width: { md: "80%", xs: "100%" }, margin: "0 auto" }}>
+    <Box sx={{ width: { md: "70%", xs: "90%" }, margin: "0 auto" }}>
       <Chart></Chart>
       <JobSearchInput></JobSearchInput>
       <JobList></JobList>

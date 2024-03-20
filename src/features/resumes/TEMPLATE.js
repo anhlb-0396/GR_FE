@@ -35,10 +35,10 @@ const data = {
       },
     ],
     socialMedia: [
-      { icon: FacebookIcon },
-      { icon: InstagramIcon },
-      { icon: LinkedInIcon },
-      { icon: TwitterIcon },
+      { icon: FacebookIcon, label: "Facebook", link: "" },
+      { icon: InstagramIcon, label: "Instagram", link: "" },
+      { icon: LinkedInIcon, label: "LinkedIn", link: "" },
+      { icon: TwitterIcon, label: "Twitter", link: "" },
     ],
     education: [
       {

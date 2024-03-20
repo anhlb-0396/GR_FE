@@ -1,5 +1,5 @@
 import axios from "axios";
-import { createContext, useContext, useReducer } from "react";
+import { createContext, useContext } from "react";
 import { useLocalStorageState } from "../hooks/useLocalStorageState";
 
 const BASE_URL = "http://localhost:3001/api/users";
