@@ -12,6 +12,8 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import ResumeCard from "../ResumeCard";
 import TitleText from "../../../ui/inputs/TitleText";
 
+import SaveIcon from "@mui/icons-material/Save";
+
 function Personal() {
   return (
     <ResumeCard
@@ -34,7 +36,7 @@ function Personal() {
             }}
             variant="outlined"
             size="large"
-            sx={{ width: "80%" }}
+            sx={{ width: "90%" }}
           />
         </Grid>
 
@@ -68,7 +70,7 @@ function Personal() {
             }}
             variant="outlined"
             size="large"
-            sx={{ width: "80%" }}
+            sx={{ width: "90%" }}
           />
         </Grid>
 
@@ -85,7 +87,7 @@ function Personal() {
             }}
             variant="outlined"
             size="large"
-            sx={{ width: "80%" }}
+            sx={{ width: "90%" }}
           />
         </Grid>
 
@@ -102,7 +104,7 @@ function Personal() {
             }}
             variant="outlined"
             size="large"
-            sx={{ width: "80%" }}
+            sx={{ width: "90%" }}
           />
         </Grid>
 
@@ -119,8 +121,19 @@ function Personal() {
             }}
             variant="outlined"
             size="large"
-            sx={{ width: "80%" }}
+            sx={{ width: "90%" }}
           />
+        </Grid>
+
+        <Grid container item xs={12} md={12} justifyContent={"flex-end"}>
+          <Button
+            variant="contained"
+            color="primary"
+            sx={{ color: "white", mr: "20px" }}
+            startIcon={<SaveIcon />}
+          >
+            Lưu
+          </Button>
         </Grid>
       </Grid>
     </ResumeCard>

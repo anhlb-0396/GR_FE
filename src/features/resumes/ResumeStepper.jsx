@@ -10,6 +10,9 @@ import Resume from "./Resume";
 import DATA from "./TEMPLATE";
 import { useUserCV } from "../../contexts/UserCVContext";
 import Personal from "./forms/Personal";
+import Skills from "./forms/Skills";
+import Education from "./forms/Education";
+import Experiences from "./forms/Experiences";
 
 const steps = [
   "Thông tin cá nhân",
@@ -23,6 +26,15 @@ function displayStepContent(step) {
   switch (step) {
     case 0:
       return <Personal />;
+
+    case 1:
+      return <Skills />;
+
+    case 2:
+      return <Education />;
+
+    case 3:
+      return <Experiences />;
 
     case 4:
       return <Resume profile={DATA.profile} />;
