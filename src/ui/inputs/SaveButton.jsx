@@ -8,6 +8,7 @@ function SaveButton() {
       color="primary"
       sx={{ color: "white", mr: "20px" }}
       startIcon={<SaveIcon />}
+      type="submit"
     >
       Lưu
     </Button>
