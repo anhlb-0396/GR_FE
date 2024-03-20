@@ -13,6 +13,7 @@ import ResumeCard from "../ResumeCard";
 import TitleText from "../../../ui/inputs/TitleText";
 
 import SaveIcon from "@mui/icons-material/Save";
+import SaveButton from "../../../ui/inputs/SaveButton";
 
 function Personal() {
   return (
@@ -126,14 +127,7 @@ function Personal() {
         </Grid>
 
         <Grid container item xs={12} md={12} justifyContent={"flex-end"}>
-          <Button
-            variant="contained"
-            color="primary"
-            sx={{ color: "white", mr: "20px" }}
-            startIcon={<SaveIcon />}
-          >
-            Lưu
-          </Button>
+          <SaveButton />
         </Grid>
       </Grid>
     </ResumeCard>
