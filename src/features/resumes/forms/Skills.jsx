@@ -25,7 +25,7 @@ function Skills() {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      skills: [{ category: "", skills: "" }],
+      skills: state.skills,
     },
   });
 

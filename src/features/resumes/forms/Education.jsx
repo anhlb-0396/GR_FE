@@ -27,7 +27,7 @@ function Education() {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      education: [{ degree: "", date: "", school: "", gpa: "" }],
+      education: state.education,
     },
   });
 

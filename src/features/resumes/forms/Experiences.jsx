@@ -27,7 +27,7 @@ function Experiences() {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      experience: [{ title: "", date: "", description: "" }],
+      experience: state.experience,
     },
   });
 

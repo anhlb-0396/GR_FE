@@ -24,13 +24,9 @@ function Personal() {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      name: "",
-      address: "",
-      contacts: [
-        { icon: PhoneIcon, label: "Phone", value: "" },
-        { icon: EmailIcon, label: "Email", value: "" },
-        { icon: HomeIcon, label: "Address", value: "" },
-      ],
+      name: state.name,
+      address: state.address,
+      contacts: state.contacts,
     },
   });
 
