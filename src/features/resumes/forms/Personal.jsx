@@ -7,16 +7,35 @@ import SaveButton from "../../../ui/inputs/SaveButton";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import ControlledTextField from "../../../ui/inputs/ControlledTextField";
+import { useUserCV } from "../../../contexts/UserCVContext";
+
+import PhoneIcon from "@mui/icons-material/Phone";
+import EmailIcon from "@mui/icons-material/Email";
+import HomeIcon from "@mui/icons-material/Home";
+
+const icons = [PhoneIcon, EmailIcon, HomeIcon];
 
 function Personal() {
+  const { state, dispatch } = useUserCV();
+
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      name: "",
+      address: "",
+      contacts: [
+        { icon: PhoneIcon, label: "Phone", value: "" },
+        { icon: EmailIcon, label: "Email", value: "" },
+        { icon: HomeIcon, label: "Address", value: "" },
+      ],
+    },
+  });
 
   const onSubmit = (data) => {
-    console.log(data);
+    dispatch({ type: "ADD_INFO", payload: data });
   };
 
   return (
@@ -46,6 +65,34 @@ function Personal() {
               startAdornment={<LocationOnIcon />}
             />
           </Grid>
+
+          {icons.map((Icon, index) => (
+            <Grid
+              container
+              item
+              xs={12}
+              md={6}
+              justifyContent="center"
+              key={index}
+            >
+              <ControlledTextField
+                id={`contacts[${index}].value`}
+                name={`contacts[${index}].value`}
+                label={
+                  index === 0
+                    ? "Số điện thoại"
+                    : index === 1
+                    ? "Email"
+                    : "Địa chỉ nhà"
+                }
+                register={register}
+                errors={errors}
+                InputProps={{
+                  startAdornment: <Icon style={{ color: "grey" }} />,
+                }}
+              />
+            </Grid>
+          ))}
 
           <Grid container item xs={12} md={12} justifyContent="flex-end">
             <SaveButton type="submit" />

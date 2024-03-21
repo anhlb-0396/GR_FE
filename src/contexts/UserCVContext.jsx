@@ -1,4 +1,3 @@
-import axios from "axios";
 import { createContext, useContext, useReducer } from "react";
 
 import PhoneIcon from "@mui/icons-material/Phone";
@@ -8,6 +7,7 @@ import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import TwitterIcon from "@mui/icons-material/Twitter";
+import { address } from "faker/lib/locales/az";
 
 const UserCVContext = createContext();
 
@@ -37,30 +37,28 @@ const initialState = {
 
 function reducer(state, action) {
   switch (action.type) {
-    case "ADD_CONTACT":
+    case "ADD_INFO":
       return {
         ...state,
-        contacts: [...state.contacts, action.payload],
+        address: action.payload.address,
+        name: action.payload.name,
+        contacts: [...action.payload.contacts],
       };
-    case "ADD_SOCIAL_MEDIA":
+
+    case "ADD_SKILLS":
       return {
         ...state,
-        socialMedia: [...state.socialMedia, action.payload],
-      };
-    case "ADD_SKILL":
-      return {
-        ...state,
-        skills: [...state.skills, action.payload],
+        skills: [...action.payload],
       };
     case "ADD_EDUCATION":
       return {
         ...state,
-        education: [...state.education, action.payload],
+        education: [...action.payload],
       };
-    case "ADD_EXPERIENCE":
+    case "ADD_EXPERIENCES":
       return {
         ...state,
-        experience: [...state.experience, action.payload],
+        experience: [...action.payload],
       };
     default:
       return state;

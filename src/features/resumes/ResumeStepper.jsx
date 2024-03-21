@@ -22,7 +22,7 @@ const steps = [
   "Xem trước",
 ];
 
-function displayStepContent(step) {
+function displayStepContent(step, state) {
   switch (step) {
     case 0:
       return <Personal />;
@@ -37,7 +37,7 @@ function displayStepContent(step) {
       return <Experiences />;
 
     case 4:
-      return <Resume profile={DATA.profile} />;
+      return <Resume profile={state} />;
   }
 }
 
@@ -117,7 +117,7 @@ function ResumeStepper() {
         </>
       )}
 
-      <Box sx={{ my: "2rem" }}>{displayStepContent(activeStep)}</Box>
+      <Box sx={{ my: "2rem" }}>{displayStepContent(activeStep, state)}</Box>
     </Box>
   );
 }

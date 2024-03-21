@@ -1,7 +1,7 @@
 import Button from "@mui/material/Button";
 import SaveIcon from "@mui/icons-material/Save";
 
-function SaveButton() {
+function SaveButton({ onClick }) {
   return (
     <Button
       variant="contained"
@@ -9,6 +9,7 @@ function SaveButton() {
       sx={{ color: "white", mr: "20px" }}
       startIcon={<SaveIcon />}
       type="submit"
+      onClick={onClick}
     >
       Lưu
     </Button>

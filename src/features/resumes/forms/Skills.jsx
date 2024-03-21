@@ -1,113 +1,23 @@
-import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { useForm, useFieldArray } from "react-hook-form";
+import React from "react";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Fab from "@mui/material/Fab";
 import ResumeCard from "../ResumeCard";
-import AccountCircle from "@mui/icons-material/AccountCircle";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import HomeRepairServiceIcon from "@mui/icons-material/HomeRepairService";
+import BorderColorIcon from "@mui/icons-material/BorderColor";
 
 import TitleText from "../../../ui/inputs/TitleText";
 import SaveButton from "../../../ui/inputs/SaveButton";
 
 import ControlledTextField from "../../../ui/inputs/ControlledTextField";
-
-import { useFieldArray } from "react-hook-form";
-import React from "react";
-
-// function Skills() {
-//   const {
-//     register,
-//     handleSubmit,
-//     formState: { errors },
-//   } = useForm();
-
-//   const [count, setCount] = useState(2);
-
-//   const onSubmit = (data) => {
-//     console.log(data);
-//   };
-
-//   const handleAdd = () => {
-//     if (count < 5) setCount(count + 1);
-//   };
-
-//   const handleRemove = () => {
-//     if (count > 1) setCount(count - 1);
-//   };
-
-//   return (
-//     <ResumeCard container sx={{ maxWidth: "md", margin: "0 auto" }}>
-//       <TitleText>Kĩ năng cá nhân</TitleText>
-
-//       <Box component="form" onSubmit={handleSubmit(onSubmit)}>
-//         <Grid container sx={{ mt: "2rem" }} rowGap={3}>
-//           {Array.from({ length: count }, (_, index) => index).map((index) => (
-//             <>
-//               <Grid container item xs={12} md={6} justifyContent="center">
-//                 <ControlledTextField
-//                   id={`skill_title[${index}]`}
-//                   name={`skill_title[${index}]`}
-//                   label="Kĩ năng"
-//                   register={register}
-//                   errors={errors}
-//                   startAdornment={<HomeRepairServiceIcon />}
-//                 />
-//               </Grid>
-
-//               <Grid container item xs={12} md={6} justifyContent="center">
-//                 <ControlledTextField
-//                   id={`skill_description[${index}]`}
-//                   name={`skill_description[${index}]`}
-//                   label="Mô tả chi tiết"
-//                   register={register}
-//                   errors={errors}
-//                 />
-//               </Grid>
-//             </>
-//           ))}
-
-//           <Box
-//             sx={{
-//               "& > :not(style)": { m: 1 },
-//               display: "flex",
-//               justifyContent: "center",
-//               width: "100%",
-//             }}
-//           >
-//             <Fab
-//               color="primary"
-//               aria-label="add"
-//               size="small"
-//               sx={{ color: "white" }}
-//               onClick={handleAdd}
-//             >
-//               <AddIcon />
-//             </Fab>
-//             <Fab
-//               color="primary"
-//               aria-label="remove"
-//               size="small"
-//               sx={{ color: "white" }}
-//               onClick={handleRemove}
-//             >
-//               <RemoveIcon />
-//             </Fab>
-//           </Box>
-
-//           <Grid container item xs={12} md={12} justifyContent="flex-end">
-//             <SaveButton type="submit" />
-//           </Grid>
-//         </Grid>
-//       </Box>
-//     </ResumeCard>
-//   );
-// }
+import { useUserCV } from "../../../contexts/UserCVContext";
 
 function Skills() {
+  const { state, dispatch } = useUserCV();
+
   const {
     control,
     register,
@@ -115,7 +25,7 @@ function Skills() {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      skills: [{ title: "", description: "" }],
+      skills: [{ category: "", skills: "" }],
     },
   });
 
@@ -125,7 +35,7 @@ function Skills() {
   });
 
   const onSubmit = (data) => {
-    console.log(data);
+    dispatch({ type: "ADD_SKILLS", payload: data.skills });
   };
 
   return (
@@ -144,7 +54,7 @@ function Skills() {
           aria-label="add"
           size="small"
           sx={{ color: "white" }}
-          onClick={() => append({ title: "", description: "" })}
+          onClick={() => append({ category: "", skills: "" })}
         >
           <AddIcon />
         </Fab>
@@ -167,8 +77,8 @@ function Skills() {
             <React.Fragment key={field.id}>
               <Grid container item xs={12} md={5} justifyContent="center">
                 <ControlledTextField
-                  id={`skills[${index}].title`}
-                  name={`skills[${index}].title`}
+                  id={`skills[${index}].category`}
+                  name={`skills[${index}].category`}
                   label="Kĩ năng"
                   register={register}
                   errors={errors}
@@ -178,11 +88,12 @@ function Skills() {
 
               <Grid container item xs={12} md={7} justifyContent="center">
                 <ControlledTextField
-                  id={`skills[${index}].description`}
-                  name={`skills[${index}].description`}
+                  id={`skills[${index}].skills`}
+                  name={`skills[${index}].skills`}
                   label="Mô tả chi tiết"
                   register={register}
                   errors={errors}
+                  startAdornment={<BorderColorIcon />}
                 />
               </Grid>
             </React.Fragment>
