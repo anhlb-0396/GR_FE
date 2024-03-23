@@ -21,7 +21,7 @@ import TextField from "@mui/material/TextField";
 
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import SendIcon from "@mui/icons-material/Send";
-import Comments from "../../ui/Comments";
+import Comments from "../comments/Comments";
 import MapsHomeWorkIcon from "@mui/icons-material/MapsHomeWork";
 import WcIcon from "@mui/icons-material/Wc";
 
@@ -39,6 +39,7 @@ import CompanySummaryCard from "../companies/CompanySummaryCard";
 import { useAuth } from "../../contexts/AuthContext";
 import { company } from "faker/lib/locales/az";
 import { useCreateComment } from "../comments/userCreateComment";
+import CommentList from "../comments/CommentList";
 
 const images = [
   "https://dxwd4tssreb4w.cloudfront.net/image/cbc2ef0d57c22790520b1a970314cfe9",
@@ -56,7 +57,7 @@ function JobDetails() {
   const { id } = useParams();
   const { job, isLoading, isError, error } = useJob(id);
   const [isOpenCommentDialog, setIsOpenCommentDialog] = useState(false);
-  const { currentUser, isAuthenticated, token } = useAuth();
+  const { currentUser, token } = useAuth();
 
   const { createComment, isCreating } = useCreateComment();
 
@@ -263,7 +264,9 @@ function JobDetails() {
                   </DialogContent>
                   <DialogActions>
                     <Button onClick={handleCommentDialogClickClose}>Hủy</Button>
-                    <Button type="submit">Đánh giá ngay</Button>
+                    <Button type="submit" disabled={isCreating}>
+                      Đánh giá ngay
+                    </Button>
                   </DialogActions>
                 </Dialog>
               </Stack>
@@ -365,17 +368,7 @@ function JobDetails() {
             <TitleText variant="h5">Bình luận</TitleText>
           </Divider>
 
-          <Grid
-            item
-            container
-            direction="column"
-            rowGap={2}
-            alignItems="center"
-          >
-            <Comments></Comments>
-            <Comments></Comments>
-            <Comments></Comments>
-          </Grid>
+          <CommentList companyId={job.company_id}></CommentList>
         </Grid>
       </Grid>
     </Box>

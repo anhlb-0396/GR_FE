@@ -36,7 +36,7 @@ const theme = createTheme({
       main: "rgba(255, 206, 86, 0.7)",
     },
     info: {
-      main: "rgba(195, 141, 224, 0.7)",
+      main: "rgba(200, 157, 223, 0.7)",
     },
   },
 });

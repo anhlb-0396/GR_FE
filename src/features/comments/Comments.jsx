@@ -17,15 +17,23 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import Grid from "@mui/material/Grid";
 import Rating from "@mui/material/Rating";
 import { Title } from "@mui/icons-material";
-import TitleText from "./inputs/TitleText";
+import TitleText from "../../ui/inputs/TitleText";
 
-function Comments() {
+import { parseISO, format } from "date-fns";
+
+function formatDateTime(dateTimeStr) {
+  const dateObj = parseISO(dateTimeStr);
+  const formattedDateTime = format(dateObj, "HH':'mm 'ngày' dd/MM/yyyy");
+  return formattedDateTime;
+}
+
+function Comments({ comment }) {
   return (
     <Grid item>
       <Card sx={{ maxWidth: "md" }}>
         <CardHeader
           avatar={
-            <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
+            <Avatar sx={{ bgcolor: red[500] }} aria-label="user-avatar">
               R
             </Avatar>
           }
@@ -34,15 +42,12 @@ function Comments() {
               <MoreVertIcon />
             </IconButton>
           }
-          title="Lê Bảo Anh"
-          subheader="September 14, 2016"
+          title={comment.User.name}
+          subheader={formatDateTime(comment.createdAt)}
         />
         <CardContent>
           <Typography variant="body2" color="text.secondary">
-            Công ty thật là tuyệt vời, khi vào thực tập tôi đã nhận được rất
-            nhiều sự giúp đỡ từ các đồng nghiệp, hơn thế nữa mức lương và đã ngộ
-            cực kì hấp dẫn, đáng là 1 nơi để gửi gắm sự nghiệp tương lai của
-            mình vào !
+            {comment.comment}
           </Typography>
         </CardContent>
       </Card>
