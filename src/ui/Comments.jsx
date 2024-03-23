@@ -15,11 +15,14 @@ import ShareIcon from "@mui/icons-material/Share";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import Grid from "@mui/material/Grid";
+import Rating from "@mui/material/Rating";
+import { Title } from "@mui/icons-material";
+import TitleText from "./inputs/TitleText";
 
 function Comments() {
   return (
     <Grid item>
-      <Card sx={{ maxWidth: 345 }}>
+      <Card sx={{ maxWidth: "md" }}>
         <CardHeader
           avatar={
             <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">

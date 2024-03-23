@@ -11,10 +11,19 @@ import {
   IconButton,
   Divider,
 } from "@mui/material";
-import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
+
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import TextField from "@mui/material/TextField";
+
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import SendIcon from "@mui/icons-material/Send";
 import Comments from "../../ui/Comments";
+import MapsHomeWorkIcon from "@mui/icons-material/MapsHomeWork";
+import WcIcon from "@mui/icons-material/Wc";
 
 import { changeCurrency } from "../../utils/helpers";
 import PaidIcon from "@mui/icons-material/Paid";
@@ -23,6 +32,13 @@ import JobList from "./JobList";
 import { useJob } from "./useJob";
 import { isBefore } from "date-fns";
 import TitleText from "../../ui/inputs/TitleText";
+import { useState } from "react";
+
+import Rating from "@mui/material/Rating";
+import CompanySummaryCard from "../companies/CompanySummaryCard";
+import { useAuth } from "../../contexts/AuthContext";
+import { company } from "faker/lib/locales/az";
+import { useCreateComment } from "../comments/userCreateComment";
 
 const images = [
   "https://dxwd4tssreb4w.cloudfront.net/image/cbc2ef0d57c22790520b1a970314cfe9",
@@ -30,9 +46,36 @@ const images = [
   "https://cdn.tgdd.vn/Files/2022/06/10/1438689/cong-viec-lam-them-cho-hoc-sinh-sinh-vien-6_800x450.jpg",
 ];
 
+const initialRatings = {
+  salary_rating: 0,
+  working_space_rating: 0,
+  colleague_relationship_rating: 0,
+};
+
 function JobDetails() {
   const { id } = useParams();
   const { job, isLoading, isError, error } = useJob(id);
+  const [isOpenCommentDialog, setIsOpenCommentDialog] = useState(false);
+  const { currentUser, isAuthenticated, token } = useAuth();
+
+  const { createComment, isCreating } = useCreateComment();
+
+  const [ratings, setRatings] = useState(initialRatings);
+
+  const handleRatingChange = (name, value) => {
+    setRatings((prevRatings) => ({
+      ...prevRatings,
+      [name]: value,
+    }));
+  };
+
+  const handleCommentDialogClickOpen = () => {
+    setIsOpenCommentDialog(true);
+  };
+
+  const handleCommentDialogClickClose = () => {
+    setIsOpenCommentDialog(false);
+  };
 
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>{error.message}</div>;
@@ -89,6 +132,140 @@ function JobDetails() {
                 <IconButton aria-label="bookmarks" size="md">
                   <BookmarkIcon />
                 </IconButton>
+              </Stack>
+
+              <Stack>
+                <Button
+                  color="primary"
+                  variant="outlined"
+                  onClick={handleCommentDialogClickOpen}
+                >
+                  Viết đánh giá về công ty này
+                </Button>
+
+                <Dialog
+                  open={isOpenCommentDialog}
+                  onClose={handleCommentDialogClickClose}
+                  PaperProps={{
+                    component: "form",
+                    onSubmit: (event) => {
+                      event.preventDefault();
+                      const formData = new FormData(event.currentTarget);
+                      const formJson = Object.fromEntries(formData.entries());
+                      const comment = formJson.comment;
+                      setRatings(initialRatings);
+
+                      const commentObject = {
+                        ...ratings,
+                        comment,
+                        user_id: currentUser.id,
+                        company_id: job.company_id,
+                        token,
+                      };
+
+                      createComment(commentObject);
+                      handleCommentDialogClickClose();
+                    },
+                  }}
+                >
+                  <DialogTitle>
+                    <TitleText variant="h5">Đánh giá công ty</TitleText>
+                  </DialogTitle>
+                  <DialogContent>
+                    <DialogContentText>
+                      Để lại đánh giá bình luận của bản thân về công ty này và
+                      đánh giá chất lượng không gian làm việc, chế độ lương
+                      thưởng và nhân sự trong công ty
+                    </DialogContentText>
+                    <Grid
+                      container
+                      mt={2}
+                      alignItems="center"
+                      justifyContent="space-between"
+                    >
+                      <Chip
+                        icon={<PaidIcon />}
+                        label="Đánh giá lương thưởng"
+                        size="large"
+                        variant="outlined"
+                        color="primary"
+                      />
+                      <Rating
+                        value={ratings.salary_rating}
+                        onChange={(event, newValue) =>
+                          handleRatingChange("salary_rating", newValue)
+                        }
+                        name="salary_rating"
+                        label="Đánh giá lương thưởng"
+                      />
+                    </Grid>
+
+                    <Grid
+                      container
+                      mt={2}
+                      alignItems="center"
+                      justifyContent="space-between"
+                    >
+                      <Chip
+                        icon={<MapsHomeWorkIcon />}
+                        label="Đánh giá không gian làm việc"
+                        size="large"
+                        variant="outlined"
+                        color="primary"
+                      />
+                      <Rating
+                        value={ratings.working_space_rating}
+                        onChange={(event, newValue) =>
+                          handleRatingChange("working_space_rating", newValue)
+                        }
+                        name="working_space_rating"
+                        label="Đánh giá không gian làm việc"
+                      />
+                    </Grid>
+
+                    <Grid
+                      container
+                      mt={2}
+                      alignItems="center"
+                      justifyContent="space-between"
+                    >
+                      <Chip
+                        icon={<WcIcon />}
+                        label="Đánh giá mối quan hệ với đồng nghiệp"
+                        size="large"
+                        variant="outlined"
+                        color="primary"
+                      />
+                      <Rating
+                        value={ratings.colleague_relationship_rating}
+                        onChange={(event, newValue) =>
+                          handleRatingChange(
+                            "colleague_relationship_rating",
+                            newValue
+                          )
+                        }
+                        name="colleague_relationship_rating"
+                        label="Đánh giá mối quan hệ với đồng nghiệp"
+                      />
+                    </Grid>
+                    <TextField
+                      fullWidth
+                      multiline
+                      rows={4}
+                      label="Bình luận"
+                      variant="outlined"
+                      margin="dense"
+                      required
+                      name="comment"
+                      id="comment"
+                      sx={{ mt: 3 }}
+                    />
+                  </DialogContent>
+                  <DialogActions>
+                    <Button onClick={handleCommentDialogClickClose}>Hủy</Button>
+                    <Button type="submit">Đánh giá ngay</Button>
+                  </DialogActions>
+                </Dialog>
               </Stack>
             </Grid>
             {/* For images */}
@@ -171,7 +348,7 @@ function JobDetails() {
             textAlign="center"
             color="primary"
           >
-            Công việc liên quan
+            Các công việc khác
           </Typography>
 
           <Grid item container gap="10px">
@@ -182,13 +359,19 @@ function JobDetails() {
         <Divider orientation="vertical" flexItem></Divider>
 
         <Grid item xs={12} md={3}>
-          <Grid item container direction="column" gap={2}></Grid>
+          <CompanySummaryCard></CompanySummaryCard>
 
           <Divider>
-            <Typography variant="h5">Bình luận</Typography>
+            <TitleText variant="h5">Bình luận</TitleText>
           </Divider>
 
-          <Grid item container direction="column" rowGap={2}>
+          <Grid
+            item
+            container
+            direction="column"
+            rowGap={2}
+            alignItems="center"
+          >
             <Comments></Comments>
             <Comments></Comments>
             <Comments></Comments>

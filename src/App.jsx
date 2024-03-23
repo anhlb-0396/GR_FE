@@ -3,6 +3,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { AuthProvider } from "./contexts/AuthContext";
+import { Toaster } from "react-hot-toast";
 
 import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
@@ -46,29 +47,45 @@ function App() {
       <ThemeProvider theme={theme}>
         <QueryClientProvider client={queryClient}>
           <ReactQueryDevtools initialIsOpen={false} />
+          <UserCVProvider>
+            <BrowserRouter>
+              <Routes>
+                <Route element={<AppLayouts></AppLayouts>}>
+                  <Route path="/" element={<Homepage></Homepage>} />
+                  <Route path="/jobs/:id" element={<JobDetails></JobDetails>} />
+                  <Route path="/login" element={<Login></Login>} />
+                  <Route path="/signup" element={<Register></Register>} />
+                  <Route
+                    path="/users/cv"
+                    element={<Resume profile={DATA.profile}></Resume>}
+                  />
+                  <Route
+                    path="/users/cv/create"
+                    element={<Resumepage profile={DATA.profile}></Resumepage>}
+                  />
+                </Route>
+              </Routes>
+            </BrowserRouter>
+          </UserCVProvider>
 
-          <BrowserRouter>
-            <Routes>
-              <Route element={<AppLayouts></AppLayouts>}>
-                <Route path="/" element={<Homepage></Homepage>} />
-                <Route path="/jobs/:id" element={<JobDetails></JobDetails>} />
-                <Route path="/login" element={<Login></Login>} />
-                <Route path="/signup" element={<Register></Register>} />
-                <Route
-                  path="/users/cv"
-                  element={<Resume profile={DATA.profile}></Resume>}
-                />
-                <Route
-                  path="/users/cv/create"
-                  element={
-                    <UserCVProvider>
-                      <Resumepage profile={DATA.profile}></Resumepage>
-                    </UserCVProvider>
-                  }
-                />
-              </Route>
-            </Routes>
-          </BrowserRouter>
+          <Toaster
+            position="top-center"
+            gutter={12}
+            containerStyle={{ margin: "8px" }}
+            toastOptions={{
+              success: {
+                duration: 3000,
+              },
+              error: {
+                duration: 5000,
+              },
+              style: {
+                fontSize: "16px",
+                maxWidth: "500px",
+                padding: "16px 24px",
+              },
+            }}
+          />
         </QueryClientProvider>
       </ThemeProvider>
     </AuthProvider>
