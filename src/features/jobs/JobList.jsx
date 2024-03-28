@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import { Grid } from "@mui/material";
-// import { Oval } from "react-loader-spinner";
+import { Grid, Box, Alert, CircularProgress } from "@mui/material";
 import JobItem from "./JobItem";
 import AppPagination from "../../ui/AppPagination";
 import { useJobsQuery } from "./useJobsQuery";
@@ -23,7 +22,7 @@ function JobList() {
     .map((el) => el.join("="))
     .join("&");
 
-  const { jobs, isLoading, isError, error, refetch } = useJobsQuery(
+  const { jobs, isLoading, isError, refetch, isFetching } = useJobsQuery(
     queryString || ""
   );
   const [currentPage, setCurrentPage] = useState(1);
@@ -45,16 +44,17 @@ function JobList() {
     setCurrentPage(value);
   };
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
   if (isError) {
-    return <div>CANNOT GET DATA</div>;
+    return (
+      <Box>
+        <Alert severity="error">Không tìm thấy công ty phù hợp</Alert>
+      </Box>
+    );
   }
 
   return (
     <Grid container spacing={2} rowGap={4} margin="10px auto">
+      {isFetching && <CircularProgress></CircularProgress>}
       {paginatedJobs.map((job) => (
         <JobItem job={job} key={job.id}></JobItem>
       ))}

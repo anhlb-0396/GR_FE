@@ -1,44 +1,158 @@
-import * as React from "react";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import SubdirectoryArrowRightIcon from "@mui/icons-material/SubdirectoryArrowRight";
+import Avatar from "@mui/material/Avatar";
+import { Link } from "react-router-dom";
+import Rating from "@mui/material/Rating";
+import Box from "@mui/material/Box";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
+import MailIcon from "@mui/icons-material/Mail";
+import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
+import PublicIcon from "@mui/icons-material/Public";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
 
 function CompanySummaryCard({ company }) {
+  console.log(company);
+
   return (
     <Card sx={{ width: "100%" }}>
-      <CardMedia
-        sx={{ width: "100%", height: "100px", objectFit: "cover" }}
-        title="green iguana"
-        image="https://cdn-new.topcv.vn/unsafe/140x/filters:format(webp)/https://static.topcv.vn/company_logos/cong-ty-co-phan-chung-khoan-vps-5ff1a3dc0a075.jpg"
+      <Avatar
+        alt={company?.name}
+        src={company?.logo}
+        sx={{
+          width: "100%",
+          height: "auto",
+          objectFit: "cover",
+          borderRadius: "8px",
+        }}
+        variant="rounded"
       />
+
       <CardContent>
-        <Typography gutterBottom variant="h4" component="div">
-          Lizard
-        </Typography>
-        <Typography gutterBottom variant="h5" component="div">
-          Lizard
+        <Typography gutterBottom variant="h5" color="text.secondary">
+          {company?.name}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          Lizards are a widespread group of squamate reptiles, with over 6,000
-          species, ranging across all continents except Antarctica
+          {company?.industry}
+        </Typography>
+        <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+          <Box display="flex" alignItems="center">
+            <LocationOnIcon sx={{ mr: 1 }} />
+            {company?.location}
+          </Box>
+        </Typography>
+        <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+          <Box display="flex" alignItems="center">
+            <PublicIcon sx={{ mr: 1 }} />
+            {company?.country}
+          </Box>
+        </Typography>
+        <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+          <Box display="flex" alignItems="center">
+            <MailIcon sx={{ mr: 1 }} />
+            {company?.contact_mail}
+          </Box>
+        </Typography>
+        <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+          <Box display="flex" alignItems="center">
+            <PeopleAltIcon sx={{ mr: 1 }} />
+            {company?.employees} nhân viên
+          </Box>
         </Typography>
 
-        <Typography variant="body2" color="text.secondary">
-          Lizards are a widespread group of squamate reptiles, with over 6,000
-          species, ranging across all continents except Antarctica
+        <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+          <Box display="flex" alignItems="center">
+            <AccessTimeIcon sx={{ mr: 1 }} />
+            Thời gian làm việc: Từ thứ {company?.start_week_day} đến{" "}
+            {company?.end_week_day <= 7
+              ? `thứ ${company?.end_week_day}`
+              : "Chủ nhật"}
+          </Box>
         </Typography>
+        <Box
+          display="flex"
+          alignItems="center"
+          sx={{ mt: 1 }}
+          justifyContent="space-between"
+        >
+          <Typography variant="body2" color="text.secondary">
+            Đánh giá trung bình:
+          </Typography>
+          <Rating
+            name="averageRating"
+            value={company?.average_rating}
+            precision={0.5}
+            readOnly
+            sx={{ ml: 1 }}
+          />
+        </Box>
 
-        <Typography variant="body2" color="text.secondary">
-          Lizards are a widespread group of squamate reptiles, with over 6,000
-          species, ranging across all continents except Antarctica
-        </Typography>
+        <Box
+          display="flex"
+          alignItems="center"
+          sx={{ mt: 1 }}
+          justifyContent="space-between"
+        >
+          <Typography variant="body2" color="text.secondary">
+            Lương thưởng đãi ngộ:
+          </Typography>
+          <Rating
+            name="averageRating"
+            value={company?.average_salary_rating}
+            precision={0.5}
+            readOnly
+            sx={{ ml: 1 }}
+          />
+        </Box>
+
+        <Box
+          display="flex"
+          alignItems="center"
+          sx={{ mt: 1 }}
+          justifyContent="space-between"
+        >
+          <Typography variant="body2" color="text.secondary">
+            Môi trường làm việc:
+          </Typography>
+          <Rating
+            name="averageRating"
+            value={company?.average_working_space_rating}
+            precision={0.5}
+            readOnly
+            sx={{ ml: 1 }}
+          />
+        </Box>
+
+        <Box
+          display="flex"
+          alignItems="center"
+          sx={{ mt: 1 }}
+          justifyContent="space-between"
+        >
+          <Typography variant="body2" color="text.secondary">
+            Nhân sự:
+          </Typography>
+          <Rating
+            name="averageRating"
+            value={company?.average_colleague_rating}
+            precision={0.5}
+            readOnly
+            sx={{ ml: 1 }}
+          />
+        </Box>
       </CardContent>
+
       <CardActions>
-        <Button endIcon={<SubdirectoryArrowRightIcon />}>
+        <Button
+          endIcon={<SubdirectoryArrowRightIcon />}
+          component={Link}
+          to={company.website}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           Đi đến trang web công ty
         </Button>
       </CardActions>

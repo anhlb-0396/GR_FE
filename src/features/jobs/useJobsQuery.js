@@ -6,6 +6,7 @@ export function useJobsQuery(queryString = "") {
     data: jobs,
     isLoading,
     isError,
+    isFetching,
     error,
     refetch,
   } = useQuery({
@@ -13,5 +14,5 @@ export function useJobsQuery(queryString = "") {
     queryFn: () => fetchJobsWithQueries(queryString),
   });
 
-  return { isLoading, isError, error, jobs, refetch };
+  return { isLoading, isError, error, jobs, refetch, isFetching };
 }

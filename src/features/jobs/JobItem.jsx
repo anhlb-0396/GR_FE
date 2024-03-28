@@ -59,8 +59,14 @@ function JobItem({ job }) {
         <Grid item xs={7} md={8}>
           <Grid container rowGap={1}>
             <Grid item xs={12}>
-              <Typography variant="h6">{job.title}</Typography>
-              <Typography variant="caption" fontWeight="400">
+              <Typography variant="h6" color="text.secondary">
+                {job.title}
+              </Typography>
+              <Typography
+                variant="caption"
+                fontWeight="500"
+                color="text.secondary"
+              >
                 {job.Company.name}
               </Typography>
             </Grid>

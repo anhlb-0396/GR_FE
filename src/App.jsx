@@ -18,6 +18,7 @@ import Resume from "./features/resumes/Resume";
 import Login from "./features/authentication/Login";
 import Register from "./features/authentication/Register";
 import Resumepage from "./pages/Resumepage";
+import ProtectedRoute from "./pages/ProtectedRoute";
 import { UserCVProvider } from "./contexts/UserCVContext";
 
 const queryClient = new QueryClient();
@@ -61,7 +62,11 @@ function App() {
                   />
                   <Route
                     path="/users/cv/create"
-                    element={<Resumepage profile={DATA.profile}></Resumepage>}
+                    element={
+                      <ProtectedRoute>
+                        <Resumepage profile={DATA.profile}></Resumepage>
+                      </ProtectedRoute>
+                    }
                   />
                 </Route>
               </Routes>

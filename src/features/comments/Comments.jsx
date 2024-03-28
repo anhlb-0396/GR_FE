@@ -16,8 +16,6 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import Grid from "@mui/material/Grid";
 import Rating from "@mui/material/Rating";
-import { Title } from "@mui/icons-material";
-import TitleText from "../../ui/inputs/TitleText";
 
 import { parseISO, format } from "date-fns";
 
@@ -29,8 +27,8 @@ function formatDateTime(dateTimeStr) {
 
 function Comments({ comment }) {
   return (
-    <Grid item>
-      <Card sx={{ maxWidth: "md" }}>
+    <Grid item container xs={12}>
+      <Card sx={{ width: "100%" }}>
         <CardHeader
           avatar={
             <Avatar sx={{ bgcolor: red[500] }} aria-label="user-avatar">

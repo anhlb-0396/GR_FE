@@ -287,37 +287,65 @@ function JobDetails() {
             </Grid>
             {/* For additional information */}
             <Grid item container direction="column" gap={2}>
-              <Typography variant="h5" fontWeight="bold">
-                Thông tin thêm
-              </Typography>
-              <Typography>
+              <TitleText>Thông tin thêm</TitleText>
+              <Typography color="text.secondary">
                 <strong>Ngành nghề:</strong>
-                <Chip size="small" label={job.industry}></Chip>
+                <Chip
+                  size="small"
+                  label={job.industry}
+                  color="error"
+                  variant="filled"
+                  sx={{ ml: 1, color: "white" }}
+                ></Chip>
               </Typography>
-              <Typography>
+              <Typography color="text.secondary">
                 <strong>Lĩnh vực:</strong>
-                <Chip size="small" label={job.field}></Chip>
+                <Chip
+                  size="small"
+                  label={job.field}
+                  color="error"
+                  variant="filled"
+                  sx={{ ml: 1, color: "white" }}
+                ></Chip>
               </Typography>
-              <Typography>
+              <Typography color="text.secondary">
                 <strong>Kinh nghiệm:</strong>
                 <Chip
                   size="small"
                   label={`${job.working_experience} năm`}
+                  color="error"
+                  variant="filled"
+                  sx={{ ml: 1, color: "white" }}
                 ></Chip>
               </Typography>
-              <Typography>
+              <Typography color="text.secondary">
                 <strong>Phương thức làm việc:</strong>
-                <Chip size="small" label={job.working_method}></Chip>
+                <Chip
+                  size="small"
+                  label={job.working_method}
+                  color="error"
+                  variant="filled"
+                  sx={{ ml: 1, color: "white" }}
+                ></Chip>
               </Typography>
-              <Typography>
+              <Typography color="text.secondary">
                 <strong>Loại hình làm việc:</strong>
-                <Chip size="small" label={job.working_type}></Chip>
+                <Chip
+                  size="small"
+                  label={job.working_type}
+                  color="error"
+                  variant="filled"
+                  sx={{ ml: 1, color: "white" }}
+                ></Chip>
               </Typography>
-              <Typography>
+              <Typography color="text.secondary">
                 <strong>Số lượng tuyển dụng:</strong>
                 <Chip
                   size="small"
                   label={`${job.recruitment_number} nhân viên`}
+                  color="error"
+                  variant="filled"
+                  sx={{ ml: 1, color: "white" }}
                 ></Chip>
               </Typography>
             </Grid>
@@ -362,9 +390,9 @@ function JobDetails() {
         <Divider orientation="vertical" flexItem></Divider>
 
         <Grid item xs={12} md={3}>
-          <CompanySummaryCard></CompanySummaryCard>
+          <CompanySummaryCard company={job.Company}></CompanySummaryCard>
 
-          <Divider>
+          <Divider sx={{ mt: 5, mb: 3 }}>
             <TitleText variant="h5">Bình luận</TitleText>
           </Divider>
 

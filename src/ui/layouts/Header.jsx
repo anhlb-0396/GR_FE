@@ -49,7 +49,7 @@ function ResponsiveAppBar() {
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <TravelExploreIcon
-            sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
+            sx={{ display: { xs: "none", md: "flex", color: "white" }, mr: 1 }}
           />
           <Typography
             variant="h6"
@@ -62,7 +62,7 @@ function ResponsiveAppBar() {
               fontFamily: "monospace",
               fontWeight: 700,
               letterSpacing: ".3rem",
-              color: "inherit",
+              color: "white",
               textDecoration: "none",
             }}
           >
@@ -76,7 +76,7 @@ function ResponsiveAppBar() {
               aria-controls="menu-appbar"
               aria-haspopup="true"
               onClick={handleOpenNavMenu}
-              color="inherit"
+              color="white"
             >
               <MenuIcon />
             </IconButton>
@@ -95,7 +95,7 @@ function ResponsiveAppBar() {
               open={Boolean(anchorElNav)}
               onClose={handleCloseNavMenu}
               sx={{
-                display: { xs: "block", md: "none" },
+                display: { xs: "block", md: "none", color: "white" },
               }}
             >
               {pages.map((page) => (
@@ -104,6 +104,7 @@ function ResponsiveAppBar() {
                     component={Link}
                     to={page.link}
                     textAlign="center"
+                    sx={{ color: "text.primary", textDecoration: "none" }}
                   >
                     {page.title}
                   </Typography>
@@ -112,7 +113,7 @@ function ResponsiveAppBar() {
             </Menu>
           </Box>
           <TravelExploreIcon
-            sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}
+            sx={{ display: { xs: "flex", md: "none", color: "white" }, mr: 1 }}
           />
           <Typography
             variant="h5"
@@ -126,7 +127,7 @@ function ResponsiveAppBar() {
               fontFamily: "monospace",
               fontWeight: 700,
               letterSpacing: ".3rem",
-              color: "inherit",
+              color: "white",
               textDecoration: "none",
             }}
           >

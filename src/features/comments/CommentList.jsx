@@ -1,17 +1,20 @@
-import { Grid, Box } from "@mui/material";
-import CircularProgress from "@mui/material/CircularProgress";
+import { Grid, Box, CircularProgress, Alert } from "@mui/material";
 import Comments from "./Comments";
 import { useComments } from "./useComments";
 
 function CommentList({ companyId }) {
-  const { isLoading, isError, error, comments } = useComments(companyId);
+  const { isLoading, isError, comments } = useComments(companyId);
 
   console.log(comments);
 
   return (
     <Grid item container direction="column" rowGap={2} alignItems="center">
-      {isLoading && <CircularProgress />}
-      {isError && <Box>Error: {error.message}</Box>}
+      {isLoading && <CircularProgress sx={{ mt: "20px" }} />}
+      {isError && (
+        <Box sx={{ mt: "20px" }}>
+          <Alert severity="error">Không có bình luận nào</Alert>
+        </Box>
+      )}
       {comments?.map((comment) => (
         <Comments key={comment.id} comment={comment} />
       ))}
