@@ -8,6 +8,7 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import ControlledTextField from "../../../ui/inputs/ControlledTextField";
 import { useUserCV } from "../../../contexts/UserCVContext";
+import toast from "react-hot-toast";
 
 import PhoneIcon from "@mui/icons-material/Phone";
 import EmailIcon from "@mui/icons-material/Email";
@@ -32,6 +33,7 @@ function Personal() {
 
   const onSubmit = (data) => {
     dispatch({ type: "ADD_INFO", payload: data });
+    toast.success("Đã lưu thông tin cá nhân");
   };
 
   return (

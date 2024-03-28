@@ -8,6 +8,7 @@ import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import HomeRepairServiceIcon from "@mui/icons-material/HomeRepairService";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
+import toast from "react-hot-toast";
 
 import TitleText from "../../../ui/inputs/TitleText";
 import SaveButton from "../../../ui/inputs/SaveButton";
@@ -36,6 +37,7 @@ function Skills() {
 
   const onSubmit = (data) => {
     dispatch({ type: "ADD_SKILLS", payload: data.skills });
+    toast.success("Đã lưu kĩ năng cá nhân");
   };
 
   return (

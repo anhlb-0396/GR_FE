@@ -1,4 +1,5 @@
 import { useForm, useFieldArray } from "react-hook-form";
+import toast from "react-hot-toast";
 import React from "react";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
@@ -38,6 +39,7 @@ function Education() {
 
   const onSubmit = (data) => {
     dispatch({ type: "ADD_EDUCATION", payload: data.education });
+    toast.success("Đã lưu thông tin học vấn");
   };
 
   return (

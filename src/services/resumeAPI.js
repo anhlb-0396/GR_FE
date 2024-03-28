@@ -11,3 +11,13 @@ export async function fetchResumeByUserId(userId) {
 
   return response.data.data.job;
 }
+
+export async function createNewResume(data) {
+  const response = await axios.post(`${BASE_URL}/resumes`, data);
+
+  if (response.data.status >= 400) {
+    throw new Error(response.data.message);
+  }
+
+  return response.data.data.job;
+}

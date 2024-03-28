@@ -1,4 +1,5 @@
 import { useForm, useFieldArray } from "react-hook-form";
+import toast from "react-hot-toast";
 import React from "react";
 
 import Box from "@mui/material/Box";
@@ -38,6 +39,7 @@ function Experiences() {
 
   const onSubmit = (data) => {
     dispatch({ type: "ADD_EXPERIENCES", payload: data.experience });
+    toast.success("Đã lưu kinh nghiệm làm việc");
   };
 
   return (

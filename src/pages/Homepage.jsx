@@ -2,6 +2,7 @@ import JobList from "../features/jobs/JobList";
 import JobSearchInput from "../ui/inputs/JobSearchInput";
 import { Box } from "@mui/material";
 import Chart from "../ui/charts/Chart";
+import CompanyList from "../features/companies/CompanyList";
 
 function Homepage() {
   return (
@@ -9,6 +10,7 @@ function Homepage() {
       <Chart></Chart>
       <JobSearchInput></JobSearchInput>
       <JobList></JobList>
+      <CompanyList></CompanyList>
     </Box>
   );
 }

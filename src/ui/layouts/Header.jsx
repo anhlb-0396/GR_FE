@@ -12,6 +12,9 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import TravelExploreIcon from "@mui/icons-material/TravelExplore";
+import NotificationsIcon from "@mui/icons-material/Notifications";
+import Badge from "@mui/material/Badge";
+import MarkChatUnreadIcon from "@mui/icons-material/MarkChatUnread";
 
 import { Link } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
@@ -149,38 +152,59 @@ function ResponsiveAppBar() {
           </Box>
 
           {isAuthenticated && (
-            <Box sx={{ flexGrow: 0 }}>
-              <Tooltip title="Open settings">
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+            <Box display="flex">
+              <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+                <IconButton sx={{ p: 0, mr: 5 }} size="medium">
+                  <Badge badgeContent={4} color="error">
+                    <MarkChatUnreadIcon />
+                  </Badge>
                 </IconButton>
-              </Tooltip>
-              <Menu
-                sx={{ mt: "45px" }}
-                id="menu-appbar"
-                anchorEl={anchorElUser}
-                anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                open={Boolean(anchorElUser)}
-                onClose={handleCloseUserMenu}
-              >
-                {settings.map((setting) => (
-                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center">{setting}</Typography>
-                  </MenuItem>
-                ))}
+              </Box>
 
-                <MenuItem key={"logout"} onClick={handleLogout}>
-                  <Typography textAlign="center">Đăng xuất</Typography>
-                </MenuItem>
-              </Menu>
+              <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+                <IconButton sx={{ p: 0, mr: 5 }} size="medium">
+                  <Badge badgeContent={4} color="error">
+                    <NotificationsIcon />
+                  </Badge>
+                </IconButton>
+              </Box>
+
+              <Box sx={{ flexGrow: 0 }}>
+                <Tooltip title="Open settings">
+                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                    <Avatar
+                      alt="Remy Sharp"
+                      src="/static/images/avatar/2.jpg"
+                    />
+                  </IconButton>
+                </Tooltip>
+                <Menu
+                  sx={{ mt: "45px" }}
+                  id="menu-appbar"
+                  anchorEl={anchorElUser}
+                  anchorOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  open={Boolean(anchorElUser)}
+                  onClose={handleCloseUserMenu}
+                >
+                  {settings.map((setting) => (
+                    <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                      <Typography textAlign="center">{setting}</Typography>
+                    </MenuItem>
+                  ))}
+
+                  <MenuItem key={"logout"} onClick={handleLogout}>
+                    <Typography textAlign="center">Đăng xuất</Typography>
+                  </MenuItem>
+                </Menu>
+              </Box>
             </Box>
           )}
 

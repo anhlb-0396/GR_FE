@@ -13,6 +13,9 @@ import Personal from "./forms/Personal";
 import Skills from "./forms/Skills";
 import Education from "./forms/Education";
 import Experiences from "./forms/Experiences";
+import { useCreateResume } from "./userCreateResume";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../contexts/AuthContext";
 
 const steps = [
   "Thông tin cá nhân",
@@ -44,10 +47,10 @@ function displayStepContent(step, state) {
 function ResumeStepper() {
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
-
+  const { isCreating, createResume } = useCreateResume();
   const { state, dispatch } = useUserCV();
-
-  console.log(state);
+  const navigate = useNavigate();
+  const { currentUser } = useAuth();
 
   const isStepSkipped = (step) => {
     return skipped.has(step);
@@ -70,6 +73,12 @@ function ResumeStepper() {
 
   const handleReset = () => {
     setActiveStep(0);
+  };
+
+  const handleComplete = () => {
+    const data = state;
+    createResume({ resume: data, user_id: currentUser.id });
+    navigate("/");
   };
 
   return (
@@ -110,9 +119,13 @@ function ResumeStepper() {
             </Button>
             <Box sx={{ flex: "1 1 auto" }} />
 
-            <Button onClick={handleNext}>
-              {activeStep === steps.length - 1 ? "Hoàn tất" : "Tiếp theo"}
-            </Button>
+            {activeStep < steps.length - 1 && (
+              <Button onClick={handleNext}>Tiếp theo</Button>
+            )}
+
+            {activeStep === steps.length - 1 && (
+              <Button onClick={handleComplete}>Hoàn tất</Button>
+            )}
           </Box>
         </>
       )}

@@ -3,44 +3,14 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Avatar from "@mui/material/Avatar";
-import IconButton from "@mui/material/IconButton";
 import Divider from "@mui/material/Divider";
 import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import Button from "@mui/material/Button";
-
-import html2canvas from "html2canvas";
-import jsPDF from "jspdf";
-
-// Local
 import ResumeCard from "./ResumeCard";
 
-// ResumePortfolio: A React component that displays a resume/portfolio.
 export default function Resume({ profile }) {
-  const downloadPDF = () => {
-    const capture = document.querySelector(".download-pdf-container");
-
-    // Adjust the style for better PDF layout
-    capture.style.width = "fit-content";
-    capture.style.padding = "20px";
-
-    html2canvas(capture, { scrollY: -window.scrollY }).then((canvas) => {
-      const imgData = canvas.toDataURL("image/png");
-      const pdf = new jsPDF("p", "mm", "a3");
-      const imgWidth = 210; // A4 width in mm
-      const imgHeight = (canvas.height * imgWidth) / canvas.width; // Calculate A4 height
-
-      pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
-      pdf.save("resume.pdf");
-
-      // Restore the original style after export
-      capture.style.width = "auto";
-      capture.style.padding = "0";
-    });
-  };
-
   return (
     <Box>
       <Grid container spacing={2} className="download-pdf-container">
@@ -185,10 +155,6 @@ export default function Resume({ profile }) {
           </ResumeCard>
         </Grid>
       </Grid>
-
-      <Button variant="contained" onClick={downloadPDF}>
-        DOWNLOAD PDF
-      </Button>
     </Box>
   );
 }

@@ -1,4 +1,5 @@
 import Card from "@mui/material/Card";
+import Grid from "@mui/material/Grid";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
@@ -14,149 +15,148 @@ import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import PublicIcon from "@mui/icons-material/Public";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 
-function CompanySummaryCard({ company }) {
-  console.log(company);
-
+function CompanySummaryCard({ company, xs, md }) {
   return (
-    <Card sx={{ width: "100%" }}>
-      <Avatar
-        alt={company?.name}
-        src={company?.logo}
-        sx={{
-          width: "100%",
-          height: "auto",
-          objectFit: "cover",
-          borderRadius: "8px",
-        }}
-        variant="rounded"
-      />
+    <Grid container item xs={xs} md={md}>
+      <Card sx={{ width: "100%" }}>
+        <Avatar
+          alt={company?.name}
+          src={company?.logo}
+          sx={{
+            width: "100%",
+            height: "190px",
+            objectFit: "cover",
+          }}
+          variant="rounded"
+        />
 
-      <CardContent>
-        <Typography gutterBottom variant="h5" color="text.secondary">
-          {company?.name}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          {company?.industry}
-        </Typography>
-        <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
-          <Box display="flex" alignItems="center">
-            <LocationOnIcon sx={{ mr: 1 }} />
-            {company?.location}
-          </Box>
-        </Typography>
-        <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
-          <Box display="flex" alignItems="center">
-            <PublicIcon sx={{ mr: 1 }} />
-            {company?.country}
-          </Box>
-        </Typography>
-        <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
-          <Box display="flex" alignItems="center">
-            <MailIcon sx={{ mr: 1 }} />
-            {company?.contact_mail}
-          </Box>
-        </Typography>
-        <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
-          <Box display="flex" alignItems="center">
-            <PeopleAltIcon sx={{ mr: 1 }} />
-            {company?.employees} nhân viên
-          </Box>
-        </Typography>
-
-        <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
-          <Box display="flex" alignItems="center">
-            <AccessTimeIcon sx={{ mr: 1 }} />
-            Thời gian làm việc: Từ thứ {company?.start_week_day} đến{" "}
-            {company?.end_week_day <= 7
-              ? `thứ ${company?.end_week_day}`
-              : "Chủ nhật"}
-          </Box>
-        </Typography>
-        <Box
-          display="flex"
-          alignItems="center"
-          sx={{ mt: 1 }}
-          justifyContent="space-between"
-        >
-          <Typography variant="body2" color="text.secondary">
-            Đánh giá trung bình:
+        <CardContent>
+          <Typography gutterBottom variant="h5" color="text.secondary">
+            {company?.name}
           </Typography>
-          <Rating
-            name="averageRating"
-            value={company?.average_rating}
-            precision={0.5}
-            readOnly
-            sx={{ ml: 1 }}
-          />
-        </Box>
-
-        <Box
-          display="flex"
-          alignItems="center"
-          sx={{ mt: 1 }}
-          justifyContent="space-between"
-        >
           <Typography variant="body2" color="text.secondary">
-            Lương thưởng đãi ngộ:
+            {company?.industry}
           </Typography>
-          <Rating
-            name="averageRating"
-            value={company?.average_salary_rating}
-            precision={0.5}
-            readOnly
-            sx={{ ml: 1 }}
-          />
-        </Box>
-
-        <Box
-          display="flex"
-          alignItems="center"
-          sx={{ mt: 1 }}
-          justifyContent="space-between"
-        >
-          <Typography variant="body2" color="text.secondary">
-            Môi trường làm việc:
+          <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+            <Box display="flex" alignItems="center">
+              <LocationOnIcon sx={{ mr: 1 }} />
+              {company?.location}
+            </Box>
           </Typography>
-          <Rating
-            name="averageRating"
-            value={company?.average_working_space_rating}
-            precision={0.5}
-            readOnly
-            sx={{ ml: 1 }}
-          />
-        </Box>
-
-        <Box
-          display="flex"
-          alignItems="center"
-          sx={{ mt: 1 }}
-          justifyContent="space-between"
-        >
-          <Typography variant="body2" color="text.secondary">
-            Nhân sự:
+          <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+            <Box display="flex" alignItems="center">
+              <PublicIcon sx={{ mr: 1 }} />
+              {company?.country}
+            </Box>
           </Typography>
-          <Rating
-            name="averageRating"
-            value={company?.average_colleague_rating}
-            precision={0.5}
-            readOnly
-            sx={{ ml: 1 }}
-          />
-        </Box>
-      </CardContent>
+          <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+            <Box display="flex" alignItems="center">
+              <MailIcon sx={{ mr: 1 }} />
+              {company?.contact_mail}
+            </Box>
+          </Typography>
+          <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+            <Box display="flex" alignItems="center">
+              <PeopleAltIcon sx={{ mr: 1 }} />
+              {company?.employees} nhân viên
+            </Box>
+          </Typography>
 
-      <CardActions>
-        <Button
-          endIcon={<SubdirectoryArrowRightIcon />}
-          component={Link}
-          to={company.website}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Đi đến trang web công ty
-        </Button>
-      </CardActions>
-    </Card>
+          <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+            <Box display="flex" alignItems="center">
+              <AccessTimeIcon sx={{ mr: 1 }} />
+              Thời gian làm việc: Từ thứ {company?.start_week_day} đến{" "}
+              {company?.end_week_day <= 7
+                ? `thứ ${company?.end_week_day}`
+                : "Chủ nhật"}
+            </Box>
+          </Typography>
+          <Box
+            display="flex"
+            alignItems="center"
+            sx={{ mt: 1 }}
+            justifyContent="space-between"
+          >
+            <Typography variant="body2" color="text.secondary">
+              Đánh giá trung bình:
+            </Typography>
+            <Rating
+              name="averageRating"
+              value={company?.average_rating}
+              precision={0.5}
+              readOnly
+              sx={{ ml: 1 }}
+            />
+          </Box>
+
+          <Box
+            display="flex"
+            alignItems="center"
+            sx={{ mt: 1 }}
+            justifyContent="space-between"
+          >
+            <Typography variant="body2" color="text.secondary">
+              Lương thưởng đãi ngộ:
+            </Typography>
+            <Rating
+              name="averageRating"
+              value={company?.average_salary_rating}
+              precision={0.5}
+              readOnly
+              sx={{ ml: 1 }}
+            />
+          </Box>
+
+          <Box
+            display="flex"
+            alignItems="center"
+            sx={{ mt: 1 }}
+            justifyContent="space-between"
+          >
+            <Typography variant="body2" color="text.secondary">
+              Môi trường làm việc:
+            </Typography>
+            <Rating
+              name="averageRating"
+              value={company?.average_working_space_rating}
+              precision={0.5}
+              readOnly
+              sx={{ ml: 1 }}
+            />
+          </Box>
+
+          <Box
+            display="flex"
+            alignItems="center"
+            sx={{ mt: 1 }}
+            justifyContent="space-between"
+          >
+            <Typography variant="body2" color="text.secondary">
+              Nhân sự:
+            </Typography>
+            <Rating
+              name="averageRating"
+              value={company?.average_colleague_rating}
+              precision={0.5}
+              readOnly
+              sx={{ ml: 1 }}
+            />
+          </Box>
+        </CardContent>
+
+        <CardActions>
+          <Button
+            endIcon={<SubdirectoryArrowRightIcon />}
+            component={Link}
+            to={company.website}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Đi đến trang web công ty
+          </Button>
+        </CardActions>
+      </Card>
+    </Grid>
   );
 }
 
