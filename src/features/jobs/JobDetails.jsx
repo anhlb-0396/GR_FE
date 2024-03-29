@@ -10,6 +10,7 @@ import {
   Stack,
   IconButton,
   Divider,
+  Alert,
 } from "@mui/material";
 
 import Dialog from "@mui/material/Dialog";
@@ -19,11 +20,9 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import TextField from "@mui/material/TextField";
 import CircularProgress from "@mui/material/CircularProgress";
-import { Alert } from "@mui/material";
 
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import SendIcon from "@mui/icons-material/Send";
-import Comments from "../comments/Comments";
 import MapsHomeWorkIcon from "@mui/icons-material/MapsHomeWork";
 import WcIcon from "@mui/icons-material/Wc";
 
@@ -39,9 +38,10 @@ import { useState } from "react";
 import Rating from "@mui/material/Rating";
 import CompanySummaryCard from "../companies/CompanySummaryCard";
 import { useAuth } from "../../contexts/AuthContext";
-import { company } from "faker/lib/locales/az";
 import { useCreateComment } from "../comments/userCreateComment";
 import CommentList from "../comments/CommentList";
+import { toast } from "react-hot-toast";
+import Bookmark from "../bookmarks/Bookmark";
 
 const images = [
   "https://dxwd4tssreb4w.cloudfront.net/image/cbc2ef0d57c22790520b1a970314cfe9",
@@ -57,12 +57,10 @@ const initialRatings = {
 
 function JobDetails() {
   const { id } = useParams();
-  const { job, isLoading, isError, error } = useJob(id);
+  const { job, isLoading, isError } = useJob(id);
   const [isOpenCommentDialog, setIsOpenCommentDialog] = useState(false);
-  const { currentUser, token } = useAuth();
-
+  const { currentUser, token, isAuthenticated } = useAuth();
   const { createComment, isCreating } = useCreateComment();
-
   const [ratings, setRatings] = useState(initialRatings);
 
   const handleRatingChange = (name, value) => {
@@ -78,6 +76,13 @@ function JobDetails() {
 
   const handleCommentDialogClickClose = () => {
     setIsOpenCommentDialog(false);
+  };
+
+  const handleNotLoginBookmark = () => {
+    if (!isAuthenticated) {
+      toast.error("Vui lòng đăng nhập để lưu công việc này!!!");
+      return;
+    }
   };
 
   if (isLoading) {
@@ -153,9 +158,20 @@ function JobDetails() {
                   Ứng tuyển ngay
                 </Button>
 
-                <IconButton aria-label="bookmarks" size="md">
-                  <BookmarkIcon />
-                </IconButton>
+                {!isAuthenticated && (
+                  <IconButton>
+                    <BookmarkIcon onClick={handleNotLoginBookmark} />
+                  </IconButton>
+                )}
+
+                {isAuthenticated && (
+                  <Bookmark
+                    job={job}
+                    currentUser={currentUser}
+                    token={token}
+                    isAuthenticated={isAuthenticated}
+                  ></Bookmark>
+                )}
               </Stack>
 
               <Stack>

@@ -4,8 +4,7 @@ import { useComments } from "./useComments";
 
 function CommentList({ companyId }) {
   const { isLoading, isError, comments } = useComments(companyId);
-
-  console.log(comments);
+  // console.log(comments);
 
   return (
     <Grid item container direction="column" rowGap={2} alignItems="center">

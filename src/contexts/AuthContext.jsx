@@ -1,6 +1,7 @@
 import axios from "axios";
 import { createContext, useContext } from "react";
 import { useLocalStorageState } from "../hooks/useLocalStorageState";
+import { toast } from "react-hot-toast";
 
 const BASE_URL = "http://localhost:3001/api/users";
 
@@ -28,6 +29,7 @@ function AuthProvider({ children }) {
 
       setCurrentUser(response.data.data.currentUser);
       setToken(response.data.token);
+      toast.success("Đăng nhập thành công");
     } catch (error) {
       console.error(error);
     }
@@ -48,6 +50,7 @@ function AuthProvider({ children }) {
 
       setCurrentUser(response.data.data.currentUser);
       setToken(response.data.token);
+      toast.success("Đăng ký thành công");
     } catch (error) {
       console.error(error);
     }
@@ -56,6 +59,7 @@ function AuthProvider({ children }) {
   const handleLogout = () => {
     setCurrentUser(null);
     setToken(null);
+    toast.success("Đăng xuất thành công");
   };
 
   return (

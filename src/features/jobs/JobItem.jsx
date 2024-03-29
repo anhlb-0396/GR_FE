@@ -1,5 +1,9 @@
 import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
+import { changeCurrency } from "../../utils/helpers";
+import { useAuth } from "../../contexts/AuthContext";
+import Bookmark from "../bookmarks/Bookmark";
+import { toast } from "react-hot-toast";
 
 import {
   Grid,
@@ -24,10 +28,14 @@ import {
   Paid as PaidIcon,
 } from "@mui/icons-material";
 
-import { changeCurrency } from "../../utils/helpers";
-
 function JobItem({ job }) {
   const navigate = useNavigate();
+  const { currentUser, isAuthenticated, token } = useAuth();
+
+  const handleNotLoginBookmark = () => {
+    toast.error("Vui lòng đăng nhập để lưu công việc");
+    navigate("/login", { state: { from: "/" } });
+  };
 
   return (
     <Paper elevation={3} sx={{ borderRadius: "8px", p: "1rem", m: "0 auto" }}>
@@ -130,9 +138,20 @@ function JobItem({ job }) {
             alignItems="flex-end"
             sx={{ width: "100%", p: 0 }}
           >
-            <IconButton aria-label="bookmarks" size="small" color="error">
-              <BookmarkIcon />
-            </IconButton>
+            {!isAuthenticated && (
+              <IconButton onClick={handleNotLoginBookmark}>
+                <BookmarkIcon />
+              </IconButton>
+            )}
+
+            {isAuthenticated && (
+              <Bookmark
+                job={job}
+                currentUser={currentUser}
+                token={token}
+                isAuthenticated={isAuthenticated}
+              ></Bookmark>
+            )}
 
             <Chip
               icon={<AccessTimeFilledIcon />}

@@ -28,7 +28,7 @@ function ResponsiveAppBar() {
 
   const pages = [
     { title: "Tạo CV", link: "/users/cv/create" },
-    { title: "Xem CV", link: `/users/${currentUser.id}/cv` },
+    { title: "Xem CV", link: `/users/${currentUser?.id}/cv` },
     { title: "Tìm việc làm", link: "/" },
     { title: "Đánh giá", link: "/" },
   ];
