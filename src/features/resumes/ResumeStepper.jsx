@@ -7,7 +7,6 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Resume from "./Resume";
 
-import DATA from "./TEMPLATE";
 import { useUserCV } from "../../contexts/UserCVContext";
 import Personal from "./forms/Personal";
 import Skills from "./forms/Skills";
@@ -48,7 +47,7 @@ function ResumeStepper() {
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
   const { isCreating, createResume } = useCreateResume();
-  const { state, dispatch } = useUserCV();
+  const { state } = useUserCV();
   const navigate = useNavigate();
   const { currentUser } = useAuth();
 
@@ -84,7 +83,7 @@ function ResumeStepper() {
   return (
     <Box sx={{ width: "100%", mt: "4rem" }}>
       <Stepper activeStep={activeStep}>
-        {steps.map((label, index) => {
+        {steps.map((label) => {
           const stepProps = {};
           const labelProps = {};
 
@@ -124,7 +123,9 @@ function ResumeStepper() {
             )}
 
             {activeStep === steps.length - 1 && (
-              <Button onClick={handleComplete}>Hoàn tất</Button>
+              <Button onClick={handleComplete} disabled={isCreating}>
+                Hoàn tất
+              </Button>
             )}
           </Box>
         </>

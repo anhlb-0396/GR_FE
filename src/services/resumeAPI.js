@@ -9,7 +9,7 @@ export async function fetchResumeByUserId(userId) {
     throw new Error(response.data.message);
   }
 
-  return response.data.data.job;
+  return response.data.data.resume;
 }
 
 export async function createNewResume(data) {

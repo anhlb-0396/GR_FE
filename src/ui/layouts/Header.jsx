@@ -19,18 +19,19 @@ import MarkChatUnreadIcon from "@mui/icons-material/MarkChatUnread";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 
-const pages = [
-  { title: "Tạo CV", link: "/users/cv/create" },
-  { title: "Xem CV", link: "/users/cv" },
-  { title: "Tìm việc làm", link: "/" },
-  { title: "Đánh giá", link: "/" },
-];
 const settings = ["Profile", "Account", "Dashboard"];
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const { currentUser, isAuthenticated, handleLogout } = useAuth();
+
+  const pages = [
+    { title: "Tạo CV", link: "/users/cv/create" },
+    { title: "Xem CV", link: `/users/${currentUser.id}/cv` },
+    { title: "Tìm việc làm", link: "/" },
+    { title: "Đánh giá", link: "/" },
+  ];
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);

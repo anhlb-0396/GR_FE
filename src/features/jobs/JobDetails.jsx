@@ -18,6 +18,8 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import TextField from "@mui/material/TextField";
+import CircularProgress from "@mui/material/CircularProgress";
+import { Alert } from "@mui/material";
 
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import SendIcon from "@mui/icons-material/Send";
@@ -78,8 +80,29 @@ function JobDetails() {
     setIsOpenCommentDialog(false);
   };
 
-  if (isLoading) return <div>Loading...</div>;
-  if (isError) return <div>{error.message}</div>;
+  if (isLoading) {
+    return (
+      <Box
+        sx={{
+          width: "100%",
+          height: "50vh",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <CircularProgress size={80} />
+      </Box>
+    );
+  }
+
+  if (isError) {
+    return (
+      <Box sx={{ width: "80%", margin: "0 auto" }}>
+        <Alert severity="error">Không có dữ liệu nào về công việc này!!!</Alert>
+      </Box>
+    );
+  }
 
   return (
     <Box sx={{ width: "90%", margin: "0 auto" }}>
