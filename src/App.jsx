@@ -21,6 +21,7 @@ import ResumeCreatePage from "./pages/ResumeCreatePage";
 
 import { UserCVProvider } from "./contexts/UserCVContext";
 import ResumeDisplayPage from "./pages/ResumeDisplayPage";
+import Dashboard from "../src/features/dashboard/Dashboard";
 
 const queryClient = new QueryClient();
 const theme = createTheme({
@@ -35,10 +36,10 @@ const theme = createTheme({
       main: "rgba(75, 192, 192, 1)",
     },
     warning: {
-      main: "rgba(255, 206, 86, 0.7)",
+      main: "rgba(255, 159, 64, 1)",
     },
     info: {
-      main: "rgba(200, 157, 223, 0.7)",
+      main: "rgba(54, 162, 235, 1)",
     },
   },
 });
@@ -67,6 +68,11 @@ function App() {
                     }
                   />
                 </Route>
+
+                <Route
+                  path="/agent/dashboard"
+                  element={<Dashboard></Dashboard>}
+                ></Route>
               </Routes>
             </BrowserRouter>
           </UserCVProvider>
