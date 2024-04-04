@@ -1,6 +1,5 @@
 import axios from "axios";
-
-const BASE_URL = "http://localhost:3001/api";
+import { BASE_URL } from "../constants/urlConstants";
 
 export async function fetchResumeByUserId(userId) {
   const response = await axios.get(`${BASE_URL}/resumes/${userId}`);
