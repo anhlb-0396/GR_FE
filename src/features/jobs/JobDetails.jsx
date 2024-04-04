@@ -42,6 +42,7 @@ import { useCreateComment } from "../comments/userCreateComment";
 import CommentList from "../comments/CommentList";
 import { toast } from "react-hot-toast";
 import Bookmark from "../bookmarks/Bookmark";
+import Apply from "../applies/Apply";
 
 const images = [
   "https://dxwd4tssreb4w.cloudfront.net/image/cbc2ef0d57c22790520b1a970314cfe9",
@@ -80,7 +81,14 @@ function JobDetails() {
 
   const handleNotLoginBookmark = () => {
     if (!isAuthenticated) {
-      toast.error("Vui lòng đăng nhập để lưu công việc này!!!");
+      toast.error("Vui lòng đăng nhập để lưu công việc này !");
+      return;
+    }
+  };
+
+  const handleNotLoginApply = () => {
+    if (!isAuthenticated) {
+      toast.error("Vui lòng đăng nhập để tham gia ứng tuyển công việc này !");
       return;
     }
   };
@@ -150,13 +158,25 @@ function JobDetails() {
                 flexWrap="wrap"
                 justifyContent="space-between"
               >
-                <Button
-                  startIcon={<SendIcon></SendIcon>}
-                  variant="outlined"
-                  color="primary"
-                >
-                  Ứng tuyển ngay
-                </Button>
+                {!isAuthenticated && (
+                  <Button
+                    startIcon={<SendIcon></SendIcon>}
+                    variant="outlined"
+                    color="primary"
+                    onClick={handleNotLoginApply}
+                  >
+                    Ứng tuyển ngay
+                  </Button>
+                )}
+
+                {isAuthenticated && (
+                  <Apply
+                    job={job}
+                    currentUser={currentUser}
+                    token={token}
+                    isAuthenticated={isAuthenticated}
+                  ></Apply>
+                )}
 
                 {!isAuthenticated && (
                   <IconButton>

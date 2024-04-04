@@ -10,7 +10,6 @@ function Bookmark({ job, currentUser, token, isAuthenticated }) {
   const { bookmarks, isLoading, isError } = useBookmarks(currentUser.id);
 
   if (isLoading) return null;
-
   if (isError) return null;
 
   const isBookmarked = bookmarks.some(

@@ -9,8 +9,6 @@ import CircularProgress from "@mui/material/CircularProgress";
 import { useParams } from "react-router-dom";
 import TitleText from "../ui/inputs/TitleText";
 import Resume from "../features/resumes/Resume";
-
-import DATA from "../features/resumes/TEMPLATE";
 import { useResume } from "../features/resumes/useResume";
 
 function ResumeDisplayPage() {
@@ -39,7 +37,7 @@ function ResumeDisplayPage() {
       }
     });
 
-    pdf.save("download.pdf");
+    pdf.save("resume.pdf");
   };
 
   if (isLoading) {
