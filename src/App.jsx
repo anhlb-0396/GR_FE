@@ -22,6 +22,8 @@ import ResumeCreatePage from "./pages/ResumeCreatePage";
 import { UserCVProvider } from "./contexts/UserCVContext";
 import ResumeDisplayPage from "./pages/ResumeDisplayPage";
 import Dashboard from "../src/features/dashboard/Dashboard";
+import AgentLayouts from "./ui/layouts/AgentLayouts";
+import Orders from "./features/dashboard/Orders";
 
 const queryClient = new QueryClient();
 const theme = createTheme({
@@ -69,10 +71,9 @@ function App() {
                   />
                 </Route>
 
-                <Route
-                  path="/agent/dashboard"
-                  element={<Dashboard></Dashboard>}
-                ></Route>
+                <Route element={<AgentLayouts />}>
+                  <Route path="/agent/dashboard" element={<Orders />} />
+                </Route>
               </Routes>
             </BrowserRouter>
           </UserCVProvider>
@@ -86,7 +87,7 @@ function App() {
                 duration: 3000,
               },
               error: {
-                duration: 5000,
+                duration: 3000,
               },
               style: {
                 fontSize: "16px",
