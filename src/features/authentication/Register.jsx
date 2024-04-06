@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Link as MuiLink } from "@mui/material";
 import {
@@ -24,20 +24,22 @@ function Register() {
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const [isAgent, setIsAgent] = useState(false);
 
   useEffect(() => {
     if (isAuthenticated) navigate("/");
   }, [isAuthenticated, navigate]);
 
   const onSubmit = async (data) => {
-    console.log(data);
     await handleSignup(
       data.email,
       data.password,
       data.confirmPassword,
-      data.name
+      data.name,
+      isAgent ? "agent" : "user"
     );
     navigate("/login");
+    setIsAgent(false);
   };
 
   return (
@@ -160,8 +162,15 @@ function Register() {
           />
 
           <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
+            control={
+              <Checkbox
+                checked={isAgent}
+                onChange={(e) => setIsAgent(e.target.checked)}
+                value="agent"
+                color="primary"
+              />
+            }
+            label="Register as Agent"
           />
 
           <Button

@@ -8,6 +8,8 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import CheckIcon from "@mui/icons-material/Check";
+import CloseIcon from "@mui/icons-material/Close";
 import { useCreateApply } from "./userCreateApply";
 import { useDeleteApply } from "./userDeleteApply";
 import { useApplies } from "./useApplies";
@@ -23,8 +25,6 @@ function Apply({ job, currentUser, token, isAuthenticated }) {
     currentUser.id
   );
   const navigate = useNavigate();
-
-  console.log(applies);
 
   if (isLoading) return null;
   if (isError) return null;
@@ -56,6 +56,10 @@ function Apply({ job, currentUser, token, isAuthenticated }) {
   const isApplied = applies.some(
     (apply) => apply.job_id === job.id && apply.user_id === currentUser.id
   );
+
+  const currentStatus = applies.find(
+    (apply) => apply.job_id === job.id && apply.user_id === currentUser.id
+  )?.status;
 
   const handleApply = () => {
     setOpenDialog(true); // Open the confirmation dialog
@@ -91,15 +95,38 @@ function Apply({ job, currentUser, token, isAuthenticated }) {
 
   return (
     <>
-      <Button
-        startIcon={<SendIcon></SendIcon>}
-        variant="outlined"
-        color={isApplied ? "error" : "primary"}
-        onClick={handleApply}
-        disabled={isCreating || isDeleting}
-      >
-        {isApplied ? "Hủy ứng tuyển" : "Ứng tuyển"}
-      </Button>
+      {(currentStatus === "pending" || !currentStatus) && (
+        <Button
+          startIcon={<SendIcon></SendIcon>}
+          variant="outlined"
+          color={isApplied ? "error" : "primary"}
+          onClick={handleApply}
+          disabled={isCreating || isDeleting}
+        >
+          {isApplied ? "Hủy ứng tuyển" : "Ứng tuyển"}
+        </Button>
+      )}
+      {currentStatus === "accepted" && (
+        <Button
+          startIcon={<CheckIcon />}
+          variant="outlined"
+          color="success"
+          disabled
+        >
+          Đã được chấp nhận
+        </Button>
+      )}
+
+      {currentStatus === "rejected" && (
+        <Button
+          startIcon={<CloseIcon />}
+          variant="outlined"
+          color="error"
+          disabled
+        >
+          Đã bị từ chối
+        </Button>
+      )}
       {/* Confirmation Dialog */}
       <Dialog
         open={openDialog}

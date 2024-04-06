@@ -15,6 +15,7 @@ function AuthProvider({ children }) {
   const [token, setToken] = useLocalStorageState("token", null);
 
   const isAuthenticated = token && currentUser;
+  const isAgent = currentUser?.role === "agent";
 
   const handleLogin = async (gmail, password) => {
     try {
@@ -29,19 +30,27 @@ function AuthProvider({ children }) {
 
       setCurrentUser(response.data.data.currentUser);
       setToken(response.data.token);
+
       toast.success("Đăng nhập thành công");
     } catch (error) {
       console.error(error);
     }
   };
 
-  const handleSignup = async (gmail, password, confirmPassword, name) => {
+  const handleSignup = async (
+    gmail,
+    password,
+    confirmPassword,
+    name,
+    role = "user"
+  ) => {
     try {
       const response = await axios.post(`${BASE_URL}/signup`, {
         gmail,
         password,
         confirmPassword,
         name,
+        role,
       });
 
       if (response.data.status === "error") {
@@ -67,6 +76,7 @@ function AuthProvider({ children }) {
       value={{
         currentUser,
         isAuthenticated,
+        isAgent,
         handleLogin,
         handleLogout,
         token,

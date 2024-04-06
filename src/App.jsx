@@ -23,6 +23,7 @@ import ResumeDisplayPage from "./pages/ResumeDisplayPage";
 import AgentLayouts from "./ui/layouts/AgentLayouts";
 import Orders from "./features/agents/Orders";
 import AppliesTable from "./features/agents/applies/AppliesTable";
+import Unauthorize from "./pages/Unauthorize";
 
 const queryClient = new QueryClient();
 const theme = createTheme({
@@ -47,12 +48,12 @@ const theme = createTheme({
 
 function App() {
   return (
-    <AuthProvider>
-      <ThemeProvider theme={theme}>
-        <QueryClientProvider client={queryClient}>
-          <ReactQueryDevtools initialIsOpen={false} />
-          <UserCVProvider>
-            <BrowserRouter>
+    <ThemeProvider theme={theme}>
+      <QueryClientProvider client={queryClient}>
+        <ReactQueryDevtools initialIsOpen={false} />
+        <BrowserRouter>
+          <AuthProvider>
+            <UserCVProvider>
               <Routes>
                 <Route element={<AppLayouts />}>
                   <Route path="/" element={<Homepage />} />
@@ -72,7 +73,7 @@ function App() {
 
                 <Route
                   element={
-                    <ProtectedRoute>
+                    <ProtectedRoute role="agent">
                       <AgentLayouts />
                     </ProtectedRoute>
                   }
@@ -80,31 +81,33 @@ function App() {
                   <Route path="/agent/dashboard" element={<Orders />} />
                   <Route path="/agent/applies" element={<AppliesTable />} />
                 </Route>
-              </Routes>
-            </BrowserRouter>
-          </UserCVProvider>
 
-          <Toaster
-            position="top-center"
-            gutter={12}
-            containerStyle={{ margin: "8px" }}
-            toastOptions={{
-              success: {
-                duration: 3000,
-              },
-              error: {
-                duration: 3000,
-              },
-              style: {
-                fontSize: "16px",
-                maxWidth: "500px",
-                padding: "16px 24px",
-              },
-            }}
-          />
-        </QueryClientProvider>
-      </ThemeProvider>
-    </AuthProvider>
+                <Route path="/unauthorize" element={<Unauthorize />} />
+              </Routes>
+            </UserCVProvider>
+          </AuthProvider>
+        </BrowserRouter>
+
+        <Toaster
+          position="top-center"
+          gutter={12}
+          containerStyle={{ margin: "8px" }}
+          toastOptions={{
+            success: {
+              duration: 3000,
+            },
+            error: {
+              duration: 3000,
+            },
+            style: {
+              fontSize: "16px",
+              maxWidth: "500px",
+              padding: "16px 24px",
+            },
+          }}
+        />
+      </QueryClientProvider>
+    </ThemeProvider>
   );
 }
 

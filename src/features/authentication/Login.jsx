@@ -17,7 +17,7 @@ import { useAuth } from "../../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 
 function Login() {
-  const { handleLogin, isAuthenticated } = useAuth();
+  const { handleLogin, isAuthenticated, isAgent } = useAuth();
   const navigate = useNavigate();
   const {
     control,
@@ -26,12 +26,17 @@ function Login() {
   } = useForm();
 
   useEffect(() => {
-    if (isAuthenticated) navigate("/");
-  }, [isAuthenticated, navigate]);
+    if (isAuthenticated) {
+      if (isAgent) {
+        navigate("/agent/applies");
+      } else {
+        navigate("/");
+      }
+    }
+  }, [isAuthenticated, navigate, isAgent]);
 
   const onSubmit = async (data) => {
     await handleLogin(data.email, data.password);
-    navigate("/");
   };
 
   return (
