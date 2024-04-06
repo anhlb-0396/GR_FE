@@ -21,7 +21,7 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import {
   mainListItems,
   secondaryListItems,
-} from "../../features/dashboard/listItems";
+} from "../../features/agents/listItems";
 
 function Copyright(props) {
   return (

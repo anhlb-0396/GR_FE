@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { fetchResumeByUserId } from "../../services/resumeAPI";
+import { fetchResumeByUserId } from "../../services/users/resumeAPI";
 
 export function useResume(userId) {
   const {

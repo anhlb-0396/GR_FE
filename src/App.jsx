@@ -13,7 +13,6 @@ import "@fontsource/roboto/700.css";
 import Homepage from "./pages/Homepage";
 import JobDetails from "./features/jobs/JobDetails";
 import AppLayouts from "./ui/layouts/AppLayouts";
-import Resume from "./features/resumes/Resume";
 import Login from "./features/authentication/Login";
 import Register from "./features/authentication/Register";
 import ProtectedRoute from "./pages/ProtectedRoute";
@@ -21,9 +20,9 @@ import ResumeCreatePage from "./pages/ResumeCreatePage";
 
 import { UserCVProvider } from "./contexts/UserCVContext";
 import ResumeDisplayPage from "./pages/ResumeDisplayPage";
-import Dashboard from "../src/features/dashboard/Dashboard";
 import AgentLayouts from "./ui/layouts/AgentLayouts";
-import Orders from "./features/dashboard/Orders";
+import Orders from "./features/agents/Orders";
+import AppliesTable from "./features/agents/applies/AppliesTable";
 
 const queryClient = new QueryClient();
 const theme = createTheme({
@@ -71,8 +70,15 @@ function App() {
                   />
                 </Route>
 
-                <Route element={<AgentLayouts />}>
+                <Route
+                  element={
+                    <ProtectedRoute>
+                      <AgentLayouts />
+                    </ProtectedRoute>
+                  }
+                >
                   <Route path="/agent/dashboard" element={<Orders />} />
+                  <Route path="/agent/applies" element={<AppliesTable />} />
                 </Route>
               </Routes>
             </BrowserRouter>

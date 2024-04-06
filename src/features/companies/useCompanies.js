@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { fetchCompanies } from "../../services/companyAPI";
+import { fetchCompanies } from "../../services/users/companyAPI";
 
 export function useCompanies() {
   const {

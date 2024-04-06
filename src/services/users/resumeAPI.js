@@ -1,5 +1,5 @@
 import axios from "axios";
-import { BASE_URL } from "../constants/urlConstants";
+import { BASE_URL } from "../../constants/urlConstants";
 
 export async function fetchResumeByUserId(userId) {
   const response = await axios.get(`${BASE_URL}/resumes/${userId}`);

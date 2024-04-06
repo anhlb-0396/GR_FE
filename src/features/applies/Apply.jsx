@@ -24,6 +24,8 @@ function Apply({ job, currentUser, token, isAuthenticated }) {
   );
   const navigate = useNavigate();
 
+  console.log(applies);
+
   if (isLoading) return null;
   if (isError) return null;
 

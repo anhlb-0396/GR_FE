@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createApply } from "../../services/applyAPI";
+import { createApply } from "../../services/users/applyAPI";
 import { toast } from "react-hot-toast";
 
 export function useCreateApply(userId) {

@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { fetchApplies } from "../../services/applyAPI";
+import { fetchApplies } from "../../services/users/applyAPI";
 
 export function useApplies(userId) {
   const {

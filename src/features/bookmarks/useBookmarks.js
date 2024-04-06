@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { fetchBookmarks } from "../../services/bookmarkAPI";
+import { fetchBookmarks } from "../../services/users/bookmarkAPI";
 
 export function useBookmarks(userId) {
   const {

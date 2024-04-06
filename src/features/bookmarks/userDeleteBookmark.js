@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { deleteBookmark } from "../../services/bookmarkAPI";
+import { deleteBookmark } from "../../services/users/bookmarkAPI";
 import { toast } from "react-hot-toast";
 
 export function useDeleteBookmark(userId) {

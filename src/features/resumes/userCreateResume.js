@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createNewResume } from "../../services/resumeAPI";
+import { createNewResume } from "../../services/users/resumeAPI";
 import { toast } from "react-hot-toast";
 
 export function useCreateResume() {

@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createCommentOfCompany } from "../../services/commentAPI";
+import { createCommentOfCompany } from "../../services/users/commentAPI";
 import { toast } from "react-hot-toast";
 
 export function useCreateComment() {

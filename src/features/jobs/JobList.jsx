@@ -22,7 +22,7 @@ function JobList() {
     .map((el) => el.join("="))
     .join("&");
 
-  const { jobs, isLoading, isError, refetch, isFetching } = useJobsQuery(
+  const { jobs, isError, refetch, isFetching } = useJobsQuery(
     queryString || ""
   );
   const [currentPage, setCurrentPage] = useState(1);

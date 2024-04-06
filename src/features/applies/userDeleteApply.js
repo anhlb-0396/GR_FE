@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { deleteApply } from "../../services/applyAPI";
+import { deleteApply } from "../../services/users/applyAPI";
 import { toast } from "react-hot-toast";
 
 export function useDeleteApply(userId) {

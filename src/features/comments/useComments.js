@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { fetchCommentsOfCompany } from "../../services/commentAPI";
+import { fetchCommentsOfCompany } from "../../services/users/commentAPI";
 
 export function useComments(companyId) {
   const {
