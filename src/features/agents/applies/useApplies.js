@@ -8,7 +8,7 @@ export function useApplies(companyId) {
     isError,
     error,
   } = useQuery({
-    queryKey: ["agents", "applies", companyId],
+    queryKey: ["companies", "applies", companyId],
     queryFn: () => fetchAppliesOfCompany(companyId),
   });
 

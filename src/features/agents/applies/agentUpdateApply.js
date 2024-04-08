@@ -10,7 +10,7 @@ export function useUpdateApply(companyId) {
     onSuccess: () => {
       toast.success("Thay đổi trạng thái thành công !");
       queryClient.invalidateQueries({
-        queryKey: ["agents", "applies", companyId],
+        queryKey: ["companies", "applies", companyId],
       });
     },
     onError: () => toast.error("Thay đổi trạng thái thất bại !"),

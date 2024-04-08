@@ -27,10 +27,12 @@ import {
   PunchClock as PunchClockIcon,
   Paid as PaidIcon,
 } from "@mui/icons-material";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
 
 function JobItem({ job }) {
   const navigate = useNavigate();
-  const { currentUser, isAuthenticated, token } = useAuth();
+  const { currentUser, isAuthenticated, token, isAgent } = useAuth();
 
   const handleNotLoginBookmark = () => {
     toast.error("Vui lòng đăng nhập để lưu công việc");
@@ -144,7 +146,7 @@ function JobItem({ job }) {
               </IconButton>
             )}
 
-            {isAuthenticated && (
+            {isAuthenticated && !isAgent && (
               <Bookmark
                 job={job}
                 currentUser={currentUser}
@@ -152,6 +154,20 @@ function JobItem({ job }) {
                 isAuthenticated={isAuthenticated}
               ></Bookmark>
             )}
+
+            {isAuthenticated &&
+              isAgent &&
+              currentUser.company_id === job.company_id && (
+                <Stack direction={"row"}>
+                  <IconButton>
+                    <EditIcon />
+                  </IconButton>
+
+                  <IconButton>
+                    <DeleteIcon />
+                  </IconButton>
+                </Stack>
+              )}
 
             <Chip
               icon={<AccessTimeFilledIcon />}
@@ -172,7 +188,7 @@ function JobItem({ job }) {
               }}
               onClick={() => navigate(`/jobs/${job.id}`)}
             >
-              Ứng tuyển
+              Chi tiết
             </Button>
           </Stack>
         </Grid>

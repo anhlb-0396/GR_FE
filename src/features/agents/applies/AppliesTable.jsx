@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import Chip from "@mui/material/Chip";
 import Box from "@mui/material/Box";
@@ -11,6 +11,7 @@ import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
+import Paper from "@mui/material/Paper";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
@@ -88,7 +89,14 @@ export default function AppliesTable() {
     rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
   return (
-    <React.Fragment>
+    <Paper
+      sx={{
+        p: 2,
+        display: "flex",
+        flexDirection: "column",
+        height: "auto",
+      }}
+    >
       <TitleText variant="h5">Danh sách ứng tuyển gần đây</TitleText>
       <Table size="medium" sx={{ mt: 3 }}>
         <TableHead>
@@ -171,6 +179,6 @@ export default function AppliesTable() {
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
-    </React.Fragment>
+    </Paper>
   );
 }

@@ -18,10 +18,7 @@ import Link from "@mui/material/Link";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import NotificationsIcon from "@mui/icons-material/Notifications";
-import {
-  mainListItems,
-  secondaryListItems,
-} from "../../features/agents/listItems";
+import { mainListItems, secondaryListItems } from "./listItems";
 
 function Copyright(props) {
   return (
@@ -166,16 +163,7 @@ export default function AgentLayouts() {
         <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
           <Grid container spacing={3}>
             <Grid item xs={12}>
-              <Paper
-                sx={{
-                  p: 2,
-                  display: "flex",
-                  flexDirection: "column",
-                  height: "auto",
-                }}
-              >
-                <Outlet></Outlet>
-              </Paper>
+              <Outlet></Outlet>
             </Grid>
           </Grid>
           <Copyright sx={{ pt: 4 }} />

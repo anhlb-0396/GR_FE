@@ -21,9 +21,9 @@ import ResumeCreatePage from "./pages/ResumeCreatePage";
 import { UserCVProvider } from "./contexts/UserCVContext";
 import ResumeDisplayPage from "./pages/ResumeDisplayPage";
 import AgentLayouts from "./ui/layouts/AgentLayouts";
-import Orders from "./features/agents/Orders";
 import AppliesTable from "./features/agents/applies/AppliesTable";
 import Unauthorize from "./pages/Unauthorize";
+import JobsOfCompany from "./features/agents/jobs/JobsOfCompany";
 
 const queryClient = new QueryClient();
 const theme = createTheme({
@@ -38,7 +38,7 @@ const theme = createTheme({
       main: "rgba(75, 192, 192, 1)",
     },
     warning: {
-      main: "rgba(255, 159, 64, 1)",
+      main: "rgba(255, 206, 86, 1)",
     },
     info: {
       main: "rgba(54, 162, 235, 1)",
@@ -78,8 +78,9 @@ function App() {
                     </ProtectedRoute>
                   }
                 >
-                  <Route path="/agent/dashboard" element={<Orders />} />
+                  {/* <Route path="/agent/dashboard" element={<Deposits />} /> */}
                   <Route path="/agent/applies" element={<AppliesTable />} />
+                  <Route path="/agent/jobs" element={<JobsOfCompany />} />
                 </Route>
 
                 <Route path="/unauthorize" element={<Unauthorize />} />
