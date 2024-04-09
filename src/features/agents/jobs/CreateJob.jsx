@@ -1,7 +1,12 @@
 import Paper from "@mui/material/Paper";
 import CreateJobForm from "../../../ui/inputs/CreateJobForm";
+import { useCreateJob } from "./agentCreateJob";
+import { useAuth } from "../../../contexts/AuthContext";
 
 function CreateJob() {
+  const { createNewJob, isCreating } = useCreateJob();
+  const { currentUser, token } = useAuth();
+
   return (
     <Paper
       sx={{
@@ -11,7 +16,12 @@ function CreateJob() {
         height: "auto",
       }}
     >
-      <CreateJobForm />
+      <CreateJobForm
+        onSubmit={createNewJob}
+        isCreating={isCreating}
+        currentUser={currentUser}
+        token={token}
+      />
     </Paper>
   );
 }

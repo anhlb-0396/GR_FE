@@ -44,11 +44,11 @@ import { toast } from "react-hot-toast";
 import Bookmark from "../bookmarks/Bookmark";
 import Apply from "../applies/Apply";
 
-const images = [
-  "https://dxwd4tssreb4w.cloudfront.net/image/cbc2ef0d57c22790520b1a970314cfe9",
-  "https://image.luatvietnam.vn/uploaded/twebp/images/original/2023/02/28/chuyen-nguoi-lao-dong-sang-lam-viec-khac_2802091944.png",
-  "https://cdn.tgdd.vn/Files/2022/06/10/1438689/cong-viec-lam-them-cho-hoc-sinh-sinh-vien-6_800x450.jpg",
-];
+// const images = [
+//   "https://dxwd4tssreb4w.cloudfront.net/image/cbc2ef0d57c22790520b1a970314cfe9",
+//   "https://image.luatvietnam.vn/uploaded/twebp/images/original/2023/02/28/chuyen-nguoi-lao-dong-sang-lam-viec-khac_2802091944.png",
+//   "https://cdn.tgdd.vn/Files/2022/06/10/1438689/cong-viec-lam-them-cho-hoc-sinh-sinh-vien-6_800x450.jpg",
+// ];
 
 const initialRatings = {
   salary_rating: 0,
@@ -116,6 +116,8 @@ function JobDetails() {
       </Box>
     );
   }
+
+  // console.log(job);
 
   return (
     <Box sx={{ width: "90%", margin: "0 auto" }}>
@@ -333,10 +335,10 @@ function JobDetails() {
             {/* For images */}
             <Grid item container>
               <ImageList cols={3} rowHeight="auto">
-                {images.map((image, index) => (
+                {job.JobImages.map((data, index) => (
                   <ImageListItem key={index}>
                     <img
-                      src={image}
+                      src={data.image}
                       alt={job.title}
                       style={{ borderRadius: "5px" }}
                     />

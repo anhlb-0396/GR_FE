@@ -34,15 +34,15 @@ const quillFormats = [
   "bullet",
 ];
 
-const CreateJobForm = ({ onSubmit }) => {
+const CreateJobForm = ({ onSubmit, isCreating, currentUser, token }) => {
   const {
     control,
     handleSubmit,
     formState: { errors },
     getValues, // Add getValues from useForm
   } = useForm();
-  const [loading, setLoading] = useState(false);
 
+  const [loading, setLoading] = useState(false);
   const [tags, setTags] = useState([]);
 
   const handleAddTag = (event) => {
@@ -59,11 +59,19 @@ const CreateJobForm = ({ onSubmit }) => {
   };
 
   const handleFormSubmit = async (data) => {
+    // e.preventDefault();
     const formData = { ...data, tags };
     console.log(formData);
+
     setLoading(true);
-    // await onSubmit(data);
+    await onSubmit(formData);
     setLoading(false);
+  };
+
+  const handleFormKeyDown = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault(); // Prevent form submission on Enter key press
+    }
   };
 
   return (
@@ -72,7 +80,10 @@ const CreateJobForm = ({ onSubmit }) => {
         Tạo công việc mới
       </TitleText>
       <Grid container spacing={2} style={{ marginTop: "16px" }}>
-        <form onSubmit={handleSubmit(handleFormSubmit)}>
+        <form
+          onSubmit={handleSubmit(handleFormSubmit)}
+          onKeyDown={handleFormKeyDown}
+        >
           <Controller
             name="title"
             control={control}
