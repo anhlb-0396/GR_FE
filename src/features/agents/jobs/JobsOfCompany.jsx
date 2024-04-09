@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -17,6 +18,7 @@ function JobsOfCompany() {
   const { currentUser, token } = useAuth();
   const { isLoading, isError, jobs } = useJobs(currentUser.company_id);
   const [currentPage, setCurrentPage] = useState(1);
+  const navigate = useNavigate();
 
   if (isLoading) {
     return (
@@ -57,7 +59,11 @@ function JobsOfCompany() {
   return (
     <>
       <TitleText variant="h4">Danh sách công việc đã đăng</TitleText>
-      <Button startIcon={<AddIcon />} variant="outlined">
+      <Button
+        startIcon={<AddIcon />}
+        variant="outlined"
+        onClick={() => navigate("/agent/jobs/create")}
+      >
         Tạo công việc mới
       </Button>
       <Grid container spacing={2} rowGap={4} margin="10px auto" mt={3}>

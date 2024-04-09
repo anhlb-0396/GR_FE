@@ -11,6 +11,5 @@ export function useJobs(companyId) {
     queryKey: ["companies", "jobs", companyId],
     queryFn: () => fetchJobsByCompanyId(companyId),
   });
-
   return { isLoading, isError, error, jobs };
 }

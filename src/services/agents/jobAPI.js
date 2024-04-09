@@ -10,3 +10,16 @@ export async function fetchJobsByCompanyId(companyId) {
 
   return response.data.data.jobs;
 }
+
+export async function createJob(companyId, job) {
+  const response = await axios.post(
+    `${BASE_URL}/companies/${companyId}/jobs`,
+    job
+  );
+
+  if (response.data.status >= 400) {
+    throw new Error(response.data.message);
+  }
+
+  return response.data.data.job;
+}

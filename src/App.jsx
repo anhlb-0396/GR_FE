@@ -24,6 +24,7 @@ import AgentLayouts from "./ui/layouts/AgentLayouts";
 import AppliesTable from "./features/agents/applies/AppliesTable";
 import Unauthorize from "./pages/Unauthorize";
 import JobsOfCompany from "./features/agents/jobs/JobsOfCompany";
+import CreateJob from "./features/agents/jobs/CreateJob";
 
 const queryClient = new QueryClient();
 const theme = createTheme({
@@ -78,9 +79,9 @@ function App() {
                     </ProtectedRoute>
                   }
                 >
-                  {/* <Route path="/agent/dashboard" element={<Deposits />} /> */}
                   <Route path="/agent/applies" element={<AppliesTable />} />
                   <Route path="/agent/jobs" element={<JobsOfCompany />} />
+                  <Route path="/agent/jobs/create" element={<CreateJob />} />
                 </Route>
 
                 <Route path="/unauthorize" element={<Unauthorize />} />
