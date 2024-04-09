@@ -25,6 +25,7 @@ import AppliesTable from "./features/agents/applies/AppliesTable";
 import Unauthorize from "./pages/Unauthorize";
 import JobsOfCompany from "./features/agents/jobs/JobsOfCompany";
 import CreateJob from "./features/agents/jobs/CreateJob";
+import NotFoundPage from "./pages/NotFoundPage";
 
 const queryClient = new QueryClient();
 const theme = createTheme({
@@ -85,6 +86,8 @@ function App() {
                 </Route>
 
                 <Route path="/unauthorize" element={<Unauthorize />} />
+
+                <Route path="*" element={<NotFoundPage />} />
               </Routes>
             </UserCVProvider>
           </AuthProvider>

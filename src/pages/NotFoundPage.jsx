@@ -3,7 +3,7 @@ import { Link as RouterLink } from "react-router-dom";
 import { Container, Typography, Button } from "@mui/material";
 import TitleText from "../ui/inputs/TitleText";
 
-const Unauthorize = () => {
+const NotFoundPage = () => {
   return (
     <Container
       maxWidth="sm"
@@ -16,10 +16,10 @@ const Unauthorize = () => {
       }}
     >
       <TitleText variant="h4" align="center" gutterBottom color="error">
-        403 - Không có quyền truy cập !
+        404 - Không tìm thấy trang !
       </TitleText>
       <TitleText variant="h5" align="center" paragraph>
-        Bạn không có quyền truy cập vào trang này
+        Không tìm thấy trang này
       </TitleText>
       <TitleText variant="body1" align="center" paragraph>
         Quay trở lại trang chủ
@@ -37,4 +37,4 @@ const Unauthorize = () => {
   );
 };
 
-export default Unauthorize;
+export default NotFoundPage;
