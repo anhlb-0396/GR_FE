@@ -26,7 +26,7 @@ export async function createJob(jobDataObject) {
     }
   });
 
-  console.log(formData);
+  // console.log(formData);
 
   const response = await axios.post(`${BASE_URL}/jobs`, formData);
 

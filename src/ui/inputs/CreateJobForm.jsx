@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import {
   TextField,
   Button,
@@ -42,8 +43,8 @@ const CreateJobForm = ({ onSubmit, isCreating, currentUser, token }) => {
     getValues, // Add getValues from useForm
   } = useForm();
 
-  const [loading, setLoading] = useState(false);
   const [tags, setTags] = useState([]);
+  const navigate = useNavigate();
 
   const handleAddTag = (event) => {
     const newTag = event.target.value.trim();
@@ -58,19 +59,20 @@ const CreateJobForm = ({ onSubmit, isCreating, currentUser, token }) => {
     setTags(updatedTags);
   };
 
-  const handleFormSubmit = async (data) => {
-    // e.preventDefault();
-    const formData = { ...data, tags };
-    console.log(formData);
-
-    setLoading(true);
-    await onSubmit(formData);
-    setLoading(false);
+  const handleFormSubmit = (data) => {
+    const formData = {
+      ...data,
+      tags,
+      company_id: currentUser.company_id,
+      token,
+    };
+    onSubmit(formData);
+    navigate("/agent/jobs");
   };
 
   const handleFormKeyDown = (e) => {
     if (e.key === "Enter") {
-      e.preventDefault(); // Prevent form submission on Enter key press
+      e.preventDefault();
     }
   };
 
@@ -106,12 +108,14 @@ const CreateJobForm = ({ onSubmit, isCreating, currentUser, token }) => {
             defaultValue=""
             rules={{ required: "Description is required" }}
             render={({ field }) => (
-              <ReactQuill
-                {...field}
-                modules={quillModules}
-                formats={quillFormats}
-                theme="snow"
-              />
+              <ReactQuill>
+                <ReactQuill
+                  {...field}
+                  modules={quillModules}
+                  formats={quillFormats}
+                  theme="snow"
+                />
+              </ReactQuill>
             )}
           />
           <Controller
@@ -366,10 +370,10 @@ const CreateJobForm = ({ onSubmit, isCreating, currentUser, token }) => {
             type="submit"
             variant="contained"
             color="primary"
-            disabled={loading}
+            disabled={isCreating}
             sx={{ my: "16px" }}
           >
-            {loading ? "Đang tạo ..." : "Tạo"}
+            {isCreating ? "Đang tạo ..." : "Tạo"}
           </Button>
         </form>
       </Grid>
