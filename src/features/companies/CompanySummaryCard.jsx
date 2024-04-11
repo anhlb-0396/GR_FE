@@ -18,13 +18,21 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 function CompanySummaryCard({ company, xs, md }) {
   return (
     <Grid container item xs={xs} md={md}>
-      <Card sx={{ width: "100%" }}>
+      <Card
+        sx={{
+          width: "100%",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between",
+          height: "100%",
+        }}
+      >
         <Avatar
           alt={company?.name}
           src={company?.logo}
           sx={{
             width: "100%",
-            height: "190px",
+            height: "200px",
             objectFit: "cover",
           }}
           variant="rounded"

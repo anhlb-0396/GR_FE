@@ -1,4 +1,5 @@
 import * as React from "react";
+import { Link } from "react-router-dom";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
@@ -20,14 +21,14 @@ export const mainListItems = (
       <ListItemText primary="Doanh nghiệp" />
     </ListItemButton>
 
-    <ListItemButton>
+    <ListItemButton component={Link} to="agent/jobs">
       <ListItemIcon>
         <WorkIcon />
       </ListItemIcon>
       <ListItemText primary="Quản lý công việc" />
     </ListItemButton>
 
-    <ListItemButton>
+    <ListItemButton component={Link} to="agent/applies">
       <ListItemIcon>
         <PeopleIcon />
       </ListItemIcon>

@@ -335,10 +335,10 @@ function JobDetails() {
             {/* For images */}
             <Grid item container>
               <ImageList cols={3} rowHeight="auto">
-                {job.JobImages.map((data, index) => (
-                  <ImageListItem key={index}>
+                {job.handledImages.map((image) => (
+                  <ImageListItem key={image.id}>
                     <img
-                      src={data.image}
+                      src={image.image}
                       alt={job.title}
                       style={{ borderRadius: "5px" }}
                     />

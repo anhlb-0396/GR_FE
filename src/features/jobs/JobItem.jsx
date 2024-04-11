@@ -27,8 +27,8 @@ import {
   PunchClock as PunchClockIcon,
   Paid as PaidIcon,
 } from "@mui/icons-material";
-import DeleteIcon from "@mui/icons-material/Delete";
-import EditIcon from "@mui/icons-material/Edit";
+import DeleteJob from "../agents/jobs/DeleteJob";
+import UpdateJob from "../agents/jobs/UpdateJob";
 
 function JobItem({ job }) {
   const navigate = useNavigate();
@@ -159,13 +159,18 @@ function JobItem({ job }) {
               isAgent &&
               currentUser.company_id === job.company_id && (
                 <Stack direction={"row"}>
-                  <IconButton>
-                    <EditIcon />
-                  </IconButton>
-
-                  <IconButton>
-                    <DeleteIcon />
-                  </IconButton>
+                  <UpdateJob
+                    job={job}
+                    currentUser={currentUser}
+                    token={token}
+                    isAuthenticated={isAuthenticated}
+                  />
+                  <DeleteJob
+                    job={job}
+                    currentUser={currentUser}
+                    token={token}
+                    isAuthenticated={isAuthenticated}
+                  />
                 </Stack>
               )}
 

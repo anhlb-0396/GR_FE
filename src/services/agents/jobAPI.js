@@ -36,3 +36,13 @@ export async function createJob(jobDataObject) {
 
   return response.data.data.job;
 }
+
+export async function deleteJob(jobId) {
+  const response = await axios.delete(`${BASE_URL}/jobs/${jobId}`);
+
+  if (response.data.status >= 400) {
+    throw new Error(response.data.message);
+  }
+
+  return response.data;
+}
