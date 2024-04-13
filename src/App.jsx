@@ -19,6 +19,7 @@ import ProtectedRoute from "./pages/ProtectedRoute";
 import ResumeCreatePage from "./pages/ResumeCreatePage";
 
 import { UserCVProvider } from "./contexts/UserCVContext";
+import { SocketProvider } from "./contexts/SocketContext";
 import ResumeDisplayPage from "./pages/ResumeDisplayPage";
 import AgentLayouts from "./ui/layouts/AgentLayouts";
 import AppliesTable from "./features/agents/applies/AppliesTable";
@@ -26,6 +27,7 @@ import Unauthorize from "./pages/Unauthorize";
 import JobsOfCompany from "./features/agents/jobs/JobsOfCompany";
 import CreateJob from "./features/agents/jobs/CreateJob";
 import NotFoundPage from "./pages/NotFoundPage";
+import UpdateJob from "./features/agents/jobs/UpdateJob";
 
 const queryClient = new QueryClient();
 const theme = createTheme({
@@ -55,41 +57,50 @@ function App() {
         <ReactQueryDevtools initialIsOpen={false} />
         <BrowserRouter>
           <AuthProvider>
-            <UserCVProvider>
-              <Routes>
-                <Route element={<AppLayouts />}>
-                  <Route path="/" element={<Homepage />} />
-                  <Route path="/jobs/:id" element={<JobDetails />} />
-                  <Route path="/login" element={<Login />} />
-                  <Route path="/signup" element={<Register />} />
-                  <Route path="/users/:id/cv" element={<ResumeDisplayPage />} />
+            <SocketProvider>
+              <UserCVProvider>
+                <Routes>
+                  <Route element={<AppLayouts />}>
+                    <Route path="/" element={<Homepage />} />
+                    <Route path="/jobs/:id" element={<JobDetails />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/signup" element={<Register />} />
+                    <Route
+                      path="/users/:id/cv"
+                      element={<ResumeDisplayPage />}
+                    />
+                    <Route
+                      path="/users/cv/create"
+                      element={
+                        <ProtectedRoute>
+                          <ResumeCreatePage />
+                        </ProtectedRoute>
+                      }
+                    />
+                  </Route>
+
                   <Route
-                    path="/users/cv/create"
                     element={
-                      <ProtectedRoute>
-                        <ResumeCreatePage />
+                      <ProtectedRoute role="agent">
+                        <AgentLayouts />
                       </ProtectedRoute>
                     }
-                  />
-                </Route>
+                  >
+                    <Route path="/agent/applies" element={<AppliesTable />} />
+                    <Route path="/agent/jobs" element={<JobsOfCompany />} />
+                    <Route path="/agent/jobs/create" element={<CreateJob />} />
+                    <Route
+                      path="/agent/jobs/:id/update"
+                      element={<UpdateJob />}
+                    />
+                  </Route>
 
-                <Route
-                  element={
-                    <ProtectedRoute role="agent">
-                      <AgentLayouts />
-                    </ProtectedRoute>
-                  }
-                >
-                  <Route path="/agent/applies" element={<AppliesTable />} />
-                  <Route path="/agent/jobs" element={<JobsOfCompany />} />
-                  <Route path="/agent/jobs/create" element={<CreateJob />} />
-                </Route>
+                  <Route path="/unauthorize" element={<Unauthorize />} />
 
-                <Route path="/unauthorize" element={<Unauthorize />} />
-
-                <Route path="*" element={<NotFoundPage />} />
-              </Routes>
-            </UserCVProvider>
+                  <Route path="*" element={<NotFoundPage />} />
+                </Routes>
+              </UserCVProvider>
+            </SocketProvider>
           </AuthProvider>
         </BrowserRouter>
 

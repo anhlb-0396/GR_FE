@@ -26,8 +26,6 @@ export async function createJob(jobDataObject) {
     }
   });
 
-  // console.log(formData);
-
   const response = await axios.post(`${BASE_URL}/jobs`, formData);
 
   if (response.data.status >= 400) {
@@ -45,4 +43,28 @@ export async function deleteJob(jobId) {
   }
 
   return response.data;
+}
+
+export async function updateJob(jobId, jobDataObject) {
+  const formData = new FormData();
+
+  // Append form fields to the FormData object
+  Object.entries(jobDataObject).forEach(([key, value]) => {
+    // If the field is 'images', append each image file
+    if (key === "images") {
+      for (let i = 0; i < value.length; i++) {
+        formData.append("images", value[i]);
+      }
+    } else {
+      formData.append(key, value);
+    }
+  });
+
+  const response = await axios.put(`${BASE_URL}/jobs/${jobId}`, formData);
+
+  if (response.data.status >= 400) {
+    throw new Error(response.data.message);
+  }
+
+  return response.data.data.job;
 }

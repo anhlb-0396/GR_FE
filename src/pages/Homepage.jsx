@@ -1,5 +1,5 @@
 import JobList from "../features/jobs/JobList";
-import JobSearchInput from "../ui/inputs/JobSearchInput";
+import JobSearchInput from "../ui/inputs/jobs/JobSearchInput";
 import { Box } from "@mui/material";
 import Chart from "../ui/charts/Chart";
 import CompanyList from "../features/companies/CompanyList";

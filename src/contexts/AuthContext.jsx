@@ -2,8 +2,9 @@ import axios from "axios";
 import { createContext, useContext } from "react";
 import { useLocalStorageState } from "../hooks/useLocalStorageState";
 import { toast } from "react-hot-toast";
+import { BASE_URL as ROOT_URL } from "../constants/urlConstants";
 
-const BASE_URL = "http://localhost:3001/api/users";
+const BASE_URL = `${ROOT_URL}/users`;
 
 const AuthContext = createContext();
 

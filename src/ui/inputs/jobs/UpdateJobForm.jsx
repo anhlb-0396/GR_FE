@@ -9,7 +9,7 @@ import {
   MenuItem,
   Chip,
 } from "@mui/material";
-import TitleText from "./TitleText";
+import TitleText from "../TitleText";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
@@ -35,7 +35,7 @@ const quillFormats = [
   "bullet",
 ];
 
-const CreateJobForm = ({ onSubmit, isCreating, currentUser, token }) => {
+const UpdateJobForm = ({ onSubmit, isCreating, currentUser, token }) => {
   const {
     control,
     handleSubmit,
@@ -59,14 +59,15 @@ const CreateJobForm = ({ onSubmit, isCreating, currentUser, token }) => {
     setTags(updatedTags);
   };
 
-  const handleFormSubmit = (data) => {
+  const handleFormSubmit = async (data) => {
     const formData = {
       ...data,
       tags,
       company_id: currentUser.company_id,
       token,
     };
-    onSubmit(formData);
+
+    await onSubmit(formData);
     navigate("/agent/jobs");
   };
 
@@ -79,7 +80,7 @@ const CreateJobForm = ({ onSubmit, isCreating, currentUser, token }) => {
   return (
     <Container maxWidth="sm">
       <TitleText variant="h4" gutterBottom>
-        Tạo công việc mới
+        Cập nhật lại thông tin công việc
       </TitleText>
       <Grid container spacing={2} style={{ marginTop: "16px" }}>
         <form
@@ -108,14 +109,12 @@ const CreateJobForm = ({ onSubmit, isCreating, currentUser, token }) => {
             defaultValue=""
             rules={{ required: "Description is required" }}
             render={({ field }) => (
-              <ReactQuill>
-                <ReactQuill
-                  {...field}
-                  modules={quillModules}
-                  formats={quillFormats}
-                  theme="snow"
-                />
-              </ReactQuill>
+              <ReactQuill
+                {...field}
+                modules={quillModules}
+                formats={quillFormats}
+                theme="snow"
+              />
             )}
           />
           <Controller
@@ -381,4 +380,4 @@ const CreateJobForm = ({ onSubmit, isCreating, currentUser, token }) => {
   );
 };
 
-export default CreateJobForm;
+export default UpdateJobForm;

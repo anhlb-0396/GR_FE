@@ -32,7 +32,7 @@ function Apply({ job, currentUser, token, isAuthenticated }) {
   if (isResumeLoading)
     return (
       <Button
-        startIcon={<AssignmentIndIcon></AssignmentIndIcon>}
+        startIcon={<AssignmentIndIcon />}
         variant="outlined"
         color="primary"
         disabled
@@ -43,7 +43,7 @@ function Apply({ job, currentUser, token, isAuthenticated }) {
   if (isResumeError)
     return (
       <Button
-        startIcon={<AssignmentIndIcon></AssignmentIndIcon>}
+        startIcon={<AssignmentIndIcon />}
         variant="outlined"
         color="warning"
         onClick={() => navigate("/users/cv/create")}

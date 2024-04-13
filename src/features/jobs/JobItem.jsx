@@ -26,9 +26,9 @@ import {
   Bookmark as BookmarkIcon,
   PunchClock as PunchClockIcon,
   Paid as PaidIcon,
+  Edit as EditIcon,
 } from "@mui/icons-material";
 import DeleteJob from "../agents/jobs/DeleteJob";
-import UpdateJob from "../agents/jobs/UpdateJob";
 
 function JobItem({ job }) {
   const navigate = useNavigate();
@@ -159,12 +159,11 @@ function JobItem({ job }) {
               isAgent &&
               currentUser.company_id === job.company_id && (
                 <Stack direction={"row"}>
-                  <UpdateJob
-                    job={job}
-                    currentUser={currentUser}
-                    token={token}
-                    isAuthenticated={isAuthenticated}
-                  />
+                  <IconButton
+                    onClick={() => navigate(`/agent/jobs/${job.id}/update`)}
+                  >
+                    <EditIcon />
+                  </IconButton>
                   <DeleteJob
                     job={job}
                     currentUser={currentUser}

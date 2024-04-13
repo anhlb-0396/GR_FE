@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   IconButton,
   Dialog,
@@ -8,11 +8,9 @@ import {
   Button,
 } from "@mui/material";
 import { Delete as DeleteIcon } from "@mui/icons-material";
-import { useNavigate } from "react-router-dom";
 import { useDeleteJob } from "./agentDeleteJob";
 
-function DeleteJob({ job, currentUser, token, isAuthenticated }) {
-  const navigate = useNavigate();
+function DeleteJob({ job, currentUser, token }) {
   const { isDeleting, deleteNewJob } = useDeleteJob(currentUser.company_id);
   const [openDialog, setOpenDialog] = useState(false);
 

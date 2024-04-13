@@ -13,11 +13,11 @@ import IconButton from "@mui/material/IconButton";
 import Badge from "@mui/material/Badge";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
-import Paper from "@mui/material/Paper";
 import Link from "@mui/material/Link";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import NotificationsIcon from "@mui/icons-material/Notifications";
+import TravelExploreIcon from "@mui/icons-material/TravelExplore";
 import { mainListItems, secondaryListItems } from "./listItems";
 
 function Copyright(props) {
@@ -111,15 +111,31 @@ export default function AgentLayouts() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography
-            component="h1"
-            variant="h6"
-            color="inherit"
-            noWrap
-            sx={{ flexGrow: 1 }}
-          >
-            Dashboard
-          </Typography>
+          <Grid container alignItems="center">
+            <TravelExploreIcon
+              sx={{
+                display: { xs: "none", md: "flex", color: "white" },
+                mr: 1,
+              }}
+            />
+            <Typography
+              variant="h6"
+              noWrap
+              component={Link}
+              to="/agent/jobs"
+              sx={{
+                mr: 2,
+                display: { xs: "none", md: "flex" },
+                fontFamily: "monospace",
+                fontWeight: 700,
+                letterSpacing: ".3rem",
+                color: "white",
+                textDecoration: "none",
+              }}
+            >
+              JOBFIND
+            </Typography>
+          </Grid>
           <IconButton color="inherit">
             <Badge badgeContent={4} color="secondary">
               <NotificationsIcon />
