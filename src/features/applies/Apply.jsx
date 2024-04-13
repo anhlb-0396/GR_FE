@@ -15,6 +15,7 @@ import { useDeleteApply } from "./userDeleteApply";
 import { useApplies } from "./useApplies";
 import { useResume } from "../resumes/useResume";
 import TitleText from "../../ui/inputs/TitleText";
+import { useSocket } from "../../contexts/SocketContext";
 
 function Apply({ job, currentUser, token, isAuthenticated }) {
   const [openDialog, setOpenDialog] = useState(false);
@@ -25,6 +26,7 @@ function Apply({ job, currentUser, token, isAuthenticated }) {
     currentUser.id
   );
   const navigate = useNavigate();
+  const { socket } = useSocket();
 
   if (isLoading) return null;
   if (isError) return null;
@@ -74,6 +76,11 @@ function Apply({ job, currentUser, token, isAuthenticated }) {
         token,
       };
       createNewApply(applyData);
+
+      socket.emit("applyForJob", {
+        userId: currentUser.id,
+        companyId: job.Company.id,
+      });
     } else {
       const applyId = applies.find(
         (apply) => apply.job_id === job.id && apply.user_id === currentUser.id

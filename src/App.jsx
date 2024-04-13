@@ -28,6 +28,7 @@ import JobsOfCompany from "./features/agents/jobs/JobsOfCompany";
 import CreateJob from "./features/agents/jobs/CreateJob";
 import NotFoundPage from "./pages/NotFoundPage";
 import UpdateJob from "./features/agents/jobs/UpdateJob";
+import Notification from "./features/agents/notifications/Notification";
 
 const queryClient = new QueryClient();
 const theme = createTheme({
@@ -92,6 +93,10 @@ function App() {
                     <Route
                       path="/agent/jobs/:id/update"
                       element={<UpdateJob />}
+                    />
+                    <Route
+                      path="/agent/notifications"
+                      element={<Notification />}
                     />
                   </Route>
 

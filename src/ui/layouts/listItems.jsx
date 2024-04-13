@@ -57,7 +57,7 @@ export const secondaryListItems = (
       Chức năng
     </ListSubheader>
 
-    <ListItemButton>
+    <ListItemButton component={Link} to="agent/notifications">
       <ListItemIcon>
         <NotificationsIcon />
       </ListItemIcon>

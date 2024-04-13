@@ -6,7 +6,7 @@ import Main from "./Main";
 function AppLayouts() {
   return (
     <Box sx={{ width: "100%" }}>
-      <Header></Header>
+      <Header />
       <Main>
         <Outlet />
       </Main>
