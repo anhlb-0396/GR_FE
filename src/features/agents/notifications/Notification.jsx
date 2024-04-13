@@ -1,41 +1,44 @@
-import React, { useState } from "react";
-import {
-  Box,
-  Tooltip,
-  IconButton,
-  List,
-  ListItem,
-  ListItemText,
-} from "@mui/material";
-import { Notifications as NotificationsIcon } from "@mui/icons-material";
+import * as React from "react";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import TitleText from "../../../ui/inputs/TitleText";
+import { Divider } from "@mui/material";
 
-const notifications = ["New message from John Doe", "New job offer"];
-
-const Notification = () => {
-  const [open, setOpen] = useState(false);
-
-  const handleToggle = () => {
-    setOpen(!open);
-  };
-
+export default function Notification({ isOpen, onClose, notifications }) {
   return (
-    <Box sx={{ flexGrow: 0 }}>
-      <Tooltip title="Open notifications">
-        <IconButton onClick={handleToggle} sx={{ p: 0 }}>
-          <NotificationsIcon />
-        </IconButton>
-      </Tooltip>
-      {open && (
-        <List sx={{ mt: "45px", maxHeight: 200, overflowY: "auto" }}>
-          {notifications.map((notification, index) => (
-            <ListItem key={index}>
-              <ListItemText primary={notification} />
-            </ListItem>
-          ))}
-        </List>
+    <Menu
+      anchorOrigin={{
+        vertical: "top",
+        horizontal: "right",
+      }}
+      transformOrigin={{
+        vertical: "top",
+        horizontal: "right",
+      }}
+      anchorEl={null}
+      open={isOpen}
+      onClose={onClose}
+      PaperProps={{
+        style: {
+          maxHeight: "300px",
+          width: "500px",
+          marginTop: "45px",
+          borderRadius: "10px",
+          overflow: "hidden",
+          overflowY: "auto",
+        },
+      }}
+    >
+      <TitleText variant="h5">Thông báo mới</TitleText>
+      <Divider sx={{ mt: 1 }} />
+      {notifications?.map((notification) => (
+        <MenuItem key={notification.id} onClick={onClose}>
+          {notification.message}
+        </MenuItem>
+      ))}
+      {notifications.length === 0 && (
+        <MenuItem disabled>Không có thông báo mới</MenuItem>
       )}
-    </Box>
+    </Menu>
   );
-};
-
-export default Notification;
+}

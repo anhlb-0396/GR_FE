@@ -19,7 +19,8 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import TravelExploreIcon from "@mui/icons-material/TravelExplore";
 import { mainListItems, secondaryListItems } from "./listItems";
-import Notification from "../../features/agents/notifications/Notification";
+import Notification from "../../features/agents/notifications/Notification"; // Import the NotificationMenu component
+import { useSocket } from "../../contexts/SocketContext";
 
 function Copyright(props) {
   return (
@@ -87,8 +88,15 @@ const Drawer = styled(MuiDrawer, {
 
 export default function AgentLayouts() {
   const [open, setOpen] = React.useState(true);
+  const [isNotificationOpen, setNotificationOpen] = React.useState(false);
+  const { notifications } = useSocket();
+
   const toggleDrawer = () => {
     setOpen(!open);
+  };
+
+  const toggleNotificationMenu = () => {
+    setNotificationOpen(!isNotificationOpen);
   };
 
   return (
@@ -97,7 +105,7 @@ export default function AgentLayouts() {
       <AppBar position="absolute" open={open}>
         <Toolbar
           sx={{
-            pr: "24px", // keep right padding when drawer closed
+            pr: "24px",
           }}
         >
           <IconButton
@@ -137,9 +145,10 @@ export default function AgentLayouts() {
               JOBFIND
             </Typography>
           </Grid>
-          <IconButton color="inherit">
-            <Badge badgeContent={4} color="secondary">
-              <NotificationsIcon />
+          <IconButton color="inherit" onClick={toggleNotificationMenu}>
+            {/* Use isNotificationOpen state to control the visibility of NotificationMenu */}
+            <Badge badgeContent={notifications.length} color="secondary">
+              <NotificationsIcon sx={{ color: "white" }} />
             </Badge>
           </IconButton>
         </Toolbar>
@@ -180,9 +189,15 @@ export default function AgentLayouts() {
         <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
           <Grid container spacing={3}>
             <Grid item xs={12}>
-              <Outlet></Outlet>
+              <Outlet />
             </Grid>
           </Grid>
+
+          <Notification
+            isOpen={isNotificationOpen}
+            onClose={toggleNotificationMenu}
+            notifications={notifications}
+          />
           <Copyright sx={{ pt: 4 }} />
         </Container>
       </Box>
