@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import {
@@ -35,16 +35,39 @@ const quillFormats = [
   "bullet",
 ];
 
-const UpdateJobForm = ({ onSubmit, isCreating, currentUser, token }) => {
+const UpdateJobForm = ({ onSubmit, isCreating, currentUser, token, job }) => {
   const {
     control,
     handleSubmit,
+    reset,
     formState: { errors },
     getValues, // Add getValues from useForm
   } = useForm();
 
   const [tags, setTags] = useState([]);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (job) {
+      const formattedExpiredDate = job.expired_date
+        ? job.expired_date.split("T")[0]
+        : new Date().toISOString().split("T")[0];
+      reset({
+        title: job.title || "",
+        description: job.description || "",
+        min_salary: job.min_salary || "",
+        max_salary: job.max_salary || "",
+        recruitment_number: job.recruitment_number || "",
+        industry: job.industry || "",
+        field: job.field || "",
+        working_experience: job.working_experience || "",
+        working_method: job.working_method || "offline", // Set default value if not provided
+        working_type: job.working_type || "fulltime", // Set default value if not provided
+        expired_date: formattedExpiredDate,
+      });
+      setTags(job.tags || []);
+    }
+  }, [job, reset]);
 
   const handleAddTag = (event) => {
     const newTag = event.target.value.trim();
@@ -64,6 +87,7 @@ const UpdateJobForm = ({ onSubmit, isCreating, currentUser, token }) => {
       ...data,
       tags,
       company_id: currentUser.company_id,
+      job_id: job.id,
       token,
     };
 

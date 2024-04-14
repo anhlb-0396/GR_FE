@@ -45,11 +45,11 @@ export async function deleteJob(jobId) {
   return response.data;
 }
 
-export async function updateJob(jobId, jobDataObject) {
+export async function updateJob(dataObject) {
   const formData = new FormData();
 
   // Append form fields to the FormData object
-  Object.entries(jobDataObject).forEach(([key, value]) => {
+  Object.entries(dataObject).forEach(([key, value]) => {
     // If the field is 'images', append each image file
     if (key === "images") {
       for (let i = 0; i < value.length; i++) {
@@ -60,7 +60,10 @@ export async function updateJob(jobId, jobDataObject) {
     }
   });
 
-  const response = await axios.put(`${BASE_URL}/jobs/${jobId}`, formData);
+  const response = await axios.put(
+    `${BASE_URL}/jobs/${dataObject.job_id}`,
+    formData
+  );
 
   if (response.data.status >= 400) {
     throw new Error(response.data.message);
