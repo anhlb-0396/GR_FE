@@ -21,9 +21,12 @@ import { useAuth } from "../../../contexts/AuthContext";
 import { changeDateTimeFormat } from "../../../utils/helpers";
 import TablePagination from "@mui/material/TablePagination";
 import { useUpdateApply } from "./agentUpdateApply";
+import { useSocket } from "../../../contexts/SocketContext";
+import { createNewNotification } from "../../../services/notifications/notificationAPI";
 
 export default function AppliesTable() {
   const { currentUser, token } = useAuth();
+  const { socket } = useSocket();
   const { applies, isLoading, isError } = useApplies(currentUser.company_id);
   const { isUpdating, updateCurrentApply } = useUpdateApply(
     currentUser.company_id
@@ -75,14 +78,33 @@ export default function AppliesTable() {
     name: apply.User.name,
     avatar: apply.User.avatar,
     jobTitle: apply.Job.title,
+    companyName: apply.Job.Company.name,
   }));
 
-  const handleAccept = (row) => {
+  const handleAccept = async (row) => {
+    const notificationObject = {
+      sender_id: currentUser.id,
+      receiver_id: row.userId,
+      type: "job_accept",
+      message: `✅ Công ty ${row.companyName} đã chấp nhận ứng tuyển của bạn với công việc ${row.jobTitle}`,
+    };
+
     updateCurrentApply({ applyId: row.id, status: "accepted" });
+    await createNewNotification(notificationObject);
+    socket.emit("agentAcceptJobApply", notificationObject);
   };
 
-  const handleDeny = (row) => {
+  const handleDeny = async (row) => {
+    const notificationObject = {
+      sender_id: currentUser.id,
+      receiver_id: row.userId,
+      type: "job_reject",
+      message: `❌ Công ty ${row.companyName} đã từ chối ứng tuyển của bạn với công việc ${row.jobTitle}`,
+    };
+
     updateCurrentApply({ applyId: row.id, status: "rejected" });
+    await createNewNotification(notificationObject);
+    socket.emit("agentDenyJobApply", notificationObject);
   };
 
   const emptyRows =

@@ -18,6 +18,8 @@ import MarkChatUnreadIcon from "@mui/icons-material/MarkChatUnread";
 
 import { Link } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
+import { useSocket } from "../../contexts/SocketContext";
+import Notification from "../../features/agents/notifications/Notification";
 
 const settings = ["Profile", "Account", "Dashboard"];
 
@@ -25,6 +27,8 @@ function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const { currentUser, isAuthenticated, handleLogout } = useAuth();
+  const [isNotificationOpen, setNotificationOpen] = React.useState(false);
+  const { notifications, handleReadAllNotifications } = useSocket();
 
   const pages = [
     { title: "Tạo CV", link: "/users/cv/create" },
@@ -46,6 +50,10 @@ function ResponsiveAppBar() {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+  };
+
+  const toggleNotificationMenu = () => {
+    setNotificationOpen(!isNotificationOpen);
   };
 
   return (
@@ -155,7 +163,7 @@ function ResponsiveAppBar() {
           {isAuthenticated && (
             <Box display="flex">
               <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-                <IconButton sx={{ p: 0, mr: 5 }} size="medium">
+                <IconButton sx={{ p: 0, mr: 3 }} size="medium">
                   <Badge badgeContent={4} color="error">
                     <MarkChatUnreadIcon />
                   </Badge>
@@ -163,9 +171,14 @@ function ResponsiveAppBar() {
               </Box>
 
               <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-                <IconButton sx={{ p: 0, mr: 5 }} size="medium">
-                  <Badge badgeContent={4} color="error">
-                    <NotificationsIcon />
+                <IconButton
+                  color="inherit"
+                  sx={{ p: 0, mr: 3 }}
+                  onClick={toggleNotificationMenu}
+                >
+                  {/* Use isNotificationOpen state to control the visibility of NotificationMenu */}
+                  <Badge badgeContent={notifications.length} color="secondary">
+                    <NotificationsIcon sx={{ color: "white" }} />
                   </Badge>
                 </IconButton>
               </Box>
@@ -231,6 +244,14 @@ function ResponsiveAppBar() {
             </Box>
           )}
         </Toolbar>
+        <Box>
+          <Notification
+            isOpen={isNotificationOpen}
+            onClose={toggleNotificationMenu}
+            notifications={notifications}
+            handleReadAllNotifications={handleReadAllNotifications}
+          />
+        </Box>
       </Container>
     </AppBar>
   );

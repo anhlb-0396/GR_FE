@@ -2,9 +2,19 @@ import * as React from "react";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import TitleText from "../../../ui/inputs/TitleText";
-import { Divider } from "@mui/material";
+import { IconButton, Divider, Grid, Icon, Box } from "@mui/material";
 
-export default function Notification({ isOpen, onClose, notifications }) {
+const menuItemStyles = {
+  whiteSpace: "normal",
+  wordWrap: "break-word",
+};
+
+export default function Notification({
+  isOpen,
+  onClose,
+  notifications,
+  handleReadAllNotifications,
+}) {
   return (
     <Menu
       anchorOrigin={{
@@ -29,12 +39,25 @@ export default function Notification({ isOpen, onClose, notifications }) {
         },
       }}
     >
-      <TitleText variant="h5">Thông báo mới</TitleText>
-      <Divider sx={{ mt: 1 }} />
-      {notifications?.map((notification) => (
-        <MenuItem key={notification.id} onClick={onClose}>
-          {notification.message}
-        </MenuItem>
+      <Grid container justifyContent="space-between">
+        <Grid item xs={10} ml={5}>
+          <TitleText variant="h5">Thông báo mới</TitleText>
+        </Grid>
+        <Grid item xs={1}>
+          <IconButton onClick={handleReadAllNotifications}>
+            <Icon>delete</Icon>
+          </IconButton>
+        </Grid>
+      </Grid>
+
+      <Divider />
+      {notifications?.map((notification, index) => (
+        <Box key={notification.id}>
+          <MenuItem onClick={onClose} sx={menuItemStyles}>
+            {notification.message}
+          </MenuItem>
+          <Divider sx={{ mt: 1 }} />
+        </Box>
       ))}
       {notifications.length === 0 && (
         <MenuItem disabled>Không có thông báo mới</MenuItem>

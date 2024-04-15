@@ -16,6 +16,7 @@ import { useApplies } from "./useApplies";
 import { useResume } from "../resumes/useResume";
 import TitleText from "../../ui/inputs/TitleText";
 import { useSocket } from "../../contexts/SocketContext";
+import { createNewNotification } from "../../services/notifications/notificationAPI";
 
 function Apply({ job, currentUser, token, isAuthenticated }) {
   const [openDialog, setOpenDialog] = useState(false);
@@ -67,7 +68,7 @@ function Apply({ job, currentUser, token, isAuthenticated }) {
     setOpenDialog(true); // Open the confirmation dialog
   };
 
-  const handleConfirmation = () => {
+  const handleConfirmation = async () => {
     setOpenDialog(false); // Close the confirmation dialog
     if (!isApplied) {
       const applyData = {
@@ -77,10 +78,17 @@ function Apply({ job, currentUser, token, isAuthenticated }) {
       };
       createNewApply(applyData);
 
-      socket.emit("applyForJob", {
-        userId: currentUser.id,
+      const notificationObject = {
+        sender_id: currentUser.id,
+        receiver_id: job.ownerId,
+        type: "job_apply",
+        message: `👩‍💻 ${currentUser.name} đã yêu cầu ứng tuyển công việc ${job.title}`,
         companyId: job.Company.id,
-      });
+      };
+
+      await createNewNotification(notificationObject);
+
+      socket.emit("applyForJob", notificationObject);
     } else {
       const applyId = applies.find(
         (apply) => apply.job_id === job.id && apply.user_id === currentUser.id
@@ -97,7 +105,7 @@ function Apply({ job, currentUser, token, isAuthenticated }) {
   };
 
   const handleCloseDialog = () => {
-    setOpenDialog(false); // Close the confirmation dialog without proceeding
+    setOpenDialog(false);
   };
 
   return (

@@ -89,7 +89,7 @@ const Drawer = styled(MuiDrawer, {
 export default function AgentLayouts() {
   const [open, setOpen] = React.useState(true);
   const [isNotificationOpen, setNotificationOpen] = React.useState(false);
-  const { notifications } = useSocket();
+  const { notifications, handleReadAllNotifications } = useSocket();
 
   const toggleDrawer = () => {
     setOpen(!open);
@@ -197,6 +197,7 @@ export default function AgentLayouts() {
             isOpen={isNotificationOpen}
             onClose={toggleNotificationMenu}
             notifications={notifications}
+            handleReadAllNotifications={handleReadAllNotifications}
           />
           <Copyright sx={{ pt: 4 }} />
         </Container>
