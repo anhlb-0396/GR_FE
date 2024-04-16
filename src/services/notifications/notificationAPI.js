@@ -23,3 +23,15 @@ export async function getAllNotifications(receiverId) {
 
   return response.data.data.notifications;
 }
+
+export async function deleteAllNotifications(receiverId) {
+  const response = await axios.delete(
+    `${BASE_URL}/notifications/${receiverId}`
+  );
+
+  if (response.data.status >= 400) {
+    throw new Error(response.data.message);
+  }
+
+  return response.data.data.notifications;
+}

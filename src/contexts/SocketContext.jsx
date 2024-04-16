@@ -3,8 +3,10 @@ import { io } from "socket.io-client";
 import { SOCKET_SERVER_URL } from "../constants/urlConstants";
 import { useAuth } from "./AuthContext";
 import { toast } from "react-hot-toast";
-import { getAllNotifications } from "../services/notifications/notificationAPI";
-import { set } from "react-hook-form";
+import {
+  getAllNotifications,
+  deleteAllNotifications,
+} from "../services/notifications/notificationAPI";
 
 const SocketContext = createContext();
 
@@ -70,6 +72,9 @@ const SocketProvider = ({ children }) => {
 
   const handleReadAllNotifications = () => {
     setNotifications([]);
+    deleteAllNotifications(currentUser.id)
+      .then(setNotifications([]))
+      .catch((error) => console.error(error));
   };
 
   return (
