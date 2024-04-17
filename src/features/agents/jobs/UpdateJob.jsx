@@ -49,7 +49,7 @@ function UpdateJob() {
     >
       <UpdateJobForm
         onSubmit={updateNewJob}
-        isCreating={isUpdating}
+        isUpdating={isUpdating}
         currentUser={currentUser}
         token={token}
         job={job}

@@ -1,7 +1,7 @@
 import * as React from "react";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import TitleText from "../../../ui/inputs/TitleText";
+import TitleText from "../../ui/inputs/TitleText";
 import { IconButton, Divider, Grid, Icon, Box } from "@mui/material";
 
 const menuItemStyles = {

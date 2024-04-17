@@ -19,7 +19,7 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import TravelExploreIcon from "@mui/icons-material/TravelExplore";
 import { mainListItems, secondaryListItems } from "./listItems";
-import Notification from "../../features/agents/notifications/Notification"; // Import the NotificationMenu component
+import Notification from "../../features/notifications/Notification"; // Import the NotificationMenu component
 import { useSocket } from "../../contexts/SocketContext";
 
 function Copyright(props) {

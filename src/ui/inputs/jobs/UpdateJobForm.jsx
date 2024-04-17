@@ -35,7 +35,7 @@ const quillFormats = [
   "bullet",
 ];
 
-const UpdateJobForm = ({ onSubmit, isCreating, currentUser, token, job }) => {
+const UpdateJobForm = ({ onSubmit, isUpdating, currentUser, token, job }) => {
   const {
     control,
     handleSubmit,
@@ -46,6 +46,8 @@ const UpdateJobForm = ({ onSubmit, isCreating, currentUser, token, job }) => {
 
   const [tags, setTags] = useState([]);
   const navigate = useNavigate();
+
+  console.log(job);
 
   useEffect(() => {
     if (job) {
@@ -65,7 +67,7 @@ const UpdateJobForm = ({ onSubmit, isCreating, currentUser, token, job }) => {
         working_type: job.working_type || "fulltime", // Set default value if not provided
         expired_date: formattedExpiredDate,
       });
-      setTags(job.tags || []);
+      setTags(job.Tags.map((tag) => tag.tag) || []);
     }
   }, [job, reset]);
 
@@ -393,10 +395,10 @@ const UpdateJobForm = ({ onSubmit, isCreating, currentUser, token, job }) => {
             type="submit"
             variant="contained"
             color="primary"
-            disabled={isCreating}
+            disabled={isUpdating}
             sx={{ my: "16px" }}
           >
-            {isCreating ? "Đang tạo ..." : "Tạo"}
+            {isUpdating ? "Đang Sửa ..." : "Sửa"}
           </Button>
         </form>
       </Grid>

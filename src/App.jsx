@@ -28,7 +28,7 @@ import JobsOfCompany from "./features/agents/jobs/JobsOfCompany";
 import CreateJob from "./features/agents/jobs/CreateJob";
 import NotFoundPage from "./pages/NotFoundPage";
 import UpdateJob from "./features/agents/jobs/UpdateJob";
-import Notification from "./features/agents/notifications/Notification";
+import Notification from "./features/notifications/Notification";
 
 const queryClient = new QueryClient();
 const theme = createTheme({

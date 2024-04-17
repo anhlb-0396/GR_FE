@@ -19,7 +19,7 @@ import MarkChatUnreadIcon from "@mui/icons-material/MarkChatUnread";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import { useSocket } from "../../contexts/SocketContext";
-import Notification from "../../features/agents/notifications/Notification";
+import Notification from "../../features/notifications/Notification";
 
 const settings = ["Profile", "Account", "Dashboard"];
 

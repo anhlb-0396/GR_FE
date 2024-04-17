@@ -1,5 +1,4 @@
 import { createContext, useContext, useReducer } from "react";
-
 import PhoneIcon from "@mui/icons-material/Phone";
 import EmailIcon from "@mui/icons-material/Email";
 import HomeIcon from "@mui/icons-material/Home";
@@ -7,7 +6,6 @@ import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import TwitterIcon from "@mui/icons-material/Twitter";
-import { address } from "faker/lib/locales/az";
 
 const UserCVContext = createContext();
 
