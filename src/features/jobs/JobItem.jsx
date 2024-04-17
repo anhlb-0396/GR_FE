@@ -27,6 +27,7 @@ import {
   PunchClock as PunchClockIcon,
   Paid as PaidIcon,
   Edit as EditIcon,
+  LocalOffer as LocalOfferIcon,
 } from "@mui/icons-material";
 import DeleteJob from "../agents/jobs/DeleteJob";
 
@@ -128,6 +129,15 @@ function JobItem({ job }) {
                   )} triệu`}
                   size="small"
                 />
+
+                {job.Tags.map((tag) => (
+                  <Chip
+                    icon={<LocalOfferIcon></LocalOfferIcon>}
+                    key={tag.id}
+                    label={tag.tag}
+                    size="small"
+                  />
+                ))}
               </Stack>
             </Grid>
           </Grid>

@@ -25,6 +25,7 @@ import BookmarkIcon from "@mui/icons-material/Bookmark";
 import SendIcon from "@mui/icons-material/Send";
 import MapsHomeWorkIcon from "@mui/icons-material/MapsHomeWork";
 import WcIcon from "@mui/icons-material/Wc";
+import LocalOfferIcon from "@mui/icons-material/LocalOffer";
 
 import { changeCurrency } from "../../utils/helpers";
 import PaidIcon from "@mui/icons-material/Paid";
@@ -432,6 +433,19 @@ function JobDetails() {
                 borderRadius: "5px",
               }}
             ></Typography>
+          </Grid>
+
+          <Grid item container columnGap={1}>
+            {job.Tags.map((tag) => (
+              <Chip
+                key={tag.id}
+                label={tag.tag}
+                color="primary"
+                sx={{ color: "white" }}
+                icon={<LocalOfferIcon></LocalOfferIcon>}
+                size="small"
+              ></Chip>
+            ))}
           </Grid>
 
           <Typography
