@@ -15,7 +15,7 @@ import Paper from "@mui/material/Paper";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import TitleText from "../../../ui/inputs/TitleText";
+import TitleText from "../../../ui/sharedComponents/TitleText";
 import { useApplies } from "./useApplies";
 import { useAuth } from "../../../contexts/AuthContext";
 import { changeDateTimeFormat } from "../../../utils/helpers";

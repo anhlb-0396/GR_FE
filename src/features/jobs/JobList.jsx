@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Grid, Box, Alert, CircularProgress } from "@mui/material";
 import JobItem from "./JobItem";
-import AppPagination from "../../ui/AppPagination";
+import AppPagination from "../../ui/sharedComponents/AppPagination";
 import { useJobsQuery } from "./useJobsQuery";
 import { useLocation } from "react-router-dom";
 

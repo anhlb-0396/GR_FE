@@ -9,7 +9,7 @@ import {
   MenuItem,
   Chip,
 } from "@mui/material";
-import TitleText from "../TitleText";
+import TitleText from "../../sharedComponents/TitleText";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 

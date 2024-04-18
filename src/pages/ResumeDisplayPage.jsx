@@ -7,7 +7,7 @@ import Alert from "@mui/material/Alert";
 import Button from "@mui/material/Button";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useParams } from "react-router-dom";
-import TitleText from "../ui/inputs/TitleText";
+import TitleText from "../ui/sharedComponents/TitleText";
 import Resume from "../features/resumes/Resume";
 import { useResume } from "../features/resumes/useResume";
 

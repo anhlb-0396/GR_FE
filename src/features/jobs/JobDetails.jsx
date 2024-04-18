@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useParams } from "react-router-dom";
 import {
   Grid,
@@ -11,45 +12,38 @@ import {
   IconButton,
   Divider,
   Alert,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  TextField,
+  CircularProgress,
+  Rating,
 } from "@mui/material";
 
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
-import TextField from "@mui/material/TextField";
-import CircularProgress from "@mui/material/CircularProgress";
+import {
+  Bookmark as BookmarkIcon,
+  Send as SendIcon,
+  MapsHomeWork as MapsHomeWorkIcon,
+  Wc as WcIcon,
+  LocalOffer as LocalOfferIcon,
+  Paid as PaidIcon,
+} from "@mui/icons-material";
 
-import BookmarkIcon from "@mui/icons-material/Bookmark";
-import SendIcon from "@mui/icons-material/Send";
-import MapsHomeWorkIcon from "@mui/icons-material/MapsHomeWork";
-import WcIcon from "@mui/icons-material/Wc";
-import LocalOfferIcon from "@mui/icons-material/LocalOffer";
-
-import { changeCurrency } from "../../utils/helpers";
-import PaidIcon from "@mui/icons-material/Paid";
-
-import JobList from "./JobList";
+import { toast } from "react-hot-toast";
 import { useJob } from "./useJob";
 import { isBefore } from "date-fns";
-import TitleText from "../../ui/inputs/TitleText";
-import { useState } from "react";
-
-import Rating from "@mui/material/Rating";
-import CompanySummaryCard from "../companies/CompanySummaryCard";
 import { useAuth } from "../../contexts/AuthContext";
 import { useCreateComment } from "../comments/userCreateComment";
-import CommentList from "../comments/CommentList";
-import { toast } from "react-hot-toast";
+import { changeCurrency } from "../../utils/helpers";
+
+import JobList from "./JobList";
 import Bookmark from "../bookmarks/Bookmark";
 import Apply from "../applies/Apply";
-
-// const images = [
-//   "https://dxwd4tssreb4w.cloudfront.net/image/cbc2ef0d57c22790520b1a970314cfe9",
-//   "https://image.luatvietnam.vn/uploaded/twebp/images/original/2023/02/28/chuyen-nguoi-lao-dong-sang-lam-viec-khac_2802091944.png",
-//   "https://cdn.tgdd.vn/Files/2022/06/10/1438689/cong-viec-lam-them-cho-hoc-sinh-sinh-vien-6_800x450.jpg",
-// ];
+import CommentList from "../comments/CommentList";
+import CompanySummaryCard from "../companies/CompanySummaryCard";
+import TitleText from "../../ui/sharedComponents/TitleText";
 
 const initialRatings = {
   salary_rating: 0,

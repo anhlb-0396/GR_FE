@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import TitleText from "../../ui/inputs/TitleText";
+import TitleText from "../../ui/sharedComponents/TitleText";
 import CompanySummaryCard from "./CompanySummaryCard";
 import { useCompanies } from "./useCompanies";
 import { Grid } from "@mui/material";
-import AppPagination from "../../ui/AppPagination";
+import AppPagination from "../../ui/sharedComponents/AppPagination";
 
 const COMPANIES_PER_PAGE = 3;
 

@@ -1,8 +1,16 @@
 import * as React from "react";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import TitleText from "../../ui/inputs/TitleText";
-import { IconButton, Divider, Grid, Icon, Box } from "@mui/material";
+import TitleText from "../../ui/sharedComponents/TitleText";
+import {
+  IconButton,
+  Divider,
+  Grid,
+  Icon,
+  Box,
+  Typography,
+} from "@mui/material";
+import { changeDateTimeFormat } from "../../utils/helpers";
 
 const menuItemStyles = {
   whiteSpace: "normal",
@@ -54,8 +62,14 @@ export default function Notification({
       {notifications?.map((notification, index) => (
         <Box key={notification.id}>
           <MenuItem onClick={onClose} sx={menuItemStyles}>
-            {notification.message}
+            <Box>
+              <Typography variant="body2" color="text.secondary">
+                {changeDateTimeFormat(notification.createdAt)}
+              </Typography>
+              <Box>{notification.message}</Box>
+            </Box>
           </MenuItem>
+
           <Divider sx={{ mt: 1 }} />
         </Box>
       ))}

@@ -12,7 +12,7 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import GradeIcon from "@mui/icons-material/Grade";
 import SchoolIcon from "@mui/icons-material/School";
 
-import TitleText from "../../../ui/inputs/TitleText";
+import TitleText from "../../../ui/sharedComponents/TitleText";
 import SaveButton from "../../../ui/inputs/SaveButton";
 
 import ControlledTextField from "../../../ui/inputs/ControlledTextField";

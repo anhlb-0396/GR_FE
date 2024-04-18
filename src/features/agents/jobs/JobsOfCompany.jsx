@@ -9,8 +9,8 @@ import AddIcon from "@mui/icons-material/Add";
 import { useAuth } from "../../../contexts/AuthContext";
 import { useJobs } from "./useJobs";
 import JobItem from "../../jobs/JobItem";
-import TitleText from "../../../ui/inputs/TitleText";
-import AppPagination from "../../../ui/AppPagination";
+import TitleText from "../../../ui/sharedComponents/TitleText";
+import AppPagination from "../../../ui/sharedComponents/AppPagination";
 
 const JOB_PER_PAGE = 3;
 

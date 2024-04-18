@@ -14,7 +14,7 @@ import { useCreateApply } from "./userCreateApply";
 import { useDeleteApply } from "./userDeleteApply";
 import { useApplies } from "./useApplies";
 import { useResume } from "../resumes/useResume";
-import TitleText from "../../ui/inputs/TitleText";
+import TitleText from "../../ui/sharedComponents/TitleText";
 import { useSocket } from "../../contexts/SocketContext";
 import { createNewNotification } from "../../services/notifications/notificationAPI";
 

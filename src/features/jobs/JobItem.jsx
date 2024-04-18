@@ -130,14 +130,15 @@ function JobItem({ job }) {
                   size="small"
                 />
 
-                {job.Tags.map((tag) => (
-                  <Chip
-                    icon={<LocalOfferIcon></LocalOfferIcon>}
-                    key={tag.id}
-                    label={tag.tag}
-                    size="small"
-                  />
-                ))}
+                {job.Tags &&
+                  job.Tags.map((tag) => (
+                    <Chip
+                      icon={<LocalOfferIcon></LocalOfferIcon>}
+                      key={tag.id}
+                      label={tag.tag}
+                      size="small"
+                    />
+                  ))}
               </Stack>
             </Grid>
           </Grid>

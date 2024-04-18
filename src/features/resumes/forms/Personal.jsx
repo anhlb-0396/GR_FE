@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import ResumeCard from "../ResumeCard";
-import TitleText from "../../../ui/inputs/TitleText";
+import TitleText from "../../../ui/sharedComponents/TitleText";
 import SaveButton from "../../../ui/inputs/SaveButton";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import LocationOnIcon from "@mui/icons-material/LocationOn";

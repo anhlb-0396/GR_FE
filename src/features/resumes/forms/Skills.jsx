@@ -10,7 +10,7 @@ import HomeRepairServiceIcon from "@mui/icons-material/HomeRepairService";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
 import toast from "react-hot-toast";
 
-import TitleText from "../../../ui/inputs/TitleText";
+import TitleText from "../../../ui/sharedComponents/TitleText";
 import SaveButton from "../../../ui/inputs/SaveButton";
 
 import ControlledTextField from "../../../ui/inputs/ControlledTextField";

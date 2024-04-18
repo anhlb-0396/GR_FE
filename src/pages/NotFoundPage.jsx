@@ -1,7 +1,7 @@
 import React from "react";
 import { Link as RouterLink } from "react-router-dom";
 import { Container, Typography, Button } from "@mui/material";
-import TitleText from "../ui/inputs/TitleText";
+import TitleText from "../ui/sharedComponents/TitleText";
 
 const NotFoundPage = () => {
   return (

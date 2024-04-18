@@ -2,7 +2,7 @@ import { Grid, Button } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { useJobs } from "../../../features/jobs/useJobs";
 import CustomAutoComplete from "../CustomAutoComplete";
-import TitleText from "../TitleText";
+import TitleText from "../../sharedComponents/TitleText";
 import provinces from "../../../data/provincesData";
 import { useNavigate } from "react-router-dom";
 

@@ -1,6 +1,6 @@
 import Box from "@mui/material/Box";
 
-import TitleText from "../ui/inputs/TitleText";
+import TitleText from "../ui/sharedComponents/TitleText";
 import ResumeStepper from "../features/resumes/ResumeStepper";
 
 function ResumeCreatePage() {
