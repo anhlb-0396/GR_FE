@@ -1,26 +1,32 @@
 import * as React from "react";
 import { Outlet } from "react-router-dom";
 import { styled } from "@mui/material/styles";
-import CssBaseline from "@mui/material/CssBaseline";
-import MuiDrawer from "@mui/material/Drawer";
-import Box from "@mui/material/Box";
-import MuiAppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
-import List from "@mui/material/List";
-import Typography from "@mui/material/Typography";
-import Divider from "@mui/material/Divider";
-import IconButton from "@mui/material/IconButton";
-import Badge from "@mui/material/Badge";
-import Container from "@mui/material/Container";
-import Grid from "@mui/material/Grid";
-import Link from "@mui/material/Link";
-import MenuIcon from "@mui/icons-material/Menu";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import NotificationsIcon from "@mui/icons-material/Notifications";
-import TravelExploreIcon from "@mui/icons-material/TravelExplore";
-import { mainListItems, secondaryListItems } from "./listItems";
-import Notification from "../../features/notifications/Notification"; // Import the NotificationMenu component
+import {
+  CssBaseline,
+  Drawer as MuiDrawer,
+  Box,
+  AppBar as MuiAppBar,
+  Toolbar,
+  List,
+  Typography,
+  Divider,
+  IconButton,
+  Badge,
+  Container,
+  Grid,
+  Link,
+} from "@mui/material";
+
+import {
+  Menu as MenuIcon,
+  ChevronLeft as ChevronLeftIcon,
+  Notifications as NotificationsIcon,
+  TravelExplore as TravelExploreIcon,
+} from "@mui/icons-material";
+
+import Notification from "../../features/notifications/Notification";
 import { useSocket } from "../../contexts/SocketContext";
+import { mainListItems, secondaryListItems } from "./listItems";
 
 function Copyright(props) {
   return (

@@ -1,7 +1,7 @@
-import Paper from "@mui/material/Paper";
-import CreateJobForm from "../../../ui/inputs/jobs/CreateJobForm";
+import { Paper } from "@mui/material";
 import { useCreateJob } from "./agentCreateJob";
 import { useAuth } from "../../../contexts/AuthContext";
+import CreateJobForm from "../../../ui/inputs/jobs/CreateJobForm";
 
 function CreateJob() {
   const { currentUser, token } = useAuth();

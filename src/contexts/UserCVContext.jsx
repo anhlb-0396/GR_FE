@@ -1,11 +1,13 @@
 import { createContext, useContext, useReducer } from "react";
-import PhoneIcon from "@mui/icons-material/Phone";
-import EmailIcon from "@mui/icons-material/Email";
-import HomeIcon from "@mui/icons-material/Home";
-import FacebookIcon from "@mui/icons-material/Facebook";
-import InstagramIcon from "@mui/icons-material/Instagram";
-import LinkedInIcon from "@mui/icons-material/LinkedIn";
-import TwitterIcon from "@mui/icons-material/Twitter";
+import {
+  Phone as PhoneIcon,
+  Email as EmailIcon,
+  Home as HomeIcon,
+  Facebook as FacebookIcon,
+  Instagram as InstagramIcon,
+  LinkedIn as LinkedInIcon,
+  Twitter as TwitterIcon,
+} from "@mui/icons-material";
 
 const UserCVContext = createContext();
 

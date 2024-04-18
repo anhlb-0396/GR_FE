@@ -10,9 +10,9 @@ import {
   Button,
   FormControlLabel,
   Checkbox,
+  Avatar,
 } from "@mui/material";
-import Avatar from "@mui/material/Avatar";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import { LockOutlined as LockOutlinedIcon } from "@mui/icons-material";
 import { useAuth } from "../../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 

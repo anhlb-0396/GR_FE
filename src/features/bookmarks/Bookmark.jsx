@@ -1,5 +1,5 @@
 import { IconButton } from "@mui/material";
-import BookmarkIcon from "@mui/icons-material/Bookmark";
+import { Bookmark as BookmarkIcon } from "@mui/icons-material";
 import { useCreateBookmark } from "./userCreateBookmark";
 import { useDeleteBookmark } from "./userDeleteBookmark";
 import { useBookmarks } from "./useBookmarks";

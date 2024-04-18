@@ -1,5 +1,4 @@
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
+import { Card, CardContent } from "@mui/material";
 
 export default function CustomCard({ children, sx, ...props }) {
   return (

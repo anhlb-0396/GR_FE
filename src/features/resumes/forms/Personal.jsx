@@ -1,18 +1,19 @@
 import { useForm } from "react-hook-form";
-import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
+import toast from "react-hot-toast";
+import { Box, Grid } from "@mui/material";
+import {
+  AccountCircle,
+  LocationOn as LocationOnIcon,
+  Phone as PhoneIcon,
+  Email as EmailIcon,
+  Home as HomeIcon,
+} from "@mui/icons-material";
+
+import ControlledTextField from "../../../ui/inputs/ControlledTextField";
 import ResumeCard from "../ResumeCard";
+import { useUserCV } from "../../../contexts/UserCVContext";
 import TitleText from "../../../ui/sharedComponents/TitleText";
 import SaveButton from "../../../ui/inputs/SaveButton";
-import AccountCircle from "@mui/icons-material/AccountCircle";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
-import ControlledTextField from "../../../ui/inputs/ControlledTextField";
-import { useUserCV } from "../../../contexts/UserCVContext";
-import toast from "react-hot-toast";
-
-import PhoneIcon from "@mui/icons-material/Phone";
-import EmailIcon from "@mui/icons-material/Email";
-import HomeIcon from "@mui/icons-material/Home";
 
 const icons = [PhoneIcon, EmailIcon, HomeIcon];
 

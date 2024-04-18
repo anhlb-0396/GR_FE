@@ -1,14 +1,16 @@
-import Dialog from "@mui/material/Dialog";
-import DialogTitle from "@mui/material/DialogTitle";
-import DialogContent from "@mui/material/DialogContent";
-import DialogActions from "@mui/material/DialogActions";
-import Button from "@mui/material/Button";
-import Grid from "@mui/material/Grid";
-import Typography from "@mui/material/Typography";
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Button,
+  Grid,
+  Typography,
+} from "@mui/material";
+
 import TitleText from "../../ui/sharedComponents/TitleText";
 
 const ApplyResponseDialog = ({ open, onClose, responseData }) => {
-  console.log(responseData);
   return (
     <Dialog open={open} onClose={onClose} maxWidth="md">
       <DialogTitle>

@@ -1,5 +1,5 @@
-import Button from "@mui/material/Button";
-import SaveIcon from "@mui/icons-material/Save";
+import { Button } from "@mui/material";
+import { Save as SaveIcon } from "@mui/icons-material";
 
 function SaveButton({ onClick }) {
   return (

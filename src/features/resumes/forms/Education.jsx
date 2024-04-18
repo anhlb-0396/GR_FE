@@ -1,20 +1,19 @@
 import { useForm, useFieldArray } from "react-hook-form";
 import toast from "react-hot-toast";
 import React from "react";
-import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
-import Fab from "@mui/material/Fab";
-import ResumeCard from "../ResumeCard";
-import AddIcon from "@mui/icons-material/Add";
-import RemoveIcon from "@mui/icons-material/Remove";
-import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
-import AccessTimeIcon from "@mui/icons-material/AccessTime";
-import GradeIcon from "@mui/icons-material/Grade";
-import SchoolIcon from "@mui/icons-material/School";
+import { Box, Grid, Fab } from "@mui/material";
+import {
+  Add as AddIcon,
+  Remove as RemoveIcon,
+  WorkspacePremium as WorkspacePremiumIcon,
+  AccessTime as AccessTimeIcon,
+  Grade as GradeIcon,
+  School as SchoolIcon,
+} from "@mui/icons-material";
 
-import TitleText from "../../../ui/sharedComponents/TitleText";
 import SaveButton from "../../../ui/inputs/SaveButton";
-
+import TitleText from "../../../ui/sharedComponents/TitleText";
+import ResumeCard from "../ResumeCard";
 import ControlledTextField from "../../../ui/inputs/ControlledTextField";
 import { useUserCV } from "../../../contexts/UserCVContext";
 

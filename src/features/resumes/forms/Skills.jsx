@@ -1,18 +1,17 @@
 import { useForm, useFieldArray } from "react-hook-form";
 import React from "react";
-import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
-import Fab from "@mui/material/Fab";
-import ResumeCard from "../ResumeCard";
-import AddIcon from "@mui/icons-material/Add";
-import RemoveIcon from "@mui/icons-material/Remove";
-import HomeRepairServiceIcon from "@mui/icons-material/HomeRepairService";
-import BorderColorIcon from "@mui/icons-material/BorderColor";
 import toast from "react-hot-toast";
+import { Box, Grid, Fab } from "@mui/material";
+import {
+  Add as AddIcon,
+  Remove as RemoveIcon,
+  BorderColor as BorderColorIcon,
+  HomeRepairService as HomeRepairServiceIcon,
+} from "@mui/icons-material";
 
+import ResumeCard from "../ResumeCard";
 import TitleText from "../../../ui/sharedComponents/TitleText";
 import SaveButton from "../../../ui/inputs/SaveButton";
-
 import ControlledTextField from "../../../ui/inputs/ControlledTextField";
 import { useUserCV } from "../../../contexts/UserCVContext";
 

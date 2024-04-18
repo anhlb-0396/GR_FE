@@ -1,19 +1,22 @@
 import * as React from "react";
-import Box from "@mui/material/Box";
-import Stepper from "@mui/material/Stepper";
-import Step from "@mui/material/Step";
-import StepLabel from "@mui/material/StepLabel";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import Resume from "./Resume";
+import { useNavigate } from "react-router-dom";
 
-import { useUserCV } from "../../contexts/UserCVContext";
+import {
+  Box,
+  Stepper,
+  Step,
+  StepLabel,
+  Button,
+  Typography,
+} from "@mui/material";
+
+import Resume from "./Resume";
 import Personal from "./forms/Personal";
 import Skills from "./forms/Skills";
 import Education from "./forms/Education";
 import Experiences from "./forms/Experiences";
+import { useUserCV } from "../../contexts/UserCVContext";
 import { useCreateResume } from "./userCreateResume";
-import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 
 const steps = [

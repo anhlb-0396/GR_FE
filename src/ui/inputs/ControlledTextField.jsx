@@ -1,6 +1,4 @@
-import React from "react";
-import TextField from "@mui/material/TextField";
-import InputAdornment from "@mui/material/InputAdornment";
+import { TextField, InputAdornment } from "@mui/material";
 
 const ControlledTextField = ({
   id,

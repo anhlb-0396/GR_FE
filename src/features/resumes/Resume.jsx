@@ -1,18 +1,21 @@
 import React from "react";
-import Grid from "@mui/material/Grid";
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
-import Avatar from "@mui/material/Avatar";
-import Divider from "@mui/material/Divider";
-import List from "@mui/material/List";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
+import {
+  Box,
+  Grid,
+  Typography,
+  Avatar,
+  Divider,
+  List,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+} from "@mui/material";
+import {
+  Phone as PhoneIcon,
+  Email as EmailIcon,
+  Home as HomeIcon,
+} from "@mui/icons-material";
 import ResumeCard from "./ResumeCard";
-
-import PhoneIcon from "@mui/icons-material/Phone";
-import EmailIcon from "@mui/icons-material/Email";
-import HomeIcon from "@mui/icons-material/Home";
 
 const getIconComponent = (iconName) => {
   switch (iconName) {

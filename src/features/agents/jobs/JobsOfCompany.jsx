@@ -1,11 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import CircularProgress from "@mui/material/CircularProgress";
-import Button from "@mui/material/Button";
-import Alert from "@mui/material/Alert";
-import AddIcon from "@mui/icons-material/Add";
+import { Grid, Box, CircularProgress, Button, Alert } from "@mui/material";
+import { Add as AddIcon } from "@mui/icons-material";
+
 import { useAuth } from "../../../contexts/AuthContext";
 import { useJobs } from "./useJobs";
 import JobItem from "../../jobs/JobItem";

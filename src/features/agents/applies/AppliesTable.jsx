@@ -1,30 +1,30 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import Chip from "@mui/material/Chip";
-import Box from "@mui/material/Box";
-import Alert from "@mui/material/Alert";
-import CircularProgress from "@mui/material/CircularProgress";
-import ButtonGroup from "@mui/material/ButtonGroup";
-import Button from "@mui/material/Button";
-import IconButton from "@mui/material/IconButton";
-import CheckIcon from "@mui/icons-material/Check";
-import CloseIcon from "@mui/icons-material/Close";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import Paper from "@mui/material/Paper";
-import TableCell from "@mui/material/TableCell";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import TablePagination from "@mui/material/TablePagination";
-import Dialog from "@mui/material/Dialog";
-import DialogTitle from "@mui/material/DialogTitle";
-import DialogContent from "@mui/material/DialogContent";
-import DialogActions from "@mui/material/DialogActions";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import { Check as CheckIcon, Close as CloseIcon } from "@mui/icons-material";
+import {
+  Chip,
+  Box,
+  Alert,
+  CircularProgress,
+  ButtonGroup,
+  Button,
+  IconButton,
+  Table,
+  TableBody,
+  Paper,
+  TableCell,
+  TableHead,
+  TableRow,
+  TablePagination,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+} from "@mui/material";
 
 import { quillModules, quillFormats } from "../../../constants/quill";
-import TitleText from "../../../ui/sharedComponents/TitleText";
 import { useApplies } from "./useApplies";
 import { useAuth } from "../../../contexts/AuthContext";
 import {
@@ -35,6 +35,7 @@ import {
 import { useUpdateApply } from "./agentUpdateApply";
 import { useSocket } from "../../../contexts/SocketContext";
 import { createNewNotification } from "../../../services/notifications/notificationAPI";
+import TitleText from "../../../ui/sharedComponents/TitleText";
 import ApplyResponseDialog from "../../../ui/sharedComponents/ApplyResponseDialog";
 
 export default function AppliesTable() {
@@ -77,8 +78,6 @@ export default function AppliesTable() {
       </Box>
     );
   }
-
-  console.log(applies);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);

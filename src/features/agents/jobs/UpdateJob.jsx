@@ -1,8 +1,5 @@
 import { useParams } from "react-router-dom";
-import Paper from "@mui/material/Paper";
-import Box from "@mui/material/Box";
-import CircularProgress from "@mui/material/CircularProgress";
-import Alert from "@mui/material/Alert";
+import { Box, CircularProgress, Paper, Alert } from "@mui/material";
 import UpdateJobForm from "../../../ui/inputs/jobs/UpdateJobForm";
 import { useAuth } from "../../../contexts/AuthContext";
 import { useUpdateJob } from "./agentUpdateJob";

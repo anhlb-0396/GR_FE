@@ -1,16 +1,20 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Button from "@mui/material/Button";
-import SendIcon from "@mui/icons-material/Send";
-import AssignmentIndIcon from "@mui/icons-material/AssignmentInd";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
-import CheckIcon from "@mui/icons-material/Check";
-import CloseIcon from "@mui/icons-material/Close";
-import Grid from "@mui/material/Grid";
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Grid,
+} from "@mui/material";
+import {
+  Check as CheckIcon,
+  Close as CloseIcon,
+  Send as SendIcon,
+  AssignmentInd as AssignmentIndIcon,
+} from "@mui/icons-material";
 
 import { useCreateApply } from "./userCreateApply";
 import { useDeleteApply } from "./userDeleteApply";

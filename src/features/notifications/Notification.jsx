@@ -1,7 +1,3 @@
-import * as React from "react";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import TitleText from "../../ui/sharedComponents/TitleText";
 import {
   IconButton,
   Divider,
@@ -9,7 +5,10 @@ import {
   Icon,
   Box,
   Typography,
+  Menu,
+  MenuItem,
 } from "@mui/material";
+import TitleText from "../../ui/sharedComponents/TitleText";
 import { changeDateTimeFormat } from "../../utils/helpers";
 
 const menuItemStyles = {

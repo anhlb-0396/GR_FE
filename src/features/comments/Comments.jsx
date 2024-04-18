@@ -1,15 +1,15 @@
-import * as React from "react";
-import Card from "@mui/material/Card";
-import CardHeader from "@mui/material/CardHeader";
-import CardContent from "@mui/material/CardContent";
-import Avatar from "@mui/material/Avatar";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
+import {
+  Card,
+  CardHeader,
+  CardContent,
+  Avatar,
+  IconButton,
+  Typography,
+  Grid,
+  Rating,
+} from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import Grid from "@mui/material/Grid";
-import Rating from "@mui/material/Rating";
 import { red } from "@mui/material/colors";
-
 import { parseISO, format } from "date-fns";
 
 function formatDateTime(dateTimeStr) {
@@ -19,7 +19,6 @@ function formatDateTime(dateTimeStr) {
 }
 
 function Comments({ comment }) {
-  // console.log(comment);
   return (
     <Grid item container xs={12}>
       <Card sx={{ width: "100%" }}>
