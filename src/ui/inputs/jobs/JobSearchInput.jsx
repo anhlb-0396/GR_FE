@@ -1,5 +1,5 @@
-import { Grid, Button } from "@mui/material";
-import { useForm } from "react-hook-form";
+import { Grid, Button, TextField } from "@mui/material";
+import { useForm, Controller } from "react-hook-form";
 import { useJobs } from "../../../features/jobs/useJobs";
 import CustomAutoComplete from "../CustomAutoComplete";
 import TitleText from "../../sharedComponents/TitleText";
@@ -19,6 +19,12 @@ function JobSearchInput() {
   const uniqueCompanyNames = [...new Set(jobs.map((job) => job.Company.name))];
 
   const onSubmit = (data) => {
+    const location = provinces.find(
+      (province) => province.province_name === data.location
+    );
+
+    data.location = location ? location.province_id : null;
+
     const queryString = Object.entries(data)
       .filter((el) => !!el[1])
       .map((el) => el.join("="))
@@ -39,7 +45,7 @@ function JobSearchInput() {
             name="companyName"
             control={control}
             xs={6}
-            md={3}
+            md={2.5}
             setValue={setValue}
             options={uniqueCompanyNames}
             label="Tên công ty"
@@ -51,7 +57,7 @@ function JobSearchInput() {
             xs={6}
             md={2}
             setValue={setValue}
-            options={provinces}
+            options={provinces.map((province) => province.province_name)}
             label="Địa điểm"
           />
 
@@ -59,7 +65,7 @@ function JobSearchInput() {
             name="field"
             control={control}
             xs={6}
-            md={2}
+            md={1.5}
             setValue={setValue}
             options={uniqueFields}
             label="Lĩnh vực"
@@ -69,7 +75,7 @@ function JobSearchInput() {
             name="industry"
             control={control}
             xs={6}
-            md={2}
+            md={1.5}
             setValue={setValue}
             options={uniqueIndustries}
             label="Ngành nghề"
@@ -79,7 +85,7 @@ function JobSearchInput() {
             name="workingMethod"
             control={control}
             xs={6}
-            md={1.5}
+            md={1.25}
             setValue={setValue}
             options={["offline", "remote", "hybrid"]}
             label="Hình thức"
@@ -89,11 +95,28 @@ function JobSearchInput() {
             name="workingType"
             control={control}
             xs={6}
-            md={1.5}
+            md={1.25}
             setValue={setValue}
             options={["fulltime", "partime"]}
             label="Loại hình"
           />
+
+          <Grid item xs={6} md={2}>
+            <Controller
+              name="minSalary"
+              control={control}
+              defaultValue=""
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  label="Mức lương tối thiểu"
+                  variant="outlined"
+                  size="small"
+                  fullWidth
+                />
+              )}
+            />
+          </Grid>
 
           <Grid item xs={3}>
             <Button variant="contained" sx={{ color: "white" }} type="submit">
