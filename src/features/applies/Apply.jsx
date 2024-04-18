@@ -10,6 +10,8 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
+import Grid from "@mui/material/Grid";
+
 import { useCreateApply } from "./userCreateApply";
 import { useDeleteApply } from "./userDeleteApply";
 import { useApplies } from "./useApplies";
@@ -17,6 +19,7 @@ import { useResume } from "../resumes/useResume";
 import TitleText from "../../ui/sharedComponents/TitleText";
 import { useSocket } from "../../contexts/SocketContext";
 import { createNewNotification } from "../../services/notifications/notificationAPI";
+import ApplyResponseDialog from "../../ui/sharedComponents/ApplyResponseDialog";
 
 function Apply({ job, currentUser, token, isAuthenticated }) {
   const [openDialog, setOpenDialog] = useState(false);
@@ -26,8 +29,10 @@ function Apply({ job, currentUser, token, isAuthenticated }) {
   const { isLoading: isResumeLoading, isError: isResumeError } = useResume(
     currentUser.id
   );
+
   const navigate = useNavigate();
   const { socket } = useSocket();
+  const [openResponseDialog, setOpenResponseDialog] = useState(false);
 
   if (isLoading) return null;
   if (isError) return null;
@@ -63,6 +68,10 @@ function Apply({ job, currentUser, token, isAuthenticated }) {
   const currentStatus = applies.find(
     (apply) => apply.job_id === job.id && apply.user_id === currentUser.id
   )?.status;
+
+  const currentResponseData = applies.find(
+    (apply) => apply.job_id === job.id && apply.user_id === currentUser.id
+  )?.response;
 
   const handleApply = () => {
     setOpenDialog(true); // Open the confirmation dialog
@@ -108,8 +117,16 @@ function Apply({ job, currentUser, token, isAuthenticated }) {
     setOpenDialog(false);
   };
 
+  const handleOpenResponseDialog = async () => {
+    await setOpenResponseDialog(true);
+  };
+
+  const handleCloseResponseDialog = () => {
+    setOpenResponseDialog(false);
+  };
+
   return (
-    <>
+    <Grid>
       {(currentStatus === "pending" || !currentStatus) && (
         <Button
           startIcon={<SendIcon></SendIcon>}
@@ -121,24 +138,31 @@ function Apply({ job, currentUser, token, isAuthenticated }) {
           {isApplied ? "Hủy ứng tuyển" : "Ứng tuyển"}
         </Button>
       )}
-      {currentStatus === "accepted" && (
+
+      {currentStatus === "accepted-cv-round" && (
         <Button
           startIcon={<CheckIcon />}
           variant="outlined"
           color="success"
-          disabled
+          onClick={() => handleOpenResponseDialog()}
         >
-          Đã được chấp nhận
+          Đã qua vòng xét duyệt CV! Vui lòng kiểm tra thông báo
+        </Button>
+      )}
+
+      {currentStatus === "accepted-interview-round" && (
+        <Button
+          startIcon={<CheckIcon />}
+          variant="outlined"
+          color="success"
+          onClick={() => handleOpenResponseDialog()}
+        >
+          Đã trúng tuyển công việc
         </Button>
       )}
 
       {currentStatus === "rejected" && (
-        <Button
-          startIcon={<CloseIcon />}
-          variant="outlined"
-          color="error"
-          disabled
-        >
+        <Button startIcon={<CloseIcon />} variant="outlined" color="error">
           Đã bị từ chối
         </Button>
       )}
@@ -170,7 +194,14 @@ function Apply({ job, currentUser, token, isAuthenticated }) {
           </Button>
         </DialogActions>
       </Dialog>
-    </>
+
+      {/* Display the response dialog here */}
+      <ApplyResponseDialog
+        open={openResponseDialog}
+        onClose={handleCloseResponseDialog}
+        responseData={currentResponseData}
+      />
+    </Grid>
   );
 }
 

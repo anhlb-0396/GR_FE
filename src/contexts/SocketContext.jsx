@@ -15,7 +15,7 @@ const SocketProvider = ({ children }) => {
   const [notifications, setNotifications] = useState([]);
   const { currentUser } = useAuth();
 
-  console.log(notifications);
+  // console.log(notifications);
 
   useEffect(() => {
     if (currentUser && currentUser.id) {
@@ -50,17 +50,17 @@ const SocketProvider = ({ children }) => {
 
     socket.on("agentJobApply", (data) => {
       toast.success(`Thông báo mới: ${data.message}`);
-      setNotifications((prev) => [...prev, data]);
+      setNotifications((prev) => [data, ...prev]);
     });
 
     socket.on("userAcceptJobApply", (data) => {
       toast.success(`Thông báo mới: ${data.message}`);
-      setNotifications((prev) => [...prev, data]);
+      setNotifications((prev) => [data, ...prev]);
     });
 
     socket.on("userDenyJobApply", (data) => {
       toast.error(`Thông báo mới: ${data.message}`);
-      setNotifications((prev) => [...prev, data]);
+      setNotifications((prev) => [data, ...prev]);
     });
 
     return () => {

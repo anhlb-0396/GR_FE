@@ -12,28 +12,7 @@ import {
 import TitleText from "../../sharedComponents/TitleText";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-
-const quillModules = {
-  toolbar: [
-    [{ header: "1" }, { header: "2" }, { font: [] }],
-    [{ size: [] }],
-    ["bold", "italic", "underline", "strike"],
-    [{ list: "ordered" }, { list: "bullet" }],
-    ["clean"],
-  ],
-};
-
-const quillFormats = [
-  "header",
-  "font",
-  "size",
-  "bold",
-  "italic",
-  "underline",
-  "strike",
-  "list",
-  "bullet",
-];
+import { quillModules, quillFormats } from "../../../constants/quill";
 
 const CreateJobForm = ({ onSubmit, isCreating, currentUser, token }) => {
   const {

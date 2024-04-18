@@ -24,3 +24,33 @@ export function changeDateTimeFormat(utcTimeString) {
 
   return formatedTime;
 }
+
+export function displayStatus(status) {
+  switch (status) {
+    case "pending":
+      return "Chờ phản hồi";
+    case "accepted-cv-round":
+      return "Qua vòng duyệt hồ sơ";
+    case "accepted-interview-round":
+      return "Trúng tuyển";
+    case "rejected":
+      return "Đã từ chối";
+    default:
+      return "Chờ phản hồi";
+  }
+}
+
+export function chooseColorForStatus(status) {
+  switch (status) {
+    case "pending":
+      return "warning";
+    case "accepted-cv-round":
+      return "primary";
+    case "accepted-interview-round":
+      return "success";
+    case "rejected":
+      return "error";
+    default:
+      return "warning";
+  }
+}

@@ -47,7 +47,7 @@ const UpdateJobForm = ({ onSubmit, isUpdating, currentUser, token, job }) => {
   const [tags, setTags] = useState([]);
   const navigate = useNavigate();
 
-  console.log(job);
+  // console.log(job);
 
   useEffect(() => {
     if (job) {
