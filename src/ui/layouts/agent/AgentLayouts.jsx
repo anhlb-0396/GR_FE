@@ -24,8 +24,8 @@ import {
   TravelExplore as TravelExploreIcon,
 } from "@mui/icons-material";
 
-import Notification from "../../features/notifications/Notification";
-import { useSocket } from "../../contexts/SocketContext";
+import Notification from "../../../features/notifications/Notification";
+import { useSocket } from "../../../contexts/SocketContext";
 import { mainListItems, secondaryListItems } from "./listItems";
 
 function Copyright(props) {

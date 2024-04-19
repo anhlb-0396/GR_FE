@@ -17,10 +17,10 @@ import {
 } from "@mui/icons-material";
 
 import { Link } from "react-router-dom";
-import { useAuth } from "../../contexts/AuthContext";
-import { useSocket } from "../../contexts/SocketContext";
-import Notification from "../../features/notifications/Notification";
-import UserMenuHeader from "../sharedComponents/UserMenuHeader";
+import { useAuth } from "../../../contexts/AuthContext";
+import { useSocket } from "../../../contexts/SocketContext";
+import Notification from "../../../features/notifications/Notification";
+import UserMenuHeader from "../../sharedComponents/UserMenuHeader";
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);

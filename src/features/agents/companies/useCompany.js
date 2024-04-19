@@ -1,16 +1,16 @@
 import { useQuery } from "@tanstack/react-query";
-import { fetchAppliesOfCompany } from "../../../services/agents/applyAPI";
+import { fetchCompanyById } from "../../../services/agents/companyAPI";
 
-export function useApplies(companyId) {
+export function useCompany(companyId) {
   const {
-    data: applies,
+    data: company,
     isLoading,
     isError,
     error,
   } = useQuery({
-    queryKey: ["companies", "applies", companyId],
-    queryFn: () => fetchAppliesOfCompany(companyId),
+    queryKey: ["companies", companyId],
+    queryFn: () => fetchCompanyById(companyId),
   });
 
-  return { isLoading, isError, error, applies };
+  return { isLoading, isError, error, company };
 }

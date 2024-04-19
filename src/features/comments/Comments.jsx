@@ -20,7 +20,7 @@ function formatDateTime(dateTimeStr) {
 
 function Comments({ comment }) {
   return (
-    <Grid item container xs={12}>
+    <Grid item container xs={12} md={5.5}>
       <Card sx={{ width: "100%" }}>
         <CardHeader
           avatar={

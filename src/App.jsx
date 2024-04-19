@@ -12,16 +12,13 @@ import "@fontsource/roboto/700.css";
 
 import Homepage from "./pages/Homepage";
 import JobDetails from "./features/jobs/JobDetails";
-import AppLayouts from "./ui/layouts/AppLayouts";
+import AppLayouts from "./ui/layouts/user/AppLayouts";
 import Login from "./features/authentication/Login";
 import Register from "./features/authentication/Register";
 import ProtectedRoute from "./pages/ProtectedRoute";
 import ResumeCreatePage from "./pages/ResumeCreatePage";
-
-import { UserCVProvider } from "./contexts/UserCVContext";
-import { SocketProvider } from "./contexts/SocketContext";
 import ResumeDisplayPage from "./pages/ResumeDisplayPage";
-import AgentLayouts from "./ui/layouts/AgentLayouts";
+import AgentLayouts from "./ui/layouts/agent/AgentLayouts";
 import AppliesTable from "./features/agents/applies/AppliesTable";
 import Unauthorize from "./pages/Unauthorize";
 import JobsOfCompany from "./features/agents/jobs/JobsOfCompany";
@@ -29,6 +26,9 @@ import CreateJob from "./features/agents/jobs/CreateJob";
 import NotFoundPage from "./pages/NotFoundPage";
 import UpdateJob from "./features/agents/jobs/UpdateJob";
 import Notification from "./features/notifications/Notification";
+import AgentCompany from "./features/agents/companies/AgentCompany";
+import { UserCVProvider } from "./contexts/UserCVContext";
+import { SocketProvider } from "./contexts/SocketContext";
 
 const queryClient = new QueryClient();
 const theme = createTheme({
@@ -98,10 +98,10 @@ function App() {
                       path="/agent/notifications"
                       element={<Notification />}
                     />
+                    <Route path="/agent/company" element={<AgentCompany />} />
                   </Route>
 
                   <Route path="/unauthorize" element={<Unauthorize />} />
-
                   <Route path="*" element={<NotFoundPage />} />
                 </Routes>
               </UserCVProvider>

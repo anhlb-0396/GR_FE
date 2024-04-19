@@ -19,7 +19,7 @@ import {
 
 export const mainListItems = (
   <React.Fragment>
-    <ListItemButton>
+    <ListItemButton component={Link} to="agent/company">
       <ListItemIcon>
         <BusinessIcon />
       </ListItemIcon>
