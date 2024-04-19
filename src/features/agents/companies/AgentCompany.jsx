@@ -15,7 +15,7 @@ function AgentCompany() {
     );
   }
 
-  if (currentUser?.company === null) {
+  if (!currentUser.company_id) {
     return (
       <Box sx={{ m: 2 }}>
         <Button

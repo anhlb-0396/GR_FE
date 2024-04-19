@@ -10,10 +10,10 @@ function CommentList({ companyId, isAgent = false }) {
       item
       container
       direction={isAgent ? "row" : "column"}
-      rowGap={2}
+      rowGap={3}
       alignItems={isAgent ? "stretch" : "center"}
       justifyContent={isAgent ? "flex-start" : "center"}
-      columnGap={1}
+      columnGap={3}
     >
       {isLoading && <CircularProgress sx={{ mt: "20px" }} />}
       {isError && (

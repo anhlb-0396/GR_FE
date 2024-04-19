@@ -22,6 +22,10 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
 } from "@mui/material";
 
 import { quillModules, quillFormats } from "../../../constants/quill";
@@ -52,6 +56,7 @@ export default function AppliesTable() {
   const [openResponseDialog, setOpenResponseDialog] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
   const [selectedResponse, setSelectedResponse] = useState("");
+  const [selectedStatus, setSelectedStatus] = useState("all");
 
   if (isLoading) {
     return (
@@ -108,7 +113,17 @@ export default function AppliesTable() {
     setSelectedResponse("");
   };
 
-  const rows = applies.map((apply) => ({
+  const filteredApplies = applies.filter((apply) => {
+    if (selectedStatus === "all") return true; // Show all applies if "all" is selected
+    return apply.status === selectedStatus; // Filter by selected status
+  });
+
+  const handleStatusChange = (event) => {
+    setSelectedStatus(event.target.value);
+    setPage(0); // Reset pagination when status changes
+  };
+
+  const rows = filteredApplies.map((apply) => ({
     id: apply.id,
     jobId: apply.job_id,
     userId: apply.user_id,
@@ -186,7 +201,26 @@ export default function AppliesTable() {
         height: "auto",
       }}
     >
-      <TitleText variant="h5">Danh sách ứng tuyển gần đây</TitleText>
+      <TitleText>Danh sách ứng tuyển gần đây</TitleText>
+
+      {/* Filter by Status dropdown with MUI */}
+      <FormControl sx={{ mb: 2, mt: 2, maxWidth: "160px" }}>
+        {/* <InputLabel id="status-select-label">Trạng thái</InputLabel> */}
+        <Select
+          labelId="status-select-label"
+          value={selectedStatus}
+          onChange={handleStatusChange}
+          size="small"
+        >
+          <MenuItem value="all">Tất cả</MenuItem>
+          <MenuItem value="pending">Chờ duyệt</MenuItem>
+          <MenuItem value="accepted-cv-round">Đỗ vòng hồ sơ</MenuItem>
+          <MenuItem value="accepted-interview-round">Trúng tuyển</MenuItem>
+          <MenuItem value="rejected">Từ chối</MenuItem>
+          {/* Add additional options for other statuses if needed */}
+        </Select>
+      </FormControl>
+
       <Table size="medium" sx={{ mt: 3 }}>
         <TableHead>
           <TableRow>

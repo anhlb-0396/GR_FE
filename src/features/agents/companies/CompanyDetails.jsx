@@ -1,4 +1,4 @@
-import { Grid, Box, Button, Alert, CircularProgress } from "@mui/material";
+import { Grid, Box, Alert, CircularProgress } from "@mui/material";
 import { useCompany } from "./useCompany";
 import CompanySummaryCard from "../../companies/CompanySummaryCard";
 import CommentList from "../../comments/CommentList";
