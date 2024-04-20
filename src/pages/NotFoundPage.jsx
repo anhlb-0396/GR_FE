@@ -1,6 +1,6 @@
 import React from "react";
-import { Link as RouterLink } from "react-router-dom";
-import { Container, Typography, Button } from "@mui/material";
+import { Link } from "react-router-dom";
+import { Container, Button } from "@mui/material";
 import TitleText from "../ui/sharedComponents/TitleText";
 
 const NotFoundPage = () => {
@@ -24,7 +24,7 @@ const NotFoundPage = () => {
       <TitleText variant="body1" align="center" paragraph>
         Quay trở lại trang chủ
         <Button
-          component={RouterLink}
+          component={Link}
           to="/"
           variant="contained"
           color="primary"

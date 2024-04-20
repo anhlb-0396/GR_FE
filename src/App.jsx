@@ -29,6 +29,7 @@ import Notification from "./features/notifications/Notification";
 import AgentCompany from "./features/agents/companies/AgentCompany";
 import { UserCVProvider } from "./contexts/UserCVContext";
 import { SocketProvider } from "./contexts/SocketContext";
+import ExpectJobs from "./features/expectedJobs/ExpectJobs";
 
 const queryClient = new QueryClient();
 const theme = createTheme({
@@ -78,6 +79,14 @@ function App() {
                         </ProtectedRoute>
                       }
                     />
+                    <Route
+                      path="/users/jobs/expectations"
+                      element={
+                        <ProtectedRoute>
+                          <ExpectJobs />
+                        </ProtectedRoute>
+                      }
+                    ></Route>
                   </Route>
 
                   <Route
