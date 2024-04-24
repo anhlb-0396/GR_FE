@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { toast } from "react-hot-toast";
 
 function ProtectedRoute({ children, role }) {
-  const { isAuthenticated, isAgent } = useAuth();
+  const { isAuthenticated, currentUser } = useAuth();
   const navigate = useNavigate();
 
   useEffect(
@@ -13,12 +13,12 @@ function ProtectedRoute({ children, role }) {
         navigate("/login");
         toast.error("Vui lòng đăng nhập để truy cập trang này!");
       }
-      if (isAuthenticated && role === "agent" && !isAgent) {
+      if (isAuthenticated && role !== currentUser.role) {
         toast.error("Bạn không có quyền truy cập trang này!");
         navigate("/unauthorize");
       }
     },
-    [isAuthenticated, navigate, role, isAgent]
+    [isAuthenticated, navigate, role, currentUser.role]
   );
 
   return isAuthenticated ? children : null;

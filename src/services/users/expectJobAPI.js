@@ -23,3 +23,16 @@ export async function createExpectJob(expectJobObject) {
 
   return response.data.data.expectJob;
 }
+
+export async function updateExpectJob(expectJobObject) {
+  const response = await axios.put(
+    `${BASE_URL}/expectations/${expectJobObject.id}`,
+    expectJobObject
+  );
+
+  if (response.data.status >= 400) {
+    throw new Error(response.data.message);
+  }
+
+  return response.data.data.expectJob;
+}

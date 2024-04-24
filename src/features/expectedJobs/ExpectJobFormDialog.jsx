@@ -16,7 +16,12 @@ function ExpectJobFormDialog({ open, onClose, onSubmit, initialValues = {} }) {
   const { control, handleSubmit, setValue } = useForm({
     defaultValues: initialValues,
   });
-  const years = Array.from({ length: 5 }, (_, i) => `${i + 1} năm`);
+
+  const years = Array.from({ length: 6 }, (_, i) =>
+    i > 0 ? `${i} năm` : `0 yêu cầu kinh nghiệm`
+  );
+
+  console.log(years);
 
   const onSubmitForm = (data) => {
     // Convert selected working_experience to number
@@ -102,7 +107,7 @@ function ExpectJobFormDialog({ open, onClose, onSubmit, initialValues = {} }) {
               name="working_method"
               control={control}
               setValue={setValue}
-              options={["offline", "remote", "hybrid"]}
+              options={["offline", "remote", "hybrid", "tất cả"]}
               label="Hình thức làm việc"
               xs={12}
               md={4}
@@ -111,7 +116,7 @@ function ExpectJobFormDialog({ open, onClose, onSubmit, initialValues = {} }) {
               name="working_type"
               control={control}
               setValue={setValue}
-              options={["fulltime", "partime"]}
+              options={["fulltime", "partime", "tất cả"]}
               label="Loại công việc"
               xs={12}
               md={4}

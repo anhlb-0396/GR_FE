@@ -35,6 +35,8 @@ function JobItem({ job }) {
   const navigate = useNavigate();
   const { currentUser, isAuthenticated, token, isAgent } = useAuth();
 
+  // console.log(job);
+
   const handleNotLoginBookmark = () => {
     toast.error("Vui lòng đăng nhập để lưu công việc");
     navigate("/login", { state: { from: "/" } });
@@ -91,12 +93,18 @@ function JobItem({ job }) {
               >
                 <Chip
                   icon={<LocationOnIcon />}
-                  label={job.Company.location}
+                  label={job.Province.name}
                   size="small"
                 />
 
-                <Chip icon={<WorkIcon />} label={job.industry} size="small" />
-                <Chip icon={<WorkIcon />} label={job.field} size="small" />
+                {job.Industries.map((industry) => (
+                  <Chip
+                    key={industry.id}
+                    icon={<WorkIcon />}
+                    label={industry.industry}
+                    size="small"
+                  />
+                ))}
 
                 <Chip
                   icon={<AccessTimeFilledIcon />}
@@ -118,7 +126,11 @@ function JobItem({ job }) {
 
                 <Chip
                   icon={<PunchClockIcon />}
-                  label={`${job.working_experience} năm kinh nghiệm`}
+                  label={
+                    job.working_experience > 0
+                      ? `${job.working_experience} năm kinh nghiệm`
+                      : "Không yêu cầu kinh nghiệm"
+                  }
                   size="small"
                 />
 

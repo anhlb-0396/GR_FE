@@ -9,6 +9,7 @@ function CustomAutoComplete({
   xs = 3,
   md = 2.5,
   label,
+  multiple = false,
 }) {
   return (
     <Grid item xs={xs} md={md}>
@@ -24,6 +25,7 @@ function CustomAutoComplete({
             options={options}
             onChange={(event, value) => setValue(name, value)}
             renderInput={(params) => <TextField {...params} label={label} />}
+            multiple={multiple}
           />
         )}
       ></Controller>

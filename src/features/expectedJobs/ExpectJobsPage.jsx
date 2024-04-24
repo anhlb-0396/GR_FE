@@ -5,8 +5,9 @@ import { useExpectJobs } from "./useExpectJobs";
 import { useCreateExpectJobs } from "./userCreateExpectJobs";
 import TitleText from "../../ui/sharedComponents/TitleText";
 import ExpectJobFormDialog from "./ExpectJobFormDialog";
+import ExpectJobsList from "./ExpectJobsList";
 
-function ExpectJobs() {
+function ExpectJobsPage() {
   const { currentUser, token } = useAuth();
   const [openDialog, setOpenDialog] = useState(false);
   const { createNewExpectJob, isCreating } = useCreateExpectJobs(
@@ -29,7 +30,7 @@ function ExpectJobs() {
     setOpenDialog(false);
   };
 
-  if (isLoading) {
+  if (isLoading || isCreating) {
     return (
       <Box
         sx={{
@@ -68,13 +69,12 @@ function ExpectJobs() {
     );
   }
 
-  console.log(expectations);
-
   return (
     <Box sx={{ width: "80%", margin: "0 auto" }}>
       <TitleText>Gợi ý việc làm</TitleText>
+      <ExpectJobsList expectations={expectations} />
     </Box>
   );
 }
 
-export default ExpectJobs;
+export default ExpectJobsPage;

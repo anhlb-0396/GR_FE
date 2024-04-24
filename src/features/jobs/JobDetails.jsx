@@ -112,7 +112,7 @@ function JobDetails() {
     );
   }
 
-  // console.log(job);
+  console.log(job);
 
   return (
     <Box sx={{ width: "90%", margin: "0 auto" }}>
@@ -344,36 +344,22 @@ function JobDetails() {
             {/* For additional information */}
             <Grid item container direction="column" gap={2}>
               <TitleText>Thông tin thêm</TitleText>
-              <Typography color="text.secondary">
-                <strong>Ngành nghề:</strong>
-                <Chip
-                  size="small"
-                  label={job.industry}
-                  color="error"
-                  variant="filled"
-                  sx={{ ml: 1, color: "white" }}
-                ></Chip>
-              </Typography>
-              <Typography color="text.secondary">
-                <strong>Lĩnh vực:</strong>
-                <Chip
-                  size="small"
-                  label={job.field}
-                  color="error"
-                  variant="filled"
-                  sx={{ ml: 1, color: "white" }}
-                ></Chip>
-              </Typography>
+
               <Typography color="text.secondary">
                 <strong>Kinh nghiệm:</strong>
                 <Chip
                   size="small"
-                  label={`${job.working_experience} năm`}
+                  label={
+                    job.working_experience > 0
+                      ? `${job.working_experience} năm`
+                      : "Không yêu cầu kinh nghiệm"
+                  }
                   color="error"
                   variant="filled"
                   sx={{ ml: 1, color: "white" }}
                 ></Chip>
               </Typography>
+
               <Typography color="text.secondary">
                 <strong>Phương thức làm việc:</strong>
                 <Chip
@@ -384,6 +370,7 @@ function JobDetails() {
                   sx={{ ml: 1, color: "white" }}
                 ></Chip>
               </Typography>
+
               <Typography color="text.secondary">
                 <strong>Loại hình làm việc:</strong>
                 <Chip
@@ -394,6 +381,7 @@ function JobDetails() {
                   sx={{ ml: 1, color: "white" }}
                 ></Chip>
               </Typography>
+
               <Typography color="text.secondary">
                 <strong>Số lượng tuyển dụng:</strong>
                 <Chip
@@ -403,6 +391,53 @@ function JobDetails() {
                   variant="filled"
                   sx={{ ml: 1, color: "white" }}
                 ></Chip>
+              </Typography>
+
+              <Typography color="text.secondary">
+                <strong>Cấp bậc:</strong>
+                <Chip
+                  size="small"
+                  label={job.degree}
+                  color="error"
+                  variant="filled"
+                  sx={{ ml: 1, color: "white" }}
+                ></Chip>
+              </Typography>
+
+              <Typography color="text.secondary">
+                <strong>Địa điểm làm việc:</strong>
+                <Chip
+                  size="small"
+                  label={job.Province.name}
+                  color="error"
+                  variant="filled"
+                  sx={{ ml: 1, color: "white" }}
+                ></Chip>
+              </Typography>
+
+              <Typography color="text.secondary">
+                <strong>Thời gian làm việc:</strong>
+                <Chip
+                  size="small"
+                  label={`Từ thứ ${job.start_week_day} đến thứ ${job.end_week_day} hàng tuần`}
+                  color="error"
+                  variant="filled"
+                  sx={{ ml: 1, color: "white" }}
+                ></Chip>
+              </Typography>
+
+              <Typography color="text.secondary">
+                <strong>Ngành nghề:</strong>
+                {job.Industries.map((industry) => (
+                  <Chip
+                    key={industry.id}
+                    size="small"
+                    label={industry.industry}
+                    color="error"
+                    variant="filled"
+                    sx={{ ml: 1, color: "white" }}
+                  ></Chip>
+                ))}
               </Typography>
             </Grid>
           </Grid>

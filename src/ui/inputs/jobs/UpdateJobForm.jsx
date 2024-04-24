@@ -12,6 +12,12 @@ import {
 import TitleText from "../../sharedComponents/TitleText";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import provincesData from "../../../data/provincesData";
+
+const provinces = provincesData.map((province) => ({
+  province_id: Number(province.province_id),
+  province_name: province.province_name,
+}));
 
 const quillModules = {
   toolbar: [
@@ -45,9 +51,8 @@ const UpdateJobForm = ({ onSubmit, isUpdating, currentUser, token, job }) => {
   } = useForm();
 
   const [tags, setTags] = useState([]);
+  const [industries, setIndustries] = useState([]);
   const navigate = useNavigate();
-
-  // console.log(job);
 
   useEffect(() => {
     if (job) {
@@ -60,14 +65,18 @@ const UpdateJobForm = ({ onSubmit, isUpdating, currentUser, token, job }) => {
         min_salary: job.min_salary || "",
         max_salary: job.max_salary || "",
         recruitment_number: job.recruitment_number || "",
-        industry: job.industry || "",
-        field: job.field || "",
         working_experience: job.working_experience || "",
         working_method: job.working_method || "offline", // Set default value if not provided
         working_type: job.working_type || "fulltime", // Set default value if not provided
         expired_date: formattedExpiredDate,
+        start_week_day: job.start_week_day || 2,
+        end_week_day: job.end_week_day || 6,
+        degree: job.degree || "",
+        gender: job.gender || "",
+        province_id: job.Province.id || "",
       });
       setTags(job.Tags.map((tag) => tag.tag) || []);
+      setIndustries(job.Industries.map((industry) => industry.industry) || []);
     }
   }, [job, reset]);
 
@@ -84,14 +93,32 @@ const UpdateJobForm = ({ onSubmit, isUpdating, currentUser, token, job }) => {
     setTags(updatedTags);
   };
 
+  const handleAddIndustry = (event) => {
+    const newIndustry = event.target.value.trim();
+    if (newIndustry && !industries.includes(newIndustry)) {
+      setIndustries([...industries, newIndustry]);
+      event.target.value = "";
+    }
+  };
+
+  const handleRemoveIndustry = (index) => {
+    const updatedIndustries = industries.filter((_, i) => i !== index);
+    setIndustries(updatedIndustries);
+  };
+
   const handleFormSubmit = async (data) => {
     const formData = {
       ...data,
       tags,
+      industries,
       company_id: currentUser.company_id,
       job_id: job.id,
       token,
     };
+
+    console.log(formData);
+
+    return;
 
     await onSubmit(formData);
     navigate("/agent/jobs");
@@ -209,39 +236,28 @@ const UpdateJobForm = ({ onSubmit, isUpdating, currentUser, token, job }) => {
             )}
           />
 
-          <Controller
-            name="industry"
-            control={control}
-            defaultValue=""
-            rules={{ required: "Industry is required" }}
-            render={({ field }) => (
-              <TextField
-                {...field}
-                fullWidth
-                margin="normal"
-                label="Ngành nghề"
-                error={!!errors.industry}
-                helperText={errors.industry ? errors.industry.message : ""}
-              />
-            )}
+          {/* Tags field */}
+          <TextField
+            fullWidth
+            margin="normal"
+            label="Ngành nghề"
+            placeholder="Nhập và nhấn enter"
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                handleAddIndustry(e);
+              }
+            }}
           />
-
-          <Controller
-            name="field"
-            control={control}
-            defaultValue=""
-            rules={{ required: "Field is required" }}
-            render={({ field }) => (
-              <TextField
-                {...field}
-                fullWidth
-                margin="normal"
-                label="Lĩnh vực"
-                error={!!errors.field}
-                helperText={errors.field ? errors.field.message : ""}
+          <div style={{ display: "flex", flexWrap: "wrap" }}>
+            {industries.map((industry, index) => (
+              <Chip
+                key={index}
+                label={industry}
+                onDelete={() => handleRemoveIndustry(index)}
+                style={{ marginRight: "8px", marginBottom: "8px" }}
               />
-            )}
-          />
+            ))}
+          </div>
 
           <Controller
             name="working_experience"
@@ -337,6 +353,149 @@ const UpdateJobForm = ({ onSubmit, isUpdating, currentUser, token, job }) => {
                   errors.expired_date ? errors.expired_date.message : ""
                 }
               />
+            )}
+          />
+
+          <Controller
+            name="start_week_day"
+            control={control}
+            rules={{
+              required: "Start week day is required",
+              min: {
+                value: 2,
+                message: "Start week day must be between 2 and 8",
+              },
+              max: {
+                value: 8,
+                message: "Start week day must be between 2 and 8",
+              },
+            }}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                fullWidth
+                margin="normal"
+                label="Start Week Day"
+                type="number"
+                error={!!errors.start_week_day}
+                helperText={
+                  errors.start_week_day ? errors.start_week_day.message : ""
+                }
+              />
+            )}
+          />
+
+          <Controller
+            name="end_week_day"
+            control={control}
+            rules={{
+              required: "End week day is required",
+              min: {
+                value: 2,
+                message: "End week day must be between 2 and 8",
+              },
+              max: {
+                value: 8,
+                message: "End week day must be between 2 and 8",
+              },
+              validate: (value) =>
+                value > getValues("start_week_day") ||
+                "End week day must be greater than start week day",
+            }}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                fullWidth
+                margin="normal"
+                label="End Week Day"
+                type="number"
+                error={!!errors.end_week_day}
+                helperText={
+                  errors.end_week_day ? errors.end_week_day.message : ""
+                }
+              />
+            )}
+          />
+
+          <Controller
+            name="degree"
+            control={control}
+            defaultValue="Nhân viên"
+            rules={{ required: "Degree is required" }}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                select
+                fullWidth
+                margin="normal"
+                label="Degree"
+                error={!!errors.degree}
+                helperText={errors.degree ? errors.degree.message : ""}
+              >
+                {[
+                  "Thực tập sinh",
+                  "Nhân viên",
+                  "Trưởng nhóm",
+                  "Giám đốc",
+                  "Tổng giám đốc",
+                ].map((option) => (
+                  <MenuItem key={option} value={option}>
+                    {option}
+                  </MenuItem>
+                ))}
+              </TextField>
+            )}
+          />
+
+          <Controller
+            name="gender"
+            control={control}
+            defaultValue=""
+            rules={{ required: "Gender is required" }}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                select
+                fullWidth
+                margin="normal"
+                label="Gender"
+                error={!!errors.gender}
+                helperText={errors.gender ? errors.gender.message : ""}
+              >
+                {["male", "female"].map((option) => (
+                  <MenuItem key={option} value={option}>
+                    {option}
+                  </MenuItem>
+                ))}
+              </TextField>
+            )}
+          />
+
+          <Controller
+            name="province_id"
+            control={control}
+            rules={{ required: "Province is required" }}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                select
+                fullWidth
+                margin="normal"
+                label="Province"
+                error={!!errors.province_id}
+                helperText={
+                  errors.province_id ? errors.province_id.message : ""
+                }
+              >
+                {provinces.map((province) => (
+                  <MenuItem
+                    key={province.province_id}
+                    value={province.province_id}
+                  >
+                    {province.province_name}
+                  </MenuItem>
+                ))}
+              </TextField>
             )}
           />
 

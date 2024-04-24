@@ -29,7 +29,7 @@ import Notification from "./features/notifications/Notification";
 import AgentCompany from "./features/agents/companies/AgentCompany";
 import { UserCVProvider } from "./contexts/UserCVContext";
 import { SocketProvider } from "./contexts/SocketContext";
-import ExpectJobs from "./features/expectedJobs/ExpectJobs";
+import ExpectJobsPage from "./features/expectedJobs/ExpectJobsPage";
 
 const queryClient = new QueryClient();
 const theme = createTheme({
@@ -74,7 +74,7 @@ function App() {
                     <Route
                       path="/users/cv/create"
                       element={
-                        <ProtectedRoute>
+                        <ProtectedRoute role="user">
                           <ResumeCreatePage />
                         </ProtectedRoute>
                       }
@@ -83,7 +83,7 @@ function App() {
                       path="/users/jobs/expectations"
                       element={
                         <ProtectedRoute>
-                          <ExpectJobs />
+                          <ExpectJobsPage />
                         </ProtectedRoute>
                       }
                     ></Route>

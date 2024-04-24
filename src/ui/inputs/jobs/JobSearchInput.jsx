@@ -5,17 +5,21 @@ import CustomAutoComplete from "../CustomAutoComplete";
 import TitleText from "../../sharedComponents/TitleText";
 import provinces from "../../../data/provincesData";
 import { useNavigate } from "react-router-dom";
+import { useIndustries } from "../../../features/industries/useIndustries";
 
 function JobSearchInput() {
   const navigate = useNavigate();
   const { isLoading, isError, error, jobs } = useJobs();
+  const {
+    isLoading: isLoadingIndustries,
+    isError: isErrorIndustries,
+    industries,
+  } = useIndustries();
   const { control, handleSubmit, setValue } = useForm();
 
-  if (isLoading) return <div>Loading...</div>;
-  if (isError) return <div>{error.message}</div>;
+  if (isLoading || isLoadingIndustries) return <div>Loading...</div>;
+  if (isError || isErrorIndustries) return <div>{error.message}</div>;
 
-  const uniqueIndustries = [...new Set(jobs.map((job) => job.industry))];
-  const uniqueFields = [...new Set(jobs.map((job) => job.field))];
   const uniqueCompanyNames = [...new Set(jobs.map((job) => job.Company.name))];
 
   const onSubmit = (data) => {
@@ -62,22 +66,12 @@ function JobSearchInput() {
           />
 
           <CustomAutoComplete
-            name="field"
-            control={control}
-            xs={6}
-            md={1.5}
-            setValue={setValue}
-            options={uniqueFields}
-            label="Lĩnh vực"
-          />
-
-          <CustomAutoComplete
             name="industry"
             control={control}
             xs={6}
-            md={1.5}
+            md={2.5}
             setValue={setValue}
-            options={uniqueIndustries}
+            options={industries.map((industry) => industry.industry)}
             label="Ngành nghề"
           />
 
@@ -101,7 +95,7 @@ function JobSearchInput() {
             label="Loại hình"
           />
 
-          <Grid item xs={6} md={2}>
+          <Grid item xs={6} md={2.5}>
             <Controller
               name="minSalary"
               control={control}
