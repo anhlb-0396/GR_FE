@@ -41,6 +41,10 @@ import { useSocket } from "../../../contexts/SocketContext";
 import { createNewNotification } from "../../../services/notifications/notificationAPI";
 import TitleText from "../../../ui/sharedComponents/TitleText";
 import ApplyResponseDialog from "../../../ui/sharedComponents/ApplyResponseDialog";
+import {
+  PASS_INTERVIEW_RESPONSE,
+  PASS_CV_RESPONSE,
+} from "../../../data/responseData";
 
 export default function AppliesTable() {
   const { currentUser, token } = useAuth();
