@@ -8,6 +8,11 @@ import {
   StepLabel,
   Button,
   Typography,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  TextField,
 } from "@mui/material";
 
 import Resume from "./Resume";
@@ -47,12 +52,14 @@ function displayStepContent(step, state) {
 }
 
 function ResumeStepper() {
+  const { currentUser } = useAuth();
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
-  const { isCreating, createResume } = useCreateResume();
+  const [openDialog, setOpenDialog] = React.useState(false);
+  const [resumeName, setResumeName] = React.useState("");
+  const { isCreating, createResume } = useCreateResume(currentUser.id);
   const { state } = useUserCV();
   const navigate = useNavigate();
-  const { currentUser } = useAuth();
 
   const isStepSkipped = (step) => {
     return skipped.has(step);
@@ -78,8 +85,20 @@ function ResumeStepper() {
   };
 
   const handleComplete = () => {
+    setOpenDialog(true);
+  };
+
+  const handleDialogClose = () => {
+    setOpenDialog(false);
+  };
+
+  const handleAccept = () => {
     const data = state;
-    createResume({ resume: data, user_id: currentUser.id });
+    createResume({
+      resume: { ...data, resume_name: resumeName },
+      user_id: currentUser.id,
+      resume_name: resumeName,
+    });
     navigate("/");
   };
 
@@ -135,6 +154,25 @@ function ResumeStepper() {
       )}
 
       <Box sx={{ my: "2rem" }}>{displayStepContent(activeStep, state)}</Box>
+
+      {/* Resume Name Dialog */}
+      <Dialog open={openDialog} onClose={handleDialogClose}>
+        <DialogTitle>Đặt tên cho CV</DialogTitle>
+        <DialogContent>
+          <TextField
+            autoFocus
+            margin="dense"
+            label="Tên CV"
+            fullWidth
+            value={resumeName}
+            onChange={(e) => setResumeName(e.target.value)}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleDialogClose}>Hủy</Button>
+          <Button onClick={handleAccept}>Xác nhận</Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 }

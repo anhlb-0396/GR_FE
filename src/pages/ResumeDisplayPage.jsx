@@ -1,15 +1,14 @@
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
-
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Alert from "@mui/material/Alert";
 import Button from "@mui/material/Button";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useParams } from "react-router-dom";
+import { useResume } from "../features/resumes/useResume";
 import TitleText from "../ui/sharedComponents/TitleText";
 import Resume from "../features/resumes/Resume";
-import { useResume } from "../features/resumes/useResume";
 
 function ResumeDisplayPage() {
   const { id } = useParams();

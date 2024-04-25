@@ -42,7 +42,7 @@ function UserMenuHeader({
       <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
         <IconButton sx={{ p: 0, mr: 3 }} size="medium">
           <Badge badgeContent={4} color="error">
-            <MarkChatUnreadIcon />
+            <MarkChatUnreadIcon sx={{ color: "white" }} />
           </Badge>
         </IconButton>
       </Box>

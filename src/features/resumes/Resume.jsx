@@ -31,7 +31,7 @@ const getIconComponent = (iconName) => {
 };
 
 export default function Resume({ profile }) {
-  console.log(profile);
+  // console.log(profile);
 
   return (
     <Box sx={{ width: { xs: "100%", md: "60%" }, margin: "0 auto" }}>

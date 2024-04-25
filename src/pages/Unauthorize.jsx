@@ -1,6 +1,7 @@
 import React from "react";
 import { Link as RouterLink } from "react-router-dom";
-import { Container, Typography, Button } from "@mui/material";
+import { Container, Typography, Button, Grid } from "@mui/material";
+import { Home as HomeIcon } from "@mui/icons-material";
 import TitleText from "../ui/sharedComponents/TitleText";
 
 const Unauthorize = () => {
@@ -15,24 +16,29 @@ const Unauthorize = () => {
         height: "100vh",
       }}
     >
-      <TitleText variant="h4" align="center" gutterBottom color="error">
-        403 - Không có quyền truy cập !
-      </TitleText>
-      <TitleText variant="h5" align="center" paragraph>
-        Bạn không có quyền truy cập vào trang này
-      </TitleText>
-      <TitleText variant="body1" align="center" paragraph>
-        Quay trở lại trang chủ
+      <Grid container>
+        <TitleText variant="h3" align="center" gutterBottom color="error">
+          403 - Không có quyền truy cập !
+        </TitleText>
+      </Grid>
+      <Grid container mt={3}>
+        <TitleText variant="h4" align="center" paragraph>
+          Bạn không có quyền truy cập vào trang này !
+        </TitleText>
+      </Grid>
+
+      <Grid container mt={3} justifyContent="center">
         <Button
           component={RouterLink}
           to="/"
           variant="contained"
           color="primary"
-          sx={{ color: "white", ml: 2 }}
+          sx={{ color: "white", margin: "0 auto" }}
+          startIcon={<HomeIcon />}
         >
           Trang chủ
         </Button>
-      </TitleText>
+      </Grid>
     </Container>
   );
 };

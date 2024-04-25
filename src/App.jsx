@@ -16,7 +16,7 @@ import AppLayouts from "./ui/layouts/user/AppLayouts";
 import Login from "./features/authentication/Login";
 import Register from "./features/authentication/Register";
 import ProtectedRoute from "./pages/ProtectedRoute";
-import ResumeCreatePage from "./pages/ResumeCreatePage";
+import ResumePage from "./pages/ResumePage";
 import ResumeDisplayPage from "./pages/ResumeDisplayPage";
 import AgentLayouts from "./ui/layouts/agent/AgentLayouts";
 import AppliesTable from "./features/agents/applies/AppliesTable";
@@ -35,19 +35,32 @@ const queryClient = new QueryClient();
 const theme = createTheme({
   palette: {
     primary: {
-      main: "rgba(53, 162, 235, 1)",
+      // main: "rgba(53, 162, 235, 1)",
+      main: "#2d3758",
     },
     error: {
       main: "rgba(255, 99, 132, 1)",
+      // main: "#f44336",
     },
     success: {
-      main: "rgba(75, 192, 192, 1)",
+      // main: "rgba(75, 192, 192, 1)",
+      main: "#4caf50",
     },
     warning: {
-      main: "rgba(255, 206, 86, 1)",
+      // main: "rgba(255, 206, 86, 1)",
+      main: "#ff9800",
     },
     info: {
-      main: "rgba(54, 162, 235, 1)",
+      // main: "rgba(54, 162, 235, 1)",
+      main: "#2196f3",
+    },
+
+    text: {
+      primary: "#333",
+    },
+
+    background: {
+      default: "#f4f6f8",
     },
   },
 });
@@ -75,14 +88,14 @@ function App() {
                       path="/users/cv/create"
                       element={
                         <ProtectedRoute role="user">
-                          <ResumeCreatePage />
+                          <ResumePage />
                         </ProtectedRoute>
                       }
                     />
                     <Route
                       path="/users/jobs/expectations"
                       element={
-                        <ProtectedRoute>
+                        <ProtectedRoute role="user">
                           <ExpectJobsPage />
                         </ProtectedRoute>
                       }

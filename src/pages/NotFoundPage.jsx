@@ -1,6 +1,7 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import { Container, Button } from "@mui/material";
+import { Link as RouterLink } from "react-router-dom";
+import { Container, Typography, Button, Grid } from "@mui/material";
+import { Home as HomeIcon } from "@mui/icons-material";
 import TitleText from "../ui/sharedComponents/TitleText";
 
 const NotFoundPage = () => {
@@ -15,24 +16,29 @@ const NotFoundPage = () => {
         height: "100vh",
       }}
     >
-      <TitleText variant="h4" align="center" gutterBottom color="error">
-        404 - Không tìm thấy trang !
-      </TitleText>
-      <TitleText variant="h5" align="center" paragraph>
-        Không tìm thấy trang này
-      </TitleText>
-      <TitleText variant="body1" align="center" paragraph>
-        Quay trở lại trang chủ
+      <Grid container>
+        <TitleText variant="h3" align="center" gutterBottom color="error">
+          404 - Không tìm thấy trang web!
+        </TitleText>
+      </Grid>
+      <Grid container mt={3}>
+        <TitleText variant="h4" align="center" paragraph>
+          Không tìm thấy tài nguyên trang web này !
+        </TitleText>
+      </Grid>
+
+      <Grid container mt={3} justifyContent="center">
         <Button
-          component={Link}
+          component={RouterLink}
           to="/"
           variant="contained"
           color="primary"
-          sx={{ color: "white", ml: 2 }}
+          sx={{ color: "white", margin: "0 auto" }}
+          startIcon={<HomeIcon />}
         >
           Trang chủ
         </Button>
-      </TitleText>
+      </Grid>
     </Container>
   );
 };

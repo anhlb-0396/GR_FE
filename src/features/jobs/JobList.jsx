@@ -54,10 +54,21 @@ function JobList() {
 
   return (
     <Grid container spacing={2} rowGap={4} margin="10px auto">
-      {isFetching && <CircularProgress></CircularProgress>}
-      {paginatedJobs.map((job) => (
-        <JobItem job={job} key={job.id}></JobItem>
-      ))}
+      {isFetching && (
+        <Box
+          sx={{
+            width: "100%",
+            height: "50vh",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <CircularProgress size={80} />
+        </Box>
+      )}
+      {!isFetching &&
+        paginatedJobs.map((job) => <JobItem job={job} key={job.id}></JobItem>)}
       <AppPagination
         onChange={handleChange}
         currentPage={currentPage}
