@@ -15,10 +15,12 @@ import {
 import { Delete, Visibility } from "@mui/icons-material";
 import { useAuth } from "../../contexts/AuthContext";
 import { useResumes } from "./useResumes";
+import { useNavigate } from "react-router-dom";
 
 function ResumesTable() {
   const { currentUser } = useAuth();
   const { resumes, isLoading, isError, error } = useResumes(currentUser.id);
+  const navigate = useNavigate();
 
   if (isLoading) {
     return (
@@ -46,15 +48,21 @@ function ResumesTable() {
     );
   }
 
-  console.log(resumes);
-
-  const handleDelete = (resumeId) => {
-    console.log("Deleting resume with ID:", resumeId);
+  const handleDelete = (resume) => {
+    console.log("Deleting resume with ID:", resume.id);
   };
 
-  const handleWatch = (resumeId) => {
-    console.log("Watching resume with ID:", resumeId);
+  const handleWatch = (resume) => {
+    console.log("Watching resume with ID:", resume.id);
+    if (resume.is_uploaded) {
+      const url = resume.resume_url;
+      window.open(url, "_blank");
+    } else {
+      navigate(`/resumes/${resume.id}`);
+    }
   };
+
+  // console.log(resumes);
 
   return (
     <Box mt={4} maxWidth="md" margin="10px auto">
@@ -84,13 +92,13 @@ function ResumesTable() {
                 <TableCell>
                   <IconButton
                     aria-label="Watch"
-                    onClick={() => handleWatch(resume.id)}
+                    onClick={() => handleWatch(resume)}
                   >
                     <Visibility />
                   </IconButton>
                   <IconButton
                     aria-label="Delete"
-                    onClick={() => handleDelete(resume.id)}
+                    onClick={() => handleDelete(resume)}
                   >
                     <Delete />
                   </IconButton>

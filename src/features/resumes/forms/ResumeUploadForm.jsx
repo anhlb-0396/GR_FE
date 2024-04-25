@@ -8,8 +8,13 @@ import {
 } from "@mui/material";
 import { CloudUpload } from "@mui/icons-material"; // Import CloudUpload icon
 import { useForm, Controller } from "react-hook-form";
+import { useAuth } from "../../../contexts/AuthContext";
+import { useCreatePdfResume } from "../userCreateResume";
 
-function ResumeUploadForm({ onSubmit }) {
+function ResumeUploadForm() {
+  const { currentUser } = useAuth();
+  const { isCreating, createPdfResume } = useCreatePdfResume(currentUser.id);
+
   const {
     control,
     handleSubmit,
@@ -19,17 +24,14 @@ function ResumeUploadForm({ onSubmit }) {
   const handleFormSubmit = (data) => {
     const formData = new FormData();
     formData.append("name", data.name);
-    formData.append("resumeFile", data.resumeFile[0]);
+    formData.append("resumeFile", data.resumeFile);
+    formData.append("userId", currentUser.id);
 
-    console.log(formData);
-    return;
-    onSubmit(data);
+    createPdfResume(formData);
   };
 
-  // Custom validation rule to check file size
   const validateFileSize = (file) => {
-    console.log(file);
-    const maxSize = 5 * 1024 * 1024; // 5MB in bytes
+    const maxSize = 5 * 1024 * 1024;
     if (file.size > maxSize) {
       return "File size must be less than 5MB";
     }
@@ -66,23 +68,29 @@ function ResumeUploadForm({ onSubmit }) {
                 validate: validateFileSize, // Add custom validation rule
               }}
               render={({ field }) => (
-                <input
-                  {...field}
-                  id="upload-button" // Assign id for label association
-                  type="file"
-                  accept=".pdf"
-                />
+                <>
+                  <TextField
+                    fullWidth
+                    margin="normal"
+                    type="file"
+                    InputLabelProps={{ shrink: true }}
+                    inputProps={{ accept: ".pdf" }}
+                    onChange={(e) => field.onChange(e.target.files[0])}
+                    error={!!errors.resumeFile}
+                    helperText={
+                      errors.resumeFile ? errors.resumeFile.message : ""
+                    }
+                    label="Upload Resume"
+                  />
+                  <label htmlFor="upload-button">
+                    <IconButton component="span">
+                      <CloudUpload />
+                      Upload Resume
+                    </IconButton>
+                  </label>
+                </>
               )}
             />
-            <label htmlFor="upload-button">
-              <IconButton component="span">
-                <CloudUpload />
-                Upload Resume
-              </IconButton>
-            </label>
-            {errors.resumeFile && (
-              <span style={{ color: "red" }}>{errors.resumeFile.message}</span>
-            )}
             <Button type="submit" variant="contained" color="primary">
               Submit
             </Button>

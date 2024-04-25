@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
-import { fetchResumeByUserId } from "../../services/users/resumeAPI";
+import { fetchResumeById } from "../../services/users/resumeAPI";
 
-export function useResume(userId) {
+export function useResume(id) {
   const {
     data: resume,
     isLoading,
@@ -9,8 +9,8 @@ export function useResume(userId) {
     error,
     isFetching,
   } = useQuery({
-    queryKey: ["resume", userId],
-    queryFn: () => fetchResumeByUserId(userId),
+    queryKey: ["resume", id],
+    queryFn: () => fetchResumeById(id),
   });
 
   return { isLoading, isError, error, resume, isFetching };

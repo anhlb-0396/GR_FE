@@ -81,7 +81,7 @@ function App() {
                     <Route path="/login" element={<Login />} />
                     <Route path="/signup" element={<Register />} />
                     <Route
-                      path="/users/:id/cv"
+                      path="/resumes/:id"
                       element={<ResumeDisplayPage />}
                     />
                     <Route

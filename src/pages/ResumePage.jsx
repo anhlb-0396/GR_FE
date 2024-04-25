@@ -48,13 +48,11 @@ function ResumePage() {
     <Box sx={{ width: "80%", margin: "0 auto" }}>
       <TitleText>Sơ yếu lí lịch bản thân</TitleText>
 
-      {/* Tabs for option selection */}
       <Tabs value={tabValue} onChange={handleTabChange} centered>
         <Tab label="Tạo CV" />
         <Tab label="Xem tất cả CV" />
       </Tabs>
 
-      {/* Render components based on the selected tab */}
       {tabValue === 0 && (
         <Box>
           <Grid container alignItems="center" my={3}>
@@ -77,7 +75,6 @@ function ResumePage() {
             </Grid>
           )}
 
-          {/* Dialog for option selection */}
           <Dialog open={open} onClose={handleClose}>
             <DialogTitle>
               <TitleText variant="h5">Chọn cách tạo sơ yếu lý lịch</TitleText>
@@ -101,7 +98,6 @@ function ResumePage() {
             </DialogActions>
           </Dialog>
 
-          {/* Conditionally render components based on the selected option */}
           {selectedOption === "createInApp" && <ResumeStepper />}
           {selectedOption === "uploadPdf" && <ResumeUploadForm />}
         </Box>

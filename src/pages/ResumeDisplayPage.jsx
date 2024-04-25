@@ -64,7 +64,6 @@ function ResumeDisplayPage() {
   }
 
   const resumeData = JSON.parse(resume.data);
-  //   console.log(resumeData);
 
   return (
     <Box sx={{ width: "80%", margin: "0 auto" }}>
