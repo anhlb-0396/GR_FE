@@ -99,6 +99,13 @@ export default function AppliesTable() {
 
   const handleOpenDialog = (row) => {
     setSelectedRow(row);
+    if (row.status === "pending") {
+      setAcceptedDescription(PASS_CV_RESPONSE);
+    }
+
+    if (row.status === "accepted-cv-round") {
+      setAcceptedDescription(PASS_INTERVIEW_RESPONSE);
+    }
     setOpenDialog(true);
   };
 
@@ -196,6 +203,8 @@ export default function AppliesTable() {
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
+  // console.log(rows);
+
   return (
     <Paper
       sx={{
@@ -207,9 +216,7 @@ export default function AppliesTable() {
     >
       <TitleText>Danh sách ứng tuyển gần đây</TitleText>
 
-      {/* Filter by Status dropdown with MUI */}
       <FormControl sx={{ mb: 2, mt: 2, maxWidth: "160px" }}>
-        {/* <InputLabel id="status-select-label">Trạng thái</InputLabel> */}
         <Select
           labelId="status-select-label"
           value={selectedStatus}
@@ -221,7 +228,6 @@ export default function AppliesTable() {
           <MenuItem value="accepted-cv-round">Đỗ vòng hồ sơ</MenuItem>
           <MenuItem value="accepted-interview-round">Trúng tuyển</MenuItem>
           <MenuItem value="rejected">Từ chối</MenuItem>
-          {/* Add additional options for other statuses if needed */}
         </Select>
       </FormControl>
 

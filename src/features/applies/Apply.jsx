@@ -19,18 +19,21 @@ import {
 import { useCreateApply } from "./userCreateApply";
 import { useDeleteApply } from "./userDeleteApply";
 import { useApplies } from "./useApplies";
-import { useResume } from "../resumes/useResume";
+import { useResumes } from "../resumes/useResumes";
 import TitleText from "../../ui/sharedComponents/TitleText";
 import { useSocket } from "../../contexts/SocketContext";
 import { createNewNotification } from "../../services/notifications/notificationAPI";
 import ApplyResponseDialog from "../../ui/sharedComponents/ApplyResponseDialog";
+import ResumesTable from "../resumes/ResumesTable";
+import toast from "react-hot-toast";
 
 function Apply({ job, currentUser, token, isAuthenticated }) {
   const [openDialog, setOpenDialog] = useState(false);
+  const [choosedResume, setChoosedResume] = useState(null);
   const { createNewApply, isCreating } = useCreateApply(currentUser.id);
   const { deleteNewApply, isDeleting } = useDeleteApply(currentUser.id);
   const { applies, isLoading, isError } = useApplies(currentUser.id);
-  const { isLoading: isResumeLoading, isError: isResumeError } = useResume(
+  const { isLoading: isResumeLoading, isError: isResumeError } = useResumes(
     currentUser.id
   );
 
@@ -82,11 +85,18 @@ function Apply({ job, currentUser, token, isAuthenticated }) {
   };
 
   const handleConfirmation = async () => {
-    setOpenDialog(false); // Close the confirmation dialog
+    if (choosedResume === null) {
+      toast.error("Vui lòng chọn CV để ứng tuyển");
+      return;
+    }
+
+    setOpenDialog(false);
+
     if (!isApplied) {
       const applyData = {
         user_id: currentUser.id,
         job_id: job.id,
+        resume_id: choosedResume,
         token,
       };
       createNewApply(applyData);
@@ -184,9 +194,15 @@ function Apply({ job, currentUser, token, isAuthenticated }) {
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            {!isApplied
-              ? "Bạn có chắc muốn ứng tuyển công việc này hay không ???"
-              : "Bạn có chắc muốn hủy ứng tuyển công việc này hay không ???"}
+            {!isApplied ? (
+              <ResumesTable
+                type="apply"
+                choosedResume={choosedResume}
+                setChoosedResume={setChoosedResume}
+              />
+            ) : (
+              "Bạn có chắc muốn hủy ứng tuyển công việc này hay không ???"
+            )}
           </DialogContentText>
         </DialogContent>
         <DialogActions>

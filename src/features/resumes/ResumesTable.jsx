@@ -11,13 +11,19 @@ import {
   CircularProgress,
   Alert,
   Chip,
+  Grid,
 } from "@mui/material";
-import { Delete, Visibility } from "@mui/icons-material";
+import {
+  Delete,
+  Visibility,
+  RadioButtonUnchecked,
+  RadioButtonChecked,
+} from "@mui/icons-material";
 import { useAuth } from "../../contexts/AuthContext";
 import { useResumes } from "./useResumes";
 import { useNavigate } from "react-router-dom";
 
-function ResumesTable() {
+function ResumesTable({ type = "normal", choosedResume, setChoosedResume }) {
   const { currentUser } = useAuth();
   const { resumes, isLoading, isError, error } = useResumes(currentUser.id);
   const navigate = useNavigate();
@@ -62,8 +68,6 @@ function ResumesTable() {
     }
   };
 
-  // console.log(resumes);
-
   return (
     <Box mt={4} maxWidth="md" margin="10px auto">
       <TableContainer component={Paper}>
@@ -96,12 +100,27 @@ function ResumesTable() {
                   >
                     <Visibility />
                   </IconButton>
-                  <IconButton
-                    aria-label="Delete"
-                    onClick={() => handleDelete(resume)}
-                  >
-                    <Delete />
-                  </IconButton>
+                  {type === "normal" && (
+                    <IconButton
+                      aria-label="Delete"
+                      onClick={() => handleDelete(resume)}
+                    >
+                      <Delete />
+                    </IconButton>
+                  )}
+
+                  {type === "apply" && (
+                    <IconButton
+                      aria-label="Choose"
+                      onClick={() => setChoosedResume(resume.id)}
+                    >
+                      {choosedResume === resume.id ? (
+                        <RadioButtonChecked color="primary" />
+                      ) : (
+                        <RadioButtonUnchecked />
+                      )}
+                    </IconButton>
+                  )}
                 </TableCell>
               </TableRow>
             ))}
