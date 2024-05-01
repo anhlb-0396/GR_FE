@@ -44,7 +44,8 @@ const theme = createTheme({
     },
     success: {
       // main: "rgba(75, 192, 192, 1)",
-      main: "#4caf50",
+      // main: "#4caf50",
+      main: "#00c853",
     },
     warning: {
       // main: "rgba(255, 206, 86, 1)",

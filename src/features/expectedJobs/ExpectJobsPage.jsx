@@ -58,12 +58,6 @@ function ExpectJobsPage() {
           open={openDialog}
           onClose={handleCloseDialog}
           onSubmit={handleSubmitForm}
-          initialValues={{
-            min_salary: 5000000,
-            max_salary: 10000000,
-            field: "Công nghệ",
-            skills: ["ReactJS", "NodeJS", "MongoDB"],
-          }}
         />
       </Box>
     );

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Grid } from "@mui/material";
+import { Grid, Box, CircularProgress, Alert } from "@mui/material";
 import AppPagination from "../../ui/sharedComponents/AppPagination";
 import TitleText from "../../ui/sharedComponents/TitleText";
 import CompanySummaryCard from "./CompanySummaryCard";
@@ -11,8 +11,29 @@ function CompanyList() {
   const { companies, isLoading, isError, error } = useCompanies();
   const [currentPage, setCurrentPage] = useState(1);
 
-  if (isLoading) return <div>Loading...</div>;
-  if (isError) return <div>Error: {error.message}</div>;
+  if (isLoading) {
+    return (
+      <Box
+        sx={{
+          width: "100%",
+          height: "50vh",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <CircularProgress size={80} />
+      </Box>
+    );
+  }
+
+  if (isError) {
+    return (
+      <Box sx={{ width: "80%", margin: "0 auto" }}>
+        <Alert severity="error">Không có dữ liệu nào về công việc này!!!</Alert>
+      </Box>
+    );
+  }
 
   const startIndex = (currentPage - 1) * COMPANIES_PER_PAGE;
   const endIndex = currentPage * COMPANIES_PER_PAGE;
