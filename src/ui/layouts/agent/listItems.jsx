@@ -40,7 +40,7 @@ export const mainListItems = (
       <ListItemText primary="Quản lý ứng tuyển" />
     </ListItemButton>
 
-    <ListItemButton>
+    <ListItemButton component={Link} to="agent/statistics">
       <ListItemIcon>
         <BarChartIcon />
       </ListItemIcon>

@@ -1,3 +1,4 @@
+import React from "react";
 import {
   Box,
   Button,
@@ -6,7 +7,7 @@ import {
   Card,
   CardContent,
 } from "@mui/material";
-import { CloudUpload } from "@mui/icons-material"; // Import CloudUpload icon
+import { CloudUpload } from "@mui/icons-material";
 import { useForm, Controller } from "react-hook-form";
 import { useAuth } from "../../../contexts/AuthContext";
 import { useCreatePdfResume } from "../userCreateResume";
@@ -68,7 +69,7 @@ function ResumeUploadForm() {
                 validate: validateFileSize, // Add custom validation rule
               }}
               render={({ field }) => (
-                <>
+                <React.Fragment>
                   <TextField
                     fullWidth
                     margin="normal"
@@ -88,10 +89,15 @@ function ResumeUploadForm() {
                       Upload Resume
                     </IconButton>
                   </label>
-                </>
+                </React.Fragment>
               )}
             />
-            <Button type="submit" variant="contained" color="primary">
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              disabled={isCreating}
+            >
               Submit
             </Button>
           </Box>

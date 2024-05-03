@@ -30,6 +30,7 @@ import AgentCompany from "./features/agents/companies/AgentCompany";
 import { UserCVProvider } from "./contexts/UserCVContext";
 import { SocketProvider } from "./contexts/SocketContext";
 import ExpectJobsPage from "./features/expectedJobs/ExpectJobsPage";
+import StatisticsPage from "./pages/StatisticsPage";
 
 const queryClient = new QueryClient();
 const theme = createTheme({
@@ -116,6 +117,10 @@ function App() {
                     <Route
                       path="/agent/jobs/:id/update"
                       element={<UpdateJob />}
+                    />
+                    <Route
+                      path="/agent/statistics"
+                      element={<StatisticsPage />}
                     />
                     <Route
                       path="/agent/notifications"

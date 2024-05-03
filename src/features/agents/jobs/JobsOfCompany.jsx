@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Grid, Box, CircularProgress, Button, Alert } from "@mui/material";
 import { Add as AddIcon } from "@mui/icons-material";
@@ -54,7 +54,7 @@ function JobsOfCompany() {
   };
 
   return (
-    <>
+    <React.Fragment>
       <TitleText variant="h4">Danh sách công việc đã đăng</TitleText>
       <Button
         startIcon={<AddIcon />}
@@ -73,7 +73,7 @@ function JobsOfCompany() {
         currentPage={currentPage}
         count={count}
       ></AppPagination>
-    </>
+    </React.Fragment>
   );
 }
 
