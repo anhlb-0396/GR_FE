@@ -27,8 +27,6 @@ function ExpectJobFormDialog({ open, onClose, onSubmit, initialValues = {} }) {
 
   const { industries, isLoading, isError } = useIndustries();
 
-  // console.log("industries", industries);
-
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error...</div>;
 
@@ -51,8 +49,6 @@ function ExpectJobFormDialog({ open, onClose, onSubmit, initialValues = {} }) {
     data.working_type =
       data.working_type === "tất cả" ? null : data.working_type;
 
-    // console.log(data);
-    // return;
     onSubmit(data);
     onClose();
   };

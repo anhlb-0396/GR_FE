@@ -112,8 +112,6 @@ function JobDetails() {
     );
   }
 
-  console.log(job);
-
   return (
     <Box sx={{ width: "90%", margin: "0 auto" }}>
       <Grid container justifyContent="space-between">
