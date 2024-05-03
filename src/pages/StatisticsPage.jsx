@@ -4,19 +4,23 @@ import AppliesStatistic from "../features/agents/statistics/AppliesStatistic";
 
 function StatisticsPage() {
   return (
-    <Grid container spacing={2}>
-      <Paper>
-        <Grid container>
-          {/* Add margin top */}
-          <Grid item xs={12} mt={5}>
-            <IndustriesStatistics />
-          </Grid>
-          <Grid item xs={12} mt={5}>
-            <AppliesStatistic />
-          </Grid>
+    <Paper
+      elevation={3}
+      sx={{
+        borderRadius: 4, // Adjust the border radius as needed
+        padding: "20px", // Add padding to match the Paper component
+        marginTop: "20px", // Add margin top to match the Paper component
+      }}
+    >
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <IndustriesStatistics />
         </Grid>
-      </Paper>
-    </Grid>
+        <Grid item xs={12}>
+          <AppliesStatistic />
+        </Grid>
+      </Grid>
+    </Paper>
   );
 }
 

@@ -15,7 +15,7 @@ function AppliesStatistic() {
       <Box
         sx={{
           width: "100%",
-          height: "50vh",
+          height: "50vh", // Adjust the height here
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
@@ -28,7 +28,7 @@ function AppliesStatistic() {
 
   if (isError) {
     return (
-      <Box sx={{ width: "80%", margin: "0 auto" }}>
+      <Box sx={{ width: "100%", margin: "0 auto" }}>
         <Alert severity="error">Không có dữ liệu</Alert>
       </Box>
     );
@@ -59,7 +59,13 @@ function AppliesStatistic() {
     ],
   };
 
-  return <PieChart data={data} />;
+  return (
+    <PieChart
+      data={data}
+      title="Thống kê tình trạng ứng tuyển"
+      maxHeight="300px" // Adjust the maxHeight here
+    />
+  );
 }
 
 export default AppliesStatistic;

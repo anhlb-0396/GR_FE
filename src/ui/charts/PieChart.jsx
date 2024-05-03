@@ -1,11 +1,11 @@
 import React from "react";
-import { Grid } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Pie } from "react-chartjs-2";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-export function PieChart({ data }) {
+export function PieChart({ data, title }) {
   // Calculate total value
   const total = data.datasets[0].data.reduce((acc, value) => acc + value, 0);
 
@@ -25,6 +25,14 @@ export function PieChart({ data }) {
           },
         },
       },
+      legend: {
+        display: true,
+        position: "right", // Adjust legend position here
+        align: "start", // Adjust legend alignment here
+        labels: {
+          usePointStyle: true,
+        },
+      },
     },
   };
 
@@ -32,13 +40,21 @@ export function PieChart({ data }) {
     <Grid
       container
       sx={{
-        width: { sm: "100%", md: "60%" },
-        maxHeight: "300px",
+        width: { sm: "100%", md: "50%" },
+        maxHeight: "500px",
         mt: "2rem",
         margin: "0 auto",
       }}
       justifyContent="center"
     >
+      <Typography
+        variant="h4"
+        fontWeight="bold"
+        textAlign="center"
+        color="primary"
+      >
+        {title}
+      </Typography>
       <Pie data={data} options={options} />
     </Grid>
   );
