@@ -31,6 +31,7 @@ import { UserCVProvider } from "./contexts/UserCVContext";
 import { SocketProvider } from "./contexts/SocketContext";
 import ExpectJobsPage from "./features/expectedJobs/ExpectJobsPage";
 import StatisticsPage from "./pages/StatisticsPage";
+import Chat from "./features/chat/Chat";
 
 const queryClient = new QueryClient();
 const theme = createTheme({
@@ -79,6 +80,7 @@ function App() {
                 <Routes>
                   <Route element={<AppLayouts />}>
                     <Route path="/" element={<Homepage />} />
+                    <Route path="/chat" element={<Chat />} />
                     <Route path="/jobs/:id" element={<JobDetails />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/signup" element={<Register />} />
@@ -111,6 +113,7 @@ function App() {
                       </ProtectedRoute>
                     }
                   >
+                    <Route path="/agent/chat" element={<Chat />} />
                     <Route path="/agent/applies" element={<AppliesTable />} />
                     <Route path="/agent/jobs" element={<JobsOfCompany />} />
                     <Route path="/agent/jobs/create" element={<CreateJob />} />
