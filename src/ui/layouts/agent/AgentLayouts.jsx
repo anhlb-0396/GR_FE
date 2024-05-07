@@ -94,7 +94,7 @@ const Drawer = styled(MuiDrawer, {
 
 export default function AgentLayouts() {
   const [open, setOpen] = React.useState(true);
-  const [isNotificationOpen, setNotificationOpen] = React.useState(false);
+  const [isNotificationOpen, setIsNotificationOpen] = React.useState(false);
   const { notifications, handleReadAllNotifications } = useSocket();
 
   const toggleDrawer = () => {
@@ -102,7 +102,7 @@ export default function AgentLayouts() {
   };
 
   const toggleNotificationMenu = () => {
-    setNotificationOpen(!isNotificationOpen);
+    setIsNotificationOpen(!isNotificationOpen);
   };
 
   return (
@@ -148,7 +148,7 @@ export default function AgentLayouts() {
                 textDecoration: "none",
               }}
             >
-              JOBFIND
+              JOBFIND_AGENT
             </Typography>
           </Grid>
           <IconButton color="inherit" onClick={toggleNotificationMenu}>

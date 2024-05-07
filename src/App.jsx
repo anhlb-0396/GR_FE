@@ -37,7 +37,6 @@ const queryClient = new QueryClient();
 const theme = createTheme({
   palette: {
     primary: {
-      // main: "rgba(53, 162, 235, 1)",
       main: "#2d3758",
     },
     error: {

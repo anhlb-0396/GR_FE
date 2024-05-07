@@ -7,15 +7,19 @@ import {
   getAllNotifications,
   deleteAllNotifications,
 } from "../services/notifications/notificationAPI";
+import { getAllChatMessages } from "../services/chats/chatAPI";
+import { set } from "date-fns";
 
 const SocketContext = createContext();
 
 const SocketProvider = ({ children }) => {
   const [socket, setSocket] = useState(null);
   const [notifications, setNotifications] = useState([]);
+  const [chatMessages, setChatMessages] = useState([]);
+  const [chatMessagesOfCurrentChatUserId, setChatMessagesOfCurrentChatUserId] =
+    useState([]);
+  const [currentChatUserId, setCurrentChatUserId] = useState(null);
   const { currentUser } = useAuth();
-
-  // console.log(notifications);
 
   useEffect(() => {
     if (currentUser && currentUser.id) {
@@ -24,7 +28,13 @@ const SocketProvider = ({ children }) => {
 
       getAllNotifications(currentUser.id)
         .then((notifications) => setNotifications(notifications))
-        .catch((error) => console.error(error));
+        .catch((error) => toast.error(error));
+
+      getAllChatMessages(currentUser.id)
+        .then((chats) => {
+          setChatMessages(chats);
+        })
+        .catch((error) => toast.error(error));
 
       return () => {
         newSocket.disconnect();
@@ -70,6 +80,37 @@ const SocketProvider = ({ children }) => {
     };
   }, [socket]);
 
+  useEffect(() => {
+    if (socket === null) return;
+
+    if (!currentChatUserId) {
+      setChatMessagesOfCurrentChatUserId([]);
+      return;
+    }
+
+    setChatMessagesOfCurrentChatUserId(
+      chatMessages.filter(
+        (message) =>
+          (message.sender_id === currentUser.id &&
+            message.receiver_id === currentChatUserId) ||
+          (message.sender_id === currentChatUserId &&
+            message.receiver_id === currentUser.id)
+      )
+    );
+
+    socket.on("receiveChatMessage", (data) => {
+      if (data.sender_id === currentChatUserId) {
+        setChatMessagesOfCurrentChatUserId((prev) => [...prev, data]);
+      }
+
+      setChatMessages((prev) => [...prev, data]);
+    });
+
+    return () => {
+      socket.off("receiveChatMessage");
+    };
+  }, [socket, currentChatUserId, currentUser.id]);
+
   const handleReadAllNotifications = () => {
     setNotifications([]);
     deleteAllNotifications(currentUser.id)
@@ -79,7 +120,17 @@ const SocketProvider = ({ children }) => {
 
   return (
     <SocketContext.Provider
-      value={{ socket, notifications, handleReadAllNotifications }}
+      value={{
+        socket,
+        notifications,
+        handleReadAllNotifications,
+        currentChatUserId,
+        setCurrentChatUserId,
+        chatMessages,
+        setChatMessages,
+        setChatMessagesOfCurrentChatUserId,
+        chatMessagesOfCurrentChatUserId,
+      }}
     >
       {children}
     </SocketContext.Provider>

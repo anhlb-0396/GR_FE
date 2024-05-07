@@ -1,8 +1,12 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import { Check as CheckIcon, Close as CloseIcon } from "@mui/icons-material";
+import {
+  Check as CheckIcon,
+  Close as CloseIcon,
+  Chat as ChatIcon,
+} from "@mui/icons-material";
 import {
   Chip,
   Box,
@@ -23,7 +27,6 @@ import {
   DialogContent,
   DialogActions,
   FormControl,
-  InputLabel,
   Select,
   MenuItem,
 } from "@mui/material";
@@ -48,11 +51,12 @@ import {
 
 export default function AppliesTable() {
   const { currentUser, token } = useAuth();
-  const { socket } = useSocket();
+  const { socket, setCurrentChatUserId } = useSocket();
   const { applies, isLoading, isError } = useApplies(currentUser.company_id);
   const { isUpdating, updateCurrentApply } = useUpdateApply(
     currentUser.company_id
   );
+  const navigate = useNavigate();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [acceptedDescription, setAcceptedDescription] = useState("");
@@ -200,6 +204,11 @@ export default function AppliesTable() {
     handleCloseDialog();
   };
 
+  const handleChatButtonClick = (row) => {
+    setCurrentChatUserId(row.userId);
+    navigate("/agent/chat");
+  };
+
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
@@ -309,6 +318,12 @@ export default function AppliesTable() {
                 >
                   Xem
                 </Button>
+                <IconButton
+                  onClick={() => handleChatButtonClick(row)}
+                  color="primary"
+                >
+                  <ChatIcon />
+                </IconButton>
               </TableCell>
             </TableRow>
           ))}

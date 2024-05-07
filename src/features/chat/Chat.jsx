@@ -9,12 +9,53 @@ import {
   ListItemText,
   Paper,
   TextField,
-  Typography,
 } from "@mui/material";
 import { Send as SendIcon } from "@mui/icons-material";
+import { useSocket } from "../../contexts/SocketContext";
+import { useAuth } from "../../contexts/AuthContext";
+import { createNewChatMessage } from "../../services/chats/chatAPI";
+import { createNewNotification } from "../../services/notifications/notificationAPI";
 import TitleText from "../../ui/sharedComponents/TitleText";
+import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 
-const Chat = () => {
+const Chat = ({ chats }) => {
+  const {
+    currentChatUserId,
+    setCurrentChatUserId,
+    socket,
+    setChatMessages,
+    chatMessagesOfCurrentChatUserId,
+    setChatMessagesOfCurrentChatUserId,
+  } = useSocket();
+  const { currentUser } = useAuth();
+  const { register, handleSubmit, reset } = useForm();
+
+  const onSubmit = (data) => {
+    if (!data.comment.trim() || !currentChatUserId) return;
+
+    const newMessage = {
+      sender_id: currentUser.id,
+      receiver_id: currentChatUserId,
+      message: data.comment,
+      createdAt: new Date().toISOString(),
+    };
+
+    createNewChatMessage(newMessage)
+      .then((response) => {
+        reset();
+        socket.emit("sendChatMessage", newMessage);
+        toast.success("Đã gửi tin nhắn");
+      })
+      .catch((error) => {
+        console.error("Error sending message:", error);
+        toast.error("Gửi tin nhắn thất bại");
+      });
+
+    setChatMessages((prev) => [...prev, newMessage]);
+    setChatMessagesOfCurrentChatUserId((prev) => [...prev, newMessage]);
+  };
+
   return (
     <div>
       <Grid container>
@@ -26,7 +67,11 @@ const Chat = () => {
           <TitleText variant="h5">Remy Sharp</TitleText>
         </Grid>
       </Grid>
-      <Grid container component={Paper} sx={{ width: "100%", height: "auto" }}>
+      <Grid
+        container
+        component={Paper}
+        sx={{ width: "100%", height: "auto", mt: 2, p: 2 }}
+      >
         <Grid item xs={3} sx={{ borderRight: "1px solid #e0e0e0" }}>
           <List>
             <ListItem button key="RemySharp">
@@ -60,93 +105,47 @@ const Chat = () => {
               <ListItemText primary="Remy Sharp">Remy Sharp</ListItemText>
               <ListItemText secondary="online" align="right"></ListItemText>
             </ListItem>
-            <ListItem button key="Alice">
-              <ListItemIcon>
-                <Avatar
-                  alt="Alice"
-                  src="https://material-ui.com/static/images/avatar/3.jpg"
-                />
-              </ListItemIcon>
-              <ListItemText primary="Alice">Alice</ListItemText>
-            </ListItem>
-            <ListItem button key="CindyBaker">
-              <ListItemIcon>
-                <Avatar
-                  alt="Cindy Baker"
-                  src="https://material-ui.com/static/images/avatar/2.jpg"
-                />
-              </ListItemIcon>
-              <ListItemText primary="Cindy Baker">Cindy Baker</ListItemText>
-            </ListItem>
           </List>
         </Grid>
         <Grid item xs={9}>
-          <List
-            // className={classes.messageArea}
-            sx={{ height: "70vh", overflowY: "auto" }}
-          >
-            <ListItem key="1">
-              <Grid container>
-                <Grid item xs={12}>
-                  <ListItemText
-                    align="right"
-                    primary="Hey man, What's up ?"
-                  ></ListItemText>
-                </Grid>
-                <Grid item xs={12}>
-                  <ListItemText align="right" secondary="09:30"></ListItemText>
-                </Grid>
-              </Grid>
-            </ListItem>
-            <ListItem key="2">
-              <Grid container sx={{ backgroundColor: "#f0f0f0" }}>
-                <Grid item xs={12}>
-                  <ListItemText
-                    align="left"
-                    primary="Hey, Iam Good! What about you ?"
-                  ></ListItemText>
-                </Grid>
-                <Grid item xs={12}>
-                  <ListItemText align="left" secondary="09:31"></ListItemText>
-                </Grid>
-              </Grid>
-            </ListItem>
-            <ListItem key="3">
-              <Grid container>
-                <Grid item xs={12}>
-                  <ListItemText
-                    align="right"
-                    primary="Cool. i am good, let's catch up!"
-                  ></ListItemText>
-                </Grid>
-                <Grid item xs={12}>
-                  <ListItemText align="right" secondary="10:30"></ListItemText>
-                </Grid>
-              </Grid>
-            </ListItem>
+          <List sx={{ height: "70vh", overflowY: "auto" }}>
+            {chatMessagesOfCurrentChatUserId.map((message, index) => (
+              <ListItem key={index}>
+                <ListItemText
+                  primary={message.message}
+                  secondary={new Date(message.createdAt).toLocaleString()}
+                  align={
+                    message.sender_id === currentUser.id ? "right" : "left"
+                  }
+                ></ListItemText>
+              </ListItem>
+            ))}
           </List>
           <Divider />
-          <Grid container style={{ padding: "20px" }} alignItems="center">
-            <Grid item xs={11}>
-              <TextField
-                fullWidth
-                multiline
-                rows={2}
-                label="Bình luận"
-                variant="outlined"
-                margin="dense"
-                required
-                name="comment"
-                id="comment"
-                sx={{ mt: 3 }}
-              />
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <Grid container style={{ padding: "20px" }} alignItems="center">
+              <Grid item xs={11}>
+                <TextField
+                  fullWidth
+                  multiline
+                  rows={2}
+                  label="Bình luận"
+                  variant="outlined"
+                  margin="dense"
+                  required
+                  name="comment"
+                  id="comment"
+                  sx={{ mt: 3 }}
+                  {...register("comment")} // Register the comment field with React Hook Form
+                />
+              </Grid>
+              <Grid xs={1} align="right">
+                <Fab color="primary" aria-label="add" type="submit">
+                  <SendIcon />
+                </Fab>
+              </Grid>
             </Grid>
-            <Grid xs={1} align="right">
-              <Fab color="primary" aria-label="add">
-                <SendIcon />
-              </Fab>
-            </Grid>
-          </Grid>
+          </form>
         </Grid>
       </Grid>
     </div>
