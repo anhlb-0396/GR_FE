@@ -73,20 +73,23 @@ const SocketProvider = ({ children }) => {
       setNotifications((prev) => [data, ...prev]);
     });
 
+    socket.on("receiveMessageNotification", (data) => {
+      toast(`Thông báo mới: ${data.message}`, {
+        icon: "🔔",
+      });
+      setNotifications((prev) => [data, ...prev]);
+    });
+
     return () => {
       socket.off("agentJobApply");
       socket.off("userAcceptJobApply");
       socket.off("userDenyJobApply");
+      socket.off("receiveMessageNotification");
     };
   }, [socket]);
 
   useEffect(() => {
     if (socket === null || !currentUser || !currentUser.id) return;
-
-    // if (!currentChatUserId) {
-    //   setChatMessagesOfCurrentChatUserId([]);
-    //   return;
-    // }
 
     setChatMessagesOfCurrentChatUserId(
       chatMessages.filter(

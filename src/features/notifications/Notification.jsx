@@ -48,7 +48,7 @@ export default function Notification({
     >
       <Grid container justifyContent="space-between">
         <Grid item xs={10} ml={5}>
-          <TitleText variant="h5">Thông báo mới</TitleText>
+          <TitleText variant="h5">🔔 Thông báo mới</TitleText>
         </Grid>
         <Grid item xs={1}>
           <IconButton onClick={handleReadAllNotifications}>

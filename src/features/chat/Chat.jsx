@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import {
   Avatar,
   Divider,
@@ -31,6 +32,7 @@ const Chat = () => {
   } = useSocket();
   const { currentUser } = useAuth();
   const { register, handleSubmit, reset } = useForm();
+  const [searchQuery, setSearchQuery] = useState(""); // State to hold the search query
 
   const onSubmit = (data) => {
     if (!data.comment.trim() || !currentChatUserId) return;
@@ -58,6 +60,33 @@ const Chat = () => {
         console.error("Error sending message:", error);
         toast.error("Gửi tin nhắn thất bại");
       });
+
+    const newNotification = {
+      sender_id: currentUser.id,
+      receiver_id: currentChatUserId,
+      message: `💬 Bạn có tin nhắn mới từ ${currentUser.name}`,
+      type: "chat",
+      createdAt: new Date().toISOString(),
+    };
+
+    createNewNotification(newNotification)
+      .then(() => {
+        socket.emit("sendMessageNotification", newNotification);
+      })
+      .catch((error) => {
+        console.error("Error sending notification:", error);
+        toast.error("Gửi thông báo thất bại");
+      });
+  };
+
+  // Filtering function to filter users based on the search query
+  const filteredUsers = chattingUsers.filter((user) =>
+    user.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  // Handler function to update search query state
+  const handleSearch = (event) => {
+    setSearchQuery(event.target.value);
   };
 
   return (
@@ -85,7 +114,7 @@ const Chat = () => {
       >
         <Grid item xs={3} sx={{ borderRight: "1px solid #e0e0e0" }}>
           <List>
-            <ListItem button key="RemySharp">
+            <ListItem button key={currentUser.name}>
               <ListItemIcon>
                 <Avatar alt={currentUser.name} src={currentUser.avatar} />
               </ListItemIcon>
@@ -99,11 +128,13 @@ const Chat = () => {
               label="Search"
               variant="outlined"
               fullWidth
+              value={searchQuery}
+              onChange={handleSearch} // Call handleSearch on input change
             />
           </Grid>
           <Divider />
           <List>
-            {chattingUsers?.map((chatUser) => (
+            {filteredUsers.map((chatUser) => (
               <ListItem
                 button
                 key={chatUser.id}
@@ -123,7 +154,7 @@ const Chat = () => {
           </List>
         </Grid>
         <Grid item xs={9}>
-          <List sx={{ height: "70vh", overflowY: "auto" }}>
+          <List sx={{ height: "65vh", overflowY: "auto" }}>
             {chatMessagesOfCurrentChatUserId.map((message, index) => (
               <ListItem key={index}>
                 <ListItemText
@@ -146,8 +177,13 @@ const Chat = () => {
           </List>
           <Divider />
           <form onSubmit={handleSubmit(onSubmit)}>
-            <Grid container style={{ padding: "20px" }} alignItems="center">
-              <Grid item xs={11}>
+            <Grid
+              container
+              style={{ padding: "10px" }}
+              alignItems="center"
+              justifyContent="space-around"
+            >
+              <Grid item xs={10}>
                 <TextField
                   fullWidth
                   multiline

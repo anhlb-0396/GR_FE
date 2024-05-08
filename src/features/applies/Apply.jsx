@@ -85,14 +85,12 @@ function Apply({ job, currentUser, token, isAuthenticated }) {
   };
 
   const handleConfirmation = async () => {
-    if (choosedResume === null) {
-      toast.error("Vui lòng chọn CV để ứng tuyển");
-      return;
-    }
-
-    setOpenDialog(false);
-
     if (!isApplied) {
+      if (choosedResume === null) {
+        toast.error("Vui lòng chọn CV để ứng tuyển");
+        return;
+      }
+
       const applyData = {
         user_id: currentUser.id,
         job_id: job.id,
@@ -125,6 +123,7 @@ function Apply({ job, currentUser, token, isAuthenticated }) {
 
       deleteNewApply(applyData);
     }
+    setOpenDialog(false);
   };
 
   const handleCloseDialog = () => {
