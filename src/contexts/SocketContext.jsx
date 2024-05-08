@@ -83,10 +83,10 @@ const SocketProvider = ({ children }) => {
   useEffect(() => {
     if (socket === null || !currentUser || !currentUser.id) return;
 
-    if (!currentChatUserId) {
-      setChatMessagesOfCurrentChatUserId([]);
-      return;
-    }
+    // if (!currentChatUserId) {
+    //   setChatMessagesOfCurrentChatUserId([]);
+    //   return;
+    // }
 
     setChatMessagesOfCurrentChatUserId(
       chatMessages.filter(
@@ -100,10 +100,6 @@ const SocketProvider = ({ children }) => {
 
     socket.on("receiveChatMessage", (data) => {
       console.log(data);
-      console.log(chattingUsers);
-      if (!chattingUsers.some((user) => user.id === data.sender_id)) {
-        setChattingUsers((prev) => [...prev, data.SENDER_INFO]);
-      }
 
       if (data.sender_id === currentChatUserId) {
         setChatMessagesOfCurrentChatUserId((prev) => [...prev, data]);
