@@ -99,8 +99,6 @@ const SocketProvider = ({ children }) => {
     );
 
     socket.on("receiveChatMessage", (data) => {
-      console.log(data);
-
       if (data.sender_id === currentChatUserId) {
         setChatMessagesOfCurrentChatUserId((prev) => [...prev, data]);
       }

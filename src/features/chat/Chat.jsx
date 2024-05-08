@@ -70,7 +70,10 @@ const Chat = () => {
         <Grid item xs={9}>
           <TitleText variant="h5">
             {currentChatUserId
-              ? `Trò chuyện vs ${currentChatUserId}`
+              ? `Trò chuyện vs ${
+                  chattingUsers.find((user) => user.id === currentChatUserId)
+                    .name
+                }`
               : "Chọn một người để trò chuyện"}
           </TitleText>
         </Grid>
