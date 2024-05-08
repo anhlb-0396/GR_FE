@@ -19,7 +19,7 @@ import TitleText from "../../ui/sharedComponents/TitleText";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
-const Chat = ({ chats }) => {
+const Chat = () => {
   const {
     currentChatUserId,
     setCurrentChatUserId,
@@ -27,6 +27,7 @@ const Chat = ({ chats }) => {
     setChatMessages,
     chatMessagesOfCurrentChatUserId,
     setChatMessagesOfCurrentChatUserId,
+    chattingUsers,
   } = useSocket();
   const { currentUser } = useAuth();
   const { register, handleSubmit, reset } = useForm();
@@ -39,21 +40,24 @@ const Chat = ({ chats }) => {
       receiver_id: currentChatUserId,
       message: data.comment,
       createdAt: new Date().toISOString(),
+      SENDER_INFO: {
+        id: currentUser.id,
+        name: currentUser.name,
+        avatar: currentUser.avatar,
+      },
     };
 
     createNewChatMessage(newMessage)
-      .then((response) => {
+      .then(() => {
         reset();
         socket.emit("sendChatMessage", newMessage);
-        toast.success("Đã gửi tin nhắn");
+        setChatMessages((prev) => [...prev, newMessage]);
+        setChatMessagesOfCurrentChatUserId((prev) => [...prev, newMessage]);
       })
       .catch((error) => {
         console.error("Error sending message:", error);
         toast.error("Gửi tin nhắn thất bại");
       });
-
-    setChatMessages((prev) => [...prev, newMessage]);
-    setChatMessagesOfCurrentChatUserId((prev) => [...prev, newMessage]);
   };
 
   return (
@@ -64,7 +68,11 @@ const Chat = ({ chats }) => {
         </Grid>
 
         <Grid item xs={9}>
-          <TitleText variant="h5">Remy Sharp</TitleText>
+          <TitleText variant="h5">
+            {currentChatUserId
+              ? `Trò chuyện vs ${currentChatUserId}`
+              : "Chọn một người để trò chuyện"}
+          </TitleText>
         </Grid>
       </Grid>
       <Grid
@@ -76,12 +84,9 @@ const Chat = ({ chats }) => {
           <List>
             <ListItem button key="RemySharp">
               <ListItemIcon>
-                <Avatar
-                  alt="Remy Sharp"
-                  src="https://material-ui.com/static/images/avatar/1.jpg"
-                />
+                <Avatar alt={currentUser.name} src={currentUser.avatar} />
               </ListItemIcon>
-              <ListItemText primary="John Wick"></ListItemText>
+              <ListItemText primary={currentUser.name}></ListItemText>
             </ListItem>
           </List>
           <Divider />
@@ -95,16 +100,23 @@ const Chat = ({ chats }) => {
           </Grid>
           <Divider />
           <List>
-            <ListItem button key="RemySharp">
-              <ListItemIcon>
-                <Avatar
-                  alt="Remy Sharp"
-                  src="https://material-ui.com/static/images/avatar/1.jpg"
-                />
-              </ListItemIcon>
-              <ListItemText primary="Remy Sharp">Remy Sharp</ListItemText>
-              <ListItemText secondary="online" align="right"></ListItemText>
-            </ListItem>
+            {chattingUsers?.map((chatUser) => (
+              <ListItem
+                button
+                key={chatUser.id}
+                onClick={() => setCurrentChatUserId(chatUser.id)}
+                sx={{
+                  bgcolor:
+                    currentChatUserId === chatUser.id ? "#dbd8d8" : "white",
+                  borderRadius: "10px",
+                }}
+              >
+                <ListItemIcon>
+                  <Avatar alt={chatUser.name} src={chatUser.avatar}></Avatar>
+                </ListItemIcon>
+                <ListItemText primary={chatUser.name}></ListItemText>
+              </ListItem>
+            ))}
           </List>
         </Grid>
         <Grid item xs={9}>
@@ -117,6 +129,14 @@ const Chat = ({ chats }) => {
                   align={
                     message.sender_id === currentUser.id ? "right" : "left"
                   }
+                  sx={{
+                    borderRadius: "10px",
+                    padding: "10px",
+                    backgroundColor:
+                      message.sender_id === currentUser.id
+                        ? "#f3f3f3"
+                        : "#f3e7e7",
+                  }}
                 ></ListItemText>
               </ListItem>
             ))}

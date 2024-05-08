@@ -7,8 +7,7 @@ import {
   getAllNotifications,
   deleteAllNotifications,
 } from "../services/notifications/notificationAPI";
-import { getAllChatMessages } from "../services/chats/chatAPI";
-import { set } from "date-fns";
+import { getAllChatMessages, getUsersByIds } from "../services/chats/chatAPI";
 
 const SocketContext = createContext();
 
@@ -19,6 +18,7 @@ const SocketProvider = ({ children }) => {
   const [chatMessagesOfCurrentChatUserId, setChatMessagesOfCurrentChatUserId] =
     useState([]);
   const [currentChatUserId, setCurrentChatUserId] = useState(null);
+  const [chattingUsers, setChattingUsers] = useState([]);
   const { currentUser } = useAuth();
 
   useEffect(() => {
@@ -81,7 +81,7 @@ const SocketProvider = ({ children }) => {
   }, [socket]);
 
   useEffect(() => {
-    if (socket === null) return;
+    if (socket === null || !currentUser || !currentUser.id) return;
 
     if (!currentChatUserId) {
       setChatMessagesOfCurrentChatUserId([]);
@@ -99,6 +99,12 @@ const SocketProvider = ({ children }) => {
     );
 
     socket.on("receiveChatMessage", (data) => {
+      console.log(data);
+      console.log(chattingUsers);
+      if (!chattingUsers.some((user) => user.id === data.sender_id)) {
+        setChattingUsers((prev) => [...prev, data.SENDER_INFO]);
+      }
+
       if (data.sender_id === currentChatUserId) {
         setChatMessagesOfCurrentChatUserId((prev) => [...prev, data]);
       }
@@ -109,7 +115,32 @@ const SocketProvider = ({ children }) => {
     return () => {
       socket.off("receiveChatMessage");
     };
-  }, [socket, currentChatUserId, currentUser.id]);
+  }, [socket, currentChatUserId, currentUser, chatMessages, chattingUsers]);
+
+  useEffect(() => {
+    if (!currentUser || !currentUser.id) return;
+
+    const uniqueUserIDs = chatMessages?.reduce((acc, message) => {
+      if (!acc.includes(message.sender_id)) {
+        acc.push(message.sender_id);
+      }
+      if (!acc.includes(message.receiver_id)) {
+        acc.push(message.receiver_id);
+      }
+      return acc;
+    }, []);
+
+    const otherUserIDs = uniqueUserIDs?.filter((id) => id !== currentUser.id);
+
+    getUsersByIds(otherUserIDs)
+      .then((users) => {
+        setChattingUsers(users);
+      })
+      .catch((error) => {
+        console.error("Error fetching users:", error);
+        setChattingUsers([]);
+      });
+  }, [chatMessages, currentUser]);
 
   const handleReadAllNotifications = () => {
     setNotifications([]);
@@ -117,6 +148,8 @@ const SocketProvider = ({ children }) => {
       .then(setNotifications([]))
       .catch((error) => console.error(error));
   };
+
+  // console.log(chattingUsers);
 
   return (
     <SocketContext.Provider
@@ -128,8 +161,10 @@ const SocketProvider = ({ children }) => {
         setCurrentChatUserId,
         chatMessages,
         setChatMessages,
-        setChatMessagesOfCurrentChatUserId,
         chatMessagesOfCurrentChatUserId,
+        setChatMessagesOfCurrentChatUserId,
+        chattingUsers,
+        setChattingUsers,
       }}
     >
       {children}

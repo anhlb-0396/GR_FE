@@ -51,7 +51,8 @@ import {
 
 export default function AppliesTable() {
   const { currentUser, token } = useAuth();
-  const { socket, setCurrentChatUserId } = useSocket();
+  const { socket, setCurrentChatUserId, chattingUsers, setChattingUsers } =
+    useSocket();
   const { applies, isLoading, isError } = useApplies(currentUser.company_id);
   const { isUpdating, updateCurrentApply } = useUpdateApply(
     currentUser.company_id
@@ -206,6 +207,15 @@ export default function AppliesTable() {
 
   const handleChatButtonClick = (row) => {
     setCurrentChatUserId(row.userId);
+    setChattingUsers((prev) => {
+      if (!prev.map((user) => user.id).includes(row.userId)) {
+        return [
+          ...prev,
+          { id: row.userId, name: row.name, avatar: row.avatar },
+        ];
+      }
+      return prev;
+    });
     navigate("/agent/chat");
   };
 

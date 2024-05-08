@@ -20,3 +20,13 @@ export async function getAllChatMessages(receiverId) {
 
   return response.data.data.chats;
 }
+
+export async function getUsersByIds(userIds) {
+  const response = await axios.post(`${BASE_URL}/users/ids`, { userIds });
+
+  if (response.data.status >= 400) {
+    throw new Error(response.data.message);
+  }
+
+  return response.data.data.users;
+}
