@@ -198,7 +198,7 @@ const Chat = () => {
                   {...register("comment")} // Register the comment field with React Hook Form
                 />
               </Grid>
-              <Grid xs={1} align="right">
+              <Grid item xs={1} align="right">
                 <Fab color="primary" aria-label="add" type="submit">
                   <SendIcon />
                 </Fab>

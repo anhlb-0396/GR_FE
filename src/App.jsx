@@ -32,6 +32,7 @@ import { SocketProvider } from "./contexts/SocketContext";
 import ExpectJobsPage from "./features/expectedJobs/ExpectJobsPage";
 import StatisticsPage from "./pages/StatisticsPage";
 import Chat from "./features/chat/Chat";
+import Profile from "./features/profiles/Profile";
 
 const queryClient = new QueryClient();
 const theme = createTheme({
@@ -112,7 +113,8 @@ function App() {
                       </ProtectedRoute>
                     }
                   >
-                    <Route path="/agent/chat" element={<Chat />} />
+                    <Route path="/agent/profiles" element={<Profile />} />
+                    <Route path="/agent/chats" element={<Chat />} />
                     <Route path="/agent/applies" element={<AppliesTable />} />
                     <Route path="/agent/jobs" element={<JobsOfCompany />} />
                     <Route path="/agent/jobs/create" element={<CreateJob />} />

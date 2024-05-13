@@ -81,7 +81,7 @@ function Apply({ job, currentUser, token, isAuthenticated }) {
   )?.response;
 
   const handleApply = () => {
-    setOpenDialog(true); // Open the confirmation dialog
+    setOpenDialog(true);
   };
 
   const handleConfirmation = async () => {
@@ -105,6 +105,7 @@ function Apply({ job, currentUser, token, isAuthenticated }) {
         type: "job_apply",
         message: `👩‍💻 ${currentUser.name} đã yêu cầu ứng tuyển công việc ${job.title}`,
         companyId: job.Company.id,
+        createdAt: new Date().toISOString(),
       };
 
       await createNewNotification(notificationObject);

@@ -37,7 +37,7 @@ export default function Notification({
       onClose={onClose}
       PaperProps={{
         style: {
-          maxHeight: "300px",
+          maxHeight: "70vh",
           width: "500px",
           marginTop: "45px",
           borderRadius: "10px",

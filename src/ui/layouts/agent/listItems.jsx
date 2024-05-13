@@ -15,6 +15,8 @@ import {
   Business as BusinessIcon,
   Notifications as NotificationsIcon,
   Logout as LogoutIcon,
+  ChatBubble as ChatBubbleIcon,
+  AccountBox as AccountBoxIcon,
 } from "@mui/icons-material";
 
 export const mainListItems = (
@@ -47,11 +49,11 @@ export const mainListItems = (
       <ListItemText primary="Thống kê" />
     </ListItemButton>
 
-    <ListItemButton>
+    <ListItemButton component={Link} to="agent/chats">
       <ListItemIcon>
-        <LayersIcon />
+        <ChatBubbleIcon />
       </ListItemIcon>
-      <ListItemText primary="Ứng viên tiềm năng" />
+      <ListItemText primary="Tin nhắn" />
     </ListItemButton>
   </React.Fragment>
 );
@@ -67,6 +69,13 @@ export const secondaryListItems = (
         <NotificationsIcon />
       </ListItemIcon>
       <ListItemText primary="Thông báo" />
+    </ListItemButton>
+
+    <ListItemButton component={Link} to="agent/profiles">
+      <ListItemIcon>
+        <AccountBoxIcon />
+      </ListItemIcon>
+      <ListItemText primary="Thông tin cá nhân" />
     </ListItemButton>
 
     <ListItemButton>

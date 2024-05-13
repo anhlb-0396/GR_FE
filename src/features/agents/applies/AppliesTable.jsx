@@ -216,13 +216,11 @@ export default function AppliesTable() {
       }
       return prev;
     });
-    navigate("/agent/chat");
+    navigate("/agent/chats");
   };
 
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
-
-  // console.log(rows);
 
   return (
     <Paper
@@ -354,11 +352,13 @@ export default function AppliesTable() {
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
 
-      <ApplyResponseDialog
-        open={openResponseDialog}
-        onClose={handleCloseResponseDialog}
-        responseData={selectedResponse}
-      />
+      {selectedResponse && (
+        <ApplyResponseDialog
+          open={openResponseDialog}
+          onClose={handleCloseResponseDialog}
+          responseData={selectedResponse}
+        />
+      )}
 
       <Dialog open={openDialog} onClose={handleCloseDialog} maxWidth="md">
         <DialogTitle>
