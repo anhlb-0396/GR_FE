@@ -3,24 +3,35 @@ import { useForm } from "react-hook-form";
 import { TextField, Button, Container, Avatar, Box, Grid } from "@mui/material";
 import { useAuth } from "../../contexts/AuthContext";
 import TitleText from "../../ui/sharedComponents/TitleText";
+import { useUpdateProfile } from "./userUpdateProfile";
 
 const Profile = () => {
   const { currentUser } = useAuth();
   const { register, handleSubmit, setValue, control } = useForm();
+  const { updateUserProfile, isUpdating } = useUpdateProfile(currentUser.id);
 
-  // Set default values for form fields when currentUser changes
   useEffect(() => {
     if (currentUser) {
       setValue("name", currentUser.name || "");
       setValue("gmail", currentUser.gmail || "");
       setValue("role", currentUser.role || "");
-      setValue("date_of_birth", currentUser.date_of_birth || "");
+
+      // Convert and set the date_of_birth value
+      const formattedDateOfBirth = currentUser.date_of_birth
+        ? new Date(currentUser.date_of_birth).toISOString().split("T")[0]
+        : "";
+      setValue("date_of_birth", formattedDateOfBirth || "");
     }
   }, [currentUser, setValue]);
 
   const onSubmit = (data) => {
-    const formDataWithAvatar = { ...data };
-    console.log(formDataWithAvatar);
+    const avatarFile = data.avatar[0];
+    const formDataWithAvatar = {
+      ...data,
+      avatar: avatarFile,
+      userId: currentUser.id,
+    };
+    updateUserProfile(formDataWithAvatar);
   };
 
   return (
@@ -37,14 +48,12 @@ const Profile = () => {
           <Grid item>
             <Box position="relative">
               <Avatar
-                src={currentUser?.avatar || "/default-avatar.jpg"} // Default avatar image
+                src={currentUser?.avatar || "/default-avatar.jpg"}
                 alt="Avatar"
                 sx={{ width: 100, height: 100 }}
               />
               <input
-                {...register("avatar", {
-                  validate: (value) => value && value[0].size <= 1048576, // Validate size <= 1MB
-                })}
+                {...register("avatar")}
                 type="file"
                 accept="image/*"
                 style={{
@@ -96,7 +105,12 @@ const Profile = () => {
             />
           </Grid>
           <Grid item>
-            <Button type="submit" variant="contained" color="primary">
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              disabled={isUpdating}
+            >
               Lưu
             </Button>
           </Grid>
