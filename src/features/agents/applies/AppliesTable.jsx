@@ -6,6 +6,7 @@ import {
   Check as CheckIcon,
   Close as CloseIcon,
   Chat as ChatIcon,
+  Visibility,
 } from "@mui/icons-material";
 import {
   Chip,
@@ -130,13 +131,13 @@ export default function AppliesTable() {
   };
 
   const filteredApplies = applies.filter((apply) => {
-    if (selectedStatus === "all") return true; // Show all applies if "all" is selected
-    return apply.status === selectedStatus; // Filter by selected status
+    if (selectedStatus === "all") return true;
+    return apply.status === selectedStatus;
   });
 
   const handleStatusChange = (event) => {
     setSelectedStatus(event.target.value);
-    setPage(0); // Reset pagination when status changes
+    setPage(0);
   };
 
   const rows = filteredApplies.map((apply) => ({
@@ -150,6 +151,7 @@ export default function AppliesTable() {
     jobTitle: apply.Job.title,
     companyName: apply.Job.Company.name,
     responseData: apply.response,
+    resume: apply.Resume,
   }));
 
   const handleAccept = async () => {
@@ -219,6 +221,15 @@ export default function AppliesTable() {
     navigate("/agent/chats");
   };
 
+  const handleWatch = (resume) => {
+    if (resume.is_uploaded) {
+      const url = resume.resume_url;
+      window.open(url, "_blank");
+    } else {
+      navigate(`/resumes/${resume.id}`);
+    }
+  };
+
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
@@ -277,14 +288,13 @@ export default function AppliesTable() {
                 ></Chip>
               </TableCell>
               <TableCell>
-                <Button
-                  variant="outlined"
-                  component={Link}
-                  to={`/users/${row.userId}/cv`}
-                  size="small"
+                <IconButton
+                  aria-label="Watch"
+                  onClick={() => handleWatch(row.resume)}
+                  color="primary"
                 >
-                  Xem CV
-                </Button>
+                  <Visibility />
+                </IconButton>
               </TableCell>
               <TableCell>
                 <ButtonGroup variant="outlined">

@@ -77,12 +77,5 @@ export const secondaryListItems = (
       </ListItemIcon>
       <ListItemText primary="Thông tin cá nhân" />
     </ListItemButton>
-
-    <ListItemButton>
-      <ListItemIcon>
-        <LogoutIcon />
-      </ListItemIcon>
-      <ListItemText primary="Đăng xuất" />
-    </ListItemButton>
   </React.Fragment>
 );

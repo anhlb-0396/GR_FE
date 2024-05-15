@@ -1,4 +1,5 @@
 import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
 import { createContext, useContext } from "react";
 import { useLocalStorageState } from "../hooks/useLocalStorageState";
 import { toast } from "react-hot-toast";
@@ -17,6 +18,7 @@ function AuthProvider({ children }) {
 
   const isAuthenticated = token && currentUser;
   const isAgent = currentUser?.role === "agent";
+  const navigate = useNavigate();
 
   const handleLogin = async (gmail, password) => {
     try {
@@ -70,6 +72,7 @@ function AuthProvider({ children }) {
     setCurrentUser(null);
     setToken(null);
     toast.success("Đăng xuất thành công");
+    navigate("/");
   };
 
   return (
@@ -82,6 +85,7 @@ function AuthProvider({ children }) {
         handleLogout,
         token,
         handleSignup,
+        setCurrentUser,
       }}
     >
       {children}

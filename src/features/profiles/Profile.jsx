@@ -6,7 +6,7 @@ import TitleText from "../../ui/sharedComponents/TitleText";
 import { useUpdateProfile } from "./userUpdateProfile";
 
 const Profile = () => {
-  const { currentUser } = useAuth();
+  const { currentUser, setCurrentUser } = useAuth();
   const { register, handleSubmit, setValue, control } = useForm();
   const { updateUserProfile, isUpdating } = useUpdateProfile(currentUser.id);
 
@@ -32,6 +32,7 @@ const Profile = () => {
       userId: currentUser.id,
     };
     updateUserProfile(formDataWithAvatar);
+    setCurrentUser({ ...currentUser, ...data });
   };
 
   return (

@@ -15,6 +15,9 @@ import {
   Container,
   Grid,
   Link,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
 } from "@mui/material";
 
 import {
@@ -22,11 +25,13 @@ import {
   ChevronLeft as ChevronLeftIcon,
   Notifications as NotificationsIcon,
   TravelExplore as TravelExploreIcon,
+  Logout as LogoutIcon,
 } from "@mui/icons-material";
 
 import Notification from "../../../features/notifications/Notification";
 import { useSocket } from "../../../contexts/SocketContext";
 import { mainListItems, secondaryListItems } from "./listItems";
+import { useAuth } from "../../../contexts/AuthContext";
 
 function Copyright(props) {
   return (
@@ -96,6 +101,7 @@ export default function AgentLayouts() {
   const [open, setOpen] = React.useState(true);
   const [isNotificationOpen, setIsNotificationOpen] = React.useState(false);
   const { notifications, handleReadAllNotifications } = useSocket();
+  const { handleLogout } = useAuth();
 
   const toggleDrawer = () => {
     setOpen(!open);
@@ -177,6 +183,12 @@ export default function AgentLayouts() {
           {mainListItems}
           <Divider sx={{ my: 1 }} />
           {secondaryListItems}
+          <ListItemButton onClick={handleLogout}>
+            <ListItemIcon>
+              <LogoutIcon />
+            </ListItemIcon>
+            <ListItemText primary="Đăng xuất" />
+          </ListItemButton>
         </List>
       </Drawer>
       <Box

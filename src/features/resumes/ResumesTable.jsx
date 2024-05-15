@@ -59,7 +59,6 @@ function ResumesTable({ type = "normal", choosedResume, setChoosedResume }) {
   };
 
   const handleWatch = (resume) => {
-    console.log("Watching resume with ID:", resume.id);
     if (resume.is_uploaded) {
       const url = resume.resume_url;
       window.open(url, "_blank");
