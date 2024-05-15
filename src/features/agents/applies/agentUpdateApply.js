@@ -5,10 +5,12 @@ import { toast } from "react-hot-toast";
 export function useUpdateApply(companyId) {
   const queryClient = useQueryClient();
 
-  const { mutate: updateCurrentApply, isLoading: isUpdating } = useMutation({
+  const { mutate: updateCurrentApply, isPending: isUpdating } = useMutation({
     mutationFn: updateApply,
     onSuccess: () => {
-      toast.success("Thay đổi trạng thái thành công !");
+      toast.success(
+        "📧 Gửi mail thông báo và thay đổi trạng thái thành công !"
+      );
       queryClient.invalidateQueries({
         queryKey: ["companies", "applies", companyId],
       });

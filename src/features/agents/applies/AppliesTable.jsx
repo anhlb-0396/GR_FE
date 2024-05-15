@@ -7,6 +7,7 @@ import {
   Close as CloseIcon,
   Chat as ChatIcon,
   Visibility,
+  Mail as MailIcon,
 } from "@mui/icons-material";
 import {
   Chip,
@@ -30,6 +31,7 @@ import {
   FormControl,
   Select,
   MenuItem,
+  Backdrop,
 } from "@mui/material";
 
 import { quillModules, quillFormats } from "../../../constants/quill";
@@ -164,12 +166,24 @@ export default function AppliesTable() {
         applyId: row.id,
         status: "accepted-cv-round",
         response: acceptedDescription,
+        sender_id: currentUser.id,
+        receiver_id: row.userId,
+        message:
+          row.status === "pending"
+            ? `✅ Công ty ${row.companyName} đã chấp nhận duyệt hồ sơ ứng tuyển của bạn với công việc ${row.jobTitle}`
+            : `✅ Chúc mừng ! Công ty ${row.companyName} đã chấp nhận bạn là nhân viên chính thức với công việc ${row.jobTitle}`,
       });
     } else if (row.status === "accepted-cv-round") {
       updateCurrentApply({
         applyId: row.id,
         status: "accepted-interview-round",
         response: acceptedDescription,
+        sender_id: currentUser.id,
+        receiver_id: row.userId,
+        message:
+          row.status === "pending"
+            ? `✅ Công ty ${row.companyName} đã chấp nhận duyệt hồ sơ ứng tuyển của bạn với công việc ${row.jobTitle}`
+            : `✅ Chúc mừng ! Công ty ${row.companyName} đã chấp nhận bạn là nhân viên chính thức với công việc ${row.jobTitle}`,
       });
     }
 
@@ -197,7 +211,13 @@ export default function AppliesTable() {
       createdAt: new Date(),
     };
 
-    updateCurrentApply({ applyId: row.id, status: "rejected" });
+    updateCurrentApply({
+      applyId: row.id,
+      status: "rejected",
+      sender_id: currentUser.id,
+      receiver_id: row.userId,
+      message: `❌ Công ty ${row.companyName} đã từ chối ứng tuyển của bạn với công việc ${row.jobTitle}`,
+    });
     await createNewNotification(notificationObject);
     socket.emit("agentDenyJobApply", notificationObject);
   };
@@ -326,16 +346,17 @@ export default function AppliesTable() {
               </TableCell>
 
               <TableCell>
-                <Button
+                <IconButton
                   variant="outlined"
                   size="small"
                   onClick={() => handleOpenResponseDialog(row.responseData)}
                   disabled={
                     row.status === "pending" || row.status === "rejected"
                   }
+                  color="primary"
                 >
-                  Xem
-                </Button>
+                  <MailIcon />
+                </IconButton>
                 <IconButton
                   onClick={() => handleChatButtonClick(row)}
                   color="primary"
@@ -399,6 +420,15 @@ export default function AppliesTable() {
           </Button>
         </DialogActions>
       </Dialog>
+
+      {/* Backdrop Component */}
+      <Backdrop
+        sx={{ color: "primary", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={isUpdating}
+        // onClick={handleBackdropClose}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
     </Paper>
   );
 }
