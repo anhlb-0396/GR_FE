@@ -52,7 +52,7 @@ export default function Notification({
         </Grid>
         <Grid item xs={1}>
           <IconButton onClick={handleReadAllNotifications}>
-            <Icon></Icon>
+            <Icon>delete</Icon>
           </IconButton>
         </Grid>
       </Grid>

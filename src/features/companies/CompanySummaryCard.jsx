@@ -14,8 +14,9 @@ import MailIcon from "@mui/icons-material/Mail";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import PublicIcon from "@mui/icons-material/Public";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import React from "react";
 
-function CompanySummaryCard({ company, xs, md }) {
+function CompanySummaryCard({ company, xs, md, ratingDisplay }) {
   return (
     <Grid container item xs={xs} md={md}>
       <Card
@@ -79,77 +80,79 @@ function CompanySummaryCard({ company, xs, md }) {
                 : "Chủ nhật"}
             </Box>
           </Typography>
-          <Box
-            display="flex"
-            alignItems="center"
-            sx={{ mt: 1 }}
-            justifyContent="space-between"
-          >
-            <Typography variant="body2" color="text.secondary">
-              Đánh giá trung bình:
-            </Typography>
-            <Rating
-              name="averageRating"
-              value={company?.average_rating}
-              precision={0.5}
-              readOnly
-              sx={{ ml: 1 }}
-            />
-          </Box>
-
-          <Box
-            display="flex"
-            alignItems="center"
-            sx={{ mt: 1 }}
-            justifyContent="space-between"
-          >
-            <Typography variant="body2" color="text.secondary">
-              Lương thưởng đãi ngộ:
-            </Typography>
-            <Rating
-              name="averageRating"
-              value={company?.average_salary_rating}
-              precision={0.5}
-              readOnly
-              sx={{ ml: 1 }}
-            />
-          </Box>
-
-          <Box
-            display="flex"
-            alignItems="center"
-            sx={{ mt: 1 }}
-            justifyContent="space-between"
-          >
-            <Typography variant="body2" color="text.secondary">
-              Môi trường làm việc:
-            </Typography>
-            <Rating
-              name="averageRating"
-              value={company?.average_working_space_rating}
-              precision={0.5}
-              readOnly
-              sx={{ ml: 1 }}
-            />
-          </Box>
-
-          <Box
-            display="flex"
-            alignItems="center"
-            sx={{ mt: 1 }}
-            justifyContent="space-between"
-          >
-            <Typography variant="body2" color="text.secondary">
-              Nhân sự:
-            </Typography>
-            <Rating
-              name="averageRating"
-              value={company?.average_colleague_rating}
-              precision={0.5}
-              readOnly
-              sx={{ ml: 1 }}
-            />
-          </Box>
+          {ratingDisplay && (
+            <React.Fragment>
+              {" "}
+              <Box
+                display="flex"
+                alignItems="center"
+                sx={{ mt: 1 }}
+                justifyContent="space-between"
+              >
+                <Typography variant="body2" color="text.secondary">
+                  Đánh giá trung bình:
+                </Typography>
+                <Rating
+                  name="averageRating"
+                  value={company?.average_rating}
+                  precision={0.5}
+                  readOnly
+                  sx={{ ml: 1 }}
+                />
+              </Box>
+              <Box
+                display="flex"
+                alignItems="center"
+                sx={{ mt: 1 }}
+                justifyContent="space-between"
+              >
+                <Typography variant="body2" color="text.secondary">
+                  Lương thưởng đãi ngộ:
+                </Typography>
+                <Rating
+                  name="averageRating"
+                  value={company?.average_salary_rating}
+                  precision={0.5}
+                  readOnly
+                  sx={{ ml: 1 }}
+                />
+              </Box>
+              <Box
+                display="flex"
+                alignItems="center"
+                sx={{ mt: 1 }}
+                justifyContent="space-between"
+              >
+                <Typography variant="body2" color="text.secondary">
+                  Môi trường làm việc:
+                </Typography>
+                <Rating
+                  name="averageRating"
+                  value={company?.average_working_space_rating}
+                  precision={0.5}
+                  readOnly
+                  sx={{ ml: 1 }}
+                />
+              </Box>
+              <Box
+                display="flex"
+                alignItems="center"
+                sx={{ mt: 1 }}
+                justifyContent="space-between"
+              >
+                <Typography variant="body2" color="text.secondary">
+                  Nhân sự:
+                </Typography>
+                <Rating
+                  name="averageRating"
+                  value={company?.average_colleague_rating}
+                  precision={0.5}
+                  readOnly
+                  sx={{ ml: 1 }}
+                />
+              </Box>
+            </React.Fragment>
+          )}
         </CardContent>
 
         <CardActions>

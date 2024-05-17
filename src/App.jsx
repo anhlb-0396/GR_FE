@@ -34,6 +34,9 @@ import StatisticsPage from "./pages/StatisticsPage";
 import Chat from "./features/chat/Chat";
 import Profile from "./features/profiles/Profile";
 import UserLayouts from "./ui/layouts/user/UserLayouts";
+import CompanyPage from "./features/companies/CompanyPage";
+import CompanyDetails from "./features/companies/CompanyDetails";
+import BookmarkJobList from "./features/bookmarks/BookmarkJobList";
 
 const queryClient = new QueryClient();
 const theme = createTheme({
@@ -99,6 +102,15 @@ function App() {
                   >
                     <Route path="/user/home" element={<Homepage />} />
                     <Route path="/user/profiles" element={<Profile />} />
+                    <Route path="/user/companies" element={<CompanyPage />} />
+                    <Route
+                      path="/user/companies/:id"
+                      element={<CompanyDetails />}
+                    />
+                    <Route
+                      path="/user/jobs/bookmarks"
+                      element={<BookmarkJobList />}
+                    />
                     <Route path="/user/chats" element={<Chat />} />
                     <Route path="/user/jobs/:id" element={<JobDetails />} />
                     <Route

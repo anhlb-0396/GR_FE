@@ -5,9 +5,9 @@ import TitleText from "../../ui/sharedComponents/TitleText";
 import CompanySummaryCard from "./CompanySummaryCard";
 import { useCompanies } from "./useCompanies";
 
-const COMPANIES_PER_PAGE = 3;
+const COMPANIES_PER_PAGE = 6;
 
-function CompanyList() {
+function CompanyList({ ratingDisplay = true }) {
   const { companies, isLoading, isError, error } = useCompanies();
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -47,14 +47,14 @@ function CompanyList() {
   return (
     <Grid
       container
-      spacing={3}
+      spacing={2}
       rowGap={4}
       margin="10px auto"
       alignItems="stretch"
       mt={4}
     >
       <Grid item xs={12}>
-        <TitleText variant="h4">Danh sách các công ty nổi bật</TitleText>
+        <TitleText variant="h4">Danh sách các doanh nghiệp</TitleText>
       </Grid>
 
       {paginatedCompanies?.map((company) => (
@@ -63,6 +63,7 @@ function CompanyList() {
           company={company}
           xs={12}
           md={4}
+          ratingDisplay={ratingDisplay}
         ></CompanySummaryCard>
       ))}
 

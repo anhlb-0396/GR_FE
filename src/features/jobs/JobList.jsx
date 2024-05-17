@@ -28,7 +28,6 @@ function JobList() {
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
-    // Refetch jobs whenever the queryString changes
     setCurrentPage(1);
     refetch();
   }, [queryString, refetch]);
