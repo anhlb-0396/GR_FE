@@ -20,6 +20,8 @@ import {
   TextField,
   CircularProgress,
   Rating,
+  Tabs,
+  Tab,
 } from "@mui/material";
 
 import {
@@ -46,6 +48,7 @@ import CommentList from "../comments/CommentList";
 import CompanySummaryCard from "../companies/CompanySummaryCard";
 import TitleText from "../../ui/sharedComponents/TitleText";
 import RelatedJobist from "./RelatedJobList";
+import CompanyJobList from "./CompanyJobList";
 
 const initialRatings = {
   salary_rating: 0,
@@ -60,6 +63,11 @@ function JobDetails() {
   const { currentUser, token, isAuthenticated } = useAuth();
   const { createComment, isCreating } = useCreateComment();
   const [ratings, setRatings] = useState(initialRatings);
+  const [selectedTab, setSelectedTab] = useState(0);
+
+  const handleChange = (event, newValue) => {
+    setSelectedTab(newValue);
+  };
 
   const handleRatingChange = (name, value) => {
     setRatings((prevRatings) => ({
@@ -514,16 +522,31 @@ function JobDetails() {
             textAlign="center"
             color="primary"
           >
-            Các công việc khác cùng ngành nghề
+            Các công việc khác
           </Typography>
 
-          {/* <Grid item container gap="10px">
-            <JobList />
-          </Grid> */}
-
-          <Grid item container gap="10px">
-            <RelatedJobist job={job} />
-          </Grid>
+          <Box>
+            <Tabs value={selectedTab} onChange={handleChange} centered>
+              <Tab label="Tất cả" />
+              <Tab label="Cùng lĩnh vực/ngành nghề" />
+              <Tab label="Cùng công ty" />
+            </Tabs>
+            {selectedTab === 0 && (
+              <Grid item container gap="10px">
+                <JobList />
+              </Grid>
+            )}
+            {selectedTab === 1 && (
+              <Grid item container gap="10px">
+                <RelatedJobist job={job} />
+              </Grid>
+            )}
+            {selectedTab === 2 && (
+              <Grid item container gap="10px">
+                <CompanyJobList company={job.Company} />
+              </Grid>
+            )}
+          </Box>
         </Grid>
 
         <Divider orientation="vertical" flexItem></Divider>

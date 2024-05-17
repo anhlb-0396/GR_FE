@@ -5,10 +5,9 @@ import AppPagination from "../../ui/sharedComponents/AppPagination";
 import { useJobsQuery } from "./useJobsQuery";
 const JOB_PER_PAGE = 5;
 
-function RelatedJobist({ job }) {
-  const industriesIds = job.Industries.map((industry) => industry.id);
+function CompanyJobList({ company }) {
   const { jobs, isLoading, isError, isFetching } = useJobsQuery(
-    `industriesIds=${industriesIds.join(",")}`
+    `companyId=${company.id}`
   );
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -74,4 +73,4 @@ function RelatedJobist({ job }) {
   );
 }
 
-export default RelatedJobist;
+export default CompanyJobList;
