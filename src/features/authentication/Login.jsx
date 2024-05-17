@@ -29,8 +29,7 @@ function Login() {
     if (isAuthenticated) {
       if (isAgent) {
         navigate("/agent/applies");
-      }
-      if (isUser) {
+      } else if (isUser) {
         navigate("/user/home");
       } else {
         navigate("/");

@@ -5,7 +5,7 @@ import { toast } from "react-hot-toast";
 export function useDeleteApply(userId) {
   const queryClient = useQueryClient();
 
-  const { mutate: deleteNewApply, isLoading: isDeleting } = useMutation({
+  const { mutate: deleteNewApply, isPending: isDeleting } = useMutation({
     mutationFn: deleteApply,
     onSuccess: () => {
       toast.success("Hủy ứng tuyển việc thành công");

@@ -66,6 +66,12 @@ function ExpectJobsPage() {
   return (
     <Box sx={{ width: "80%", margin: "0 auto" }}>
       <TitleText>Gợi ý việc làm</TitleText>
+      <Button onClick={handleOpenDialog}>Thiết lập gợi ý</Button>
+      <ExpectJobFormDialog
+        open={openDialog}
+        onClose={handleCloseDialog}
+        onSubmit={handleSubmitForm}
+      />
       <ExpectJobsList expectations={expectations} />
     </Box>
   );

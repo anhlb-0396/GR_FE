@@ -49,7 +49,7 @@ export const mainListItems = (
       <ListItemIcon>
         <WorkIcon />
       </ListItemIcon>
-      <ListItemText primary="Nguyện vọng việc làm" />
+      <ListItemText primary="Nguyện vọng" />
     </ListItemButton>
 
     <ListItemButton component={Link} to="user/applies">

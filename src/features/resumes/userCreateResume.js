@@ -8,7 +8,7 @@ import { toast } from "react-hot-toast";
 export function useCreateResume(userId) {
   const queryClient = useQueryClient();
 
-  const { mutate: createResume, isLoading: isCreating } = useMutation({
+  const { mutate: createResume, isPending: isCreating } = useMutation({
     mutationFn: createNewResume,
     onSuccess: () => {
       toast.success("Lưu CV thành công!");

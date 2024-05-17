@@ -9,4 +9,16 @@ export const options = {
       text: "Job",
     },
   },
+  // scales: {
+  //   x: {
+  //     beginAtZero: true,
+  //     ticks: {
+  //       maxRotation: 90,
+  //       minRotation: 80,
+  //     },
+  //   },
+  //   y: {
+  //     beginAtZero: true,
+  //   },
+  // },
 };

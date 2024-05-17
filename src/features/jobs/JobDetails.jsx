@@ -45,6 +45,7 @@ import Apply from "../applies/Apply";
 import CommentList from "../comments/CommentList";
 import CompanySummaryCard from "../companies/CompanySummaryCard";
 import TitleText from "../../ui/sharedComponents/TitleText";
+import RelatedJobist from "./RelatedJobList";
 
 const initialRatings = {
   salary_rating: 0,
@@ -513,11 +514,15 @@ function JobDetails() {
             textAlign="center"
             color="primary"
           >
-            Các công việc khác
+            Các công việc khác cùng ngành nghề
           </Typography>
 
+          {/* <Grid item container gap="10px">
+            <JobList />
+          </Grid> */}
+
           <Grid item container gap="10px">
-            <JobList></JobList>
+            <RelatedJobist job={job} />
           </Grid>
         </Grid>
 

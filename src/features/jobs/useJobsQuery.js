@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchJobsWithQueries } from "../../services/users/jobsAPI";
 
 export function useJobsQuery(queryString = "") {
+  console.log(queryString);
   const {
     data: jobs,
     isLoading,

@@ -5,7 +5,7 @@ import { toast } from "react-hot-toast";
 export function useUpdateProfile(userId) {
   const queryClient = useQueryClient();
 
-  const { mutate: updateUserProfile, isLoading: isUpdating } = useMutation({
+  const { mutate: updateUserProfile, isPending: isUpdating } = useMutation({
     mutationFn: updateProfile,
     onSuccess: () => {
       toast.success("Lưu thông tin thành công!");

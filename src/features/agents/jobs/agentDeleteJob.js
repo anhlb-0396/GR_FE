@@ -5,7 +5,7 @@ import { deleteJob } from "../../../services/agents/jobAPI";
 export function useDeleteJob(companyId) {
   const queryClient = useQueryClient();
 
-  const { mutate: deleteNewJob, isLoading: isDeleting } = useMutation({
+  const { mutate: deleteNewJob, isPending: isDeleting } = useMutation({
     mutationFn: deleteJob,
     onSuccess: () => {
       toast.success("Xóa công việc thành công");

@@ -5,7 +5,7 @@ import { toast } from "react-hot-toast";
 export function useCreateApply(userId) {
   const queryClient = useQueryClient();
 
-  const { mutate: createNewApply, isLoading: isCreating } = useMutation({
+  const { mutate: createNewApply, isPending: isCreating } = useMutation({
     mutationFn: createApply,
     onSuccess: () => {
       toast.success(

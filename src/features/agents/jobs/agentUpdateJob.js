@@ -5,7 +5,7 @@ import { updateJob } from "../../../services/agents/jobAPI";
 export function useUpdateJob(companyId) {
   const queryClient = useQueryClient();
 
-  const { mutate: updateNewJob, isLoading: isUpdating } = useMutation({
+  const { mutate: updateNewJob, isPending: isUpdating } = useMutation({
     mutationFn: updateJob,
     onSuccess: () => {
       toast.success("Cập nhật công việc mới thành công");
