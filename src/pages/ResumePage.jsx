@@ -45,7 +45,7 @@ function ResumePage() {
   };
 
   return (
-    <Box sx={{ width: "80%", margin: "0 auto" }}>
+    <Box sx={{ margin: "0 auto" }}>
       <TitleText>Sơ yếu lí lịch bản thân</TitleText>
 
       <Tabs value={tabValue} onChange={handleTabChange} centered>

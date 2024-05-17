@@ -17,7 +17,7 @@ import { useAuth } from "../../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 
 function Login() {
-  const { handleLogin, isAuthenticated, isAgent } = useAuth();
+  const { handleLogin, isAuthenticated, isAgent, isUser } = useAuth();
   const navigate = useNavigate();
   const {
     control,
@@ -29,6 +29,9 @@ function Login() {
     if (isAuthenticated) {
       if (isAgent) {
         navigate("/agent/applies");
+      }
+      if (isUser) {
+        navigate("/user/home");
       } else {
         navigate("/");
       }

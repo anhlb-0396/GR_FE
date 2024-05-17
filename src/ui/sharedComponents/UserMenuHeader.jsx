@@ -26,7 +26,6 @@ function UserMenuHeader({
   const settings = [
     { label: "Profile", to: "/" },
     { label: "Account", to: "/" },
-    { label: "Job đã lưu", to: `users/${currentUser.id}/bookmarks` },
   ];
 
   const handleOpenUserMenu = (event) => {

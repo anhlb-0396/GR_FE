@@ -18,6 +18,7 @@ function AuthProvider({ children }) {
 
   const isAuthenticated = token && currentUser;
   const isAgent = currentUser?.role === "agent";
+  const isUser = currentUser?.role === "user";
   const navigate = useNavigate();
 
   const handleLogin = async (gmail, password) => {
@@ -36,7 +37,7 @@ function AuthProvider({ children }) {
 
       toast.success("Đăng nhập thành công");
     } catch (error) {
-      console.error(error);
+      toast.error("Đăng nhập thất bại vui lòng kiểm tra lại thông tin");
     }
   };
 
@@ -81,6 +82,7 @@ function AuthProvider({ children }) {
         currentUser,
         isAuthenticated,
         isAgent,
+        isUser,
         handleLogin,
         handleLogout,
         token,

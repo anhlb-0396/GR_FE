@@ -12,7 +12,7 @@ import "@fontsource/roboto/700.css";
 
 import Homepage from "./pages/Homepage";
 import JobDetails from "./features/jobs/JobDetails";
-import AppLayouts from "./ui/layouts/user/AppLayouts";
+import AppLayouts from "./ui/layouts/guest/AppLayouts";
 import Login from "./features/authentication/Login";
 import Register from "./features/authentication/Register";
 import ProtectedRoute from "./pages/ProtectedRoute";
@@ -33,6 +33,7 @@ import ExpectJobsPage from "./features/expectedJobs/ExpectJobsPage";
 import StatisticsPage from "./pages/StatisticsPage";
 import Chat from "./features/chat/Chat";
 import Profile from "./features/profiles/Profile";
+import UserLayouts from "./ui/layouts/user/UserLayouts";
 
 const queryClient = new QueryClient();
 const theme = createTheme({
@@ -80,7 +81,6 @@ function App() {
                 <Routes>
                   <Route element={<AppLayouts />}>
                     <Route path="/" element={<Homepage />} />
-                    <Route path="/chat" element={<Chat />} />
                     <Route path="/jobs/:id" element={<JobDetails />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/signup" element={<Register />} />
@@ -88,21 +88,27 @@ function App() {
                       path="/resumes/:id"
                       element={<ResumeDisplayPage />}
                     />
+                  </Route>
+
+                  <Route
+                    element={
+                      <ProtectedRoute role="user">
+                        <UserLayouts />
+                      </ProtectedRoute>
+                    }
+                  >
+                    <Route path="/user/home" element={<Homepage />} />
+                    <Route path="/user/profiles" element={<Profile />} />
+                    <Route path="/user/chats" element={<Chat />} />
+                    <Route path="/user/jobs/:id" element={<JobDetails />} />
                     <Route
-                      path="/users/cv/create"
-                      element={
-                        <ProtectedRoute role="user">
-                          <ResumePage />
-                        </ProtectedRoute>
-                      }
+                      path="/user/resumes/:id"
+                      element={<ResumeDisplayPage />}
                     />
+                    <Route path="/user/cv/" element={<ResumePage />} />
                     <Route
-                      path="/users/jobs/expectations"
-                      element={
-                        <ProtectedRoute role="user">
-                          <ExpectJobsPage />
-                        </ProtectedRoute>
-                      }
+                      path="/user/jobs/expectations"
+                      element={<ExpectJobsPage />}
                     ></Route>
                   </Route>
 

@@ -28,11 +28,7 @@ function ResponsiveAppBar() {
   const [isNotificationOpen, setNotificationOpen] = React.useState(false);
   const { notifications, handleReadAllNotifications } = useSocket();
 
-  const pages = [
-    { title: "Tạo CV", link: "/users/cv/create" },
-    { title: "Gợi ý việc làm", link: "/users/jobs/expectations" },
-    { title: "Đánh giá", link: "/" },
-  ];
+  const pages = [];
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);

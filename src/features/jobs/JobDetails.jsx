@@ -29,6 +29,7 @@ import {
   Wc as WcIcon,
   LocalOffer as LocalOfferIcon,
   Paid as PaidIcon,
+  PeopleAlt as PeopleAltIcon,
 } from "@mui/icons-material";
 
 import { toast } from "react-hot-toast";
@@ -129,9 +130,18 @@ function JobDetails() {
                   label={`Lương dao động từ ${changeCurrency(
                     job.min_salary
                   )} - ${changeCurrency(job.max_salary)} triệu`}
-                  size="large"
+                  size="medium"
                   variant="outlined"
                   color="success"
+                />
+
+                <Chip
+                  label={`Hạn nộp hồ sơ: ${new Date(
+                    job.expired_date
+                  ).toLocaleDateString()}`}
+                  size="medium"
+                  variant="filled"
+                  color="primary"
                 />
 
                 <Chip
@@ -140,9 +150,22 @@ function JobDetails() {
                       ? "Hết hạn"
                       : "Đang tuyển dụng"
                   }
-                  size="large"
+                  size="medium"
+                  variant="filled"
+                  color={
+                    isBefore(new Date(job.expired_date), new Date())
+                      ? "error"
+                      : "success"
+                  }
+                  sx={{ color: "white" }}
+                />
+
+                <Chip
+                  icon={<PeopleAltIcon />}
+                  label={`${job.Applies.length} ứng viên đã ứng tuyển`}
+                  size="medium"
                   variant="outlined"
-                  color="success"
+                  color="primary"
                 />
               </Grid>
 
@@ -153,16 +176,17 @@ function JobDetails() {
                 flexWrap="wrap"
                 justifyContent="space-between"
               >
-                {!isAuthenticated && (
-                  <Button
-                    startIcon={<SendIcon></SendIcon>}
-                    variant="outlined"
-                    color="primary"
-                    onClick={handleNotLoginApply}
-                  >
-                    Ứng tuyển ngay
-                  </Button>
-                )}
+                {!isAuthenticated &&
+                  isBefore(new Date(job.expired_date), new Date()) && (
+                    <Button
+                      startIcon={<SendIcon></SendIcon>}
+                      variant="outlined"
+                      color="primary"
+                      onClick={handleNotLoginApply}
+                    >
+                      Ứng tuyển ngay
+                    </Button>
+                  )}
 
                 {isAuthenticated && (
                   <Apply
@@ -190,13 +214,21 @@ function JobDetails() {
               </Stack>
 
               <Stack>
-                <Button
-                  color="primary"
-                  variant="outlined"
-                  onClick={handleCommentDialogClickOpen}
-                >
-                  Viết đánh giá về công ty này
-                </Button>
+                {isAuthenticated && (
+                  <Button
+                    color="primary"
+                    variant="outlined"
+                    onClick={handleCommentDialogClickOpen}
+                  >
+                    Viết đánh giá về công ty này
+                  </Button>
+                )}
+
+                {!isAuthenticated && (
+                  <Button color="primary" variant="outlined" disabled>
+                    Đăng nhập để viết đánh giá về công ty này
+                  </Button>
+                )}
 
                 <Dialog
                   open={isOpenCommentDialog}
