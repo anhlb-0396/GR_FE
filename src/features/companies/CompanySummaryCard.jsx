@@ -28,16 +28,44 @@ function CompanySummaryCard({ company, xs, md, ratingDisplay }) {
           height: "100%",
         }}
       >
-        <Avatar
-          alt={company?.name}
-          src={company?.logo}
+        {/* <Grid
           sx={{
             width: "100%",
-            height: "200px",
-            objectFit: "cover",
+            height: "250px",
+            overflow: "hidden",
           }}
-          variant="rounded"
-        />
+        >
+          <Avatar
+            alt={company?.name}
+            src={company?.logo}
+            sx={{
+              width: "80%",
+              height: "200px",
+              objectFit: "contain",
+            }}
+            variant="rounded"
+          />
+        </Grid> */}
+
+        <Grid
+          item
+          xs={12}
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <img
+            src={company?.logo}
+            alt={company?.name}
+            style={{
+              objectFit: "contain",
+              width: "100%",
+              height: "250px",
+            }}
+          />
+        </Grid>
 
         <CardContent>
           <Typography gutterBottom variant="h5" color="text.secondary">
