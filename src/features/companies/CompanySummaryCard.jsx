@@ -26,27 +26,9 @@ function CompanySummaryCard({ company, xs, md, ratingDisplay }) {
           flexDirection: "column",
           justifyContent: "space-between",
           height: "100%",
+          borderRadius: "10px",
         }}
       >
-        {/* <Grid
-          sx={{
-            width: "100%",
-            height: "250px",
-            overflow: "hidden",
-          }}
-        >
-          <Avatar
-            alt={company?.name}
-            src={company?.logo}
-            sx={{
-              width: "80%",
-              height: "200px",
-              objectFit: "contain",
-            }}
-            variant="rounded"
-          />
-        </Grid> */}
-
         <Grid
           item
           xs={12}
@@ -71,9 +53,9 @@ function CompanySummaryCard({ company, xs, md, ratingDisplay }) {
           <Typography gutterBottom variant="h5" color="text.secondary">
             {company?.name}
           </Typography>
-          <Typography variant="body2" color="text.secondary">
+          {/* <Typography variant="body2" color="text.secondary">
             {company?.industry}
-          </Typography>
+          </Typography> */}
           <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
             <Box display="flex" alignItems="center">
               <LocationOnIcon sx={{ mr: 1 }} />
@@ -99,15 +81,6 @@ function CompanySummaryCard({ company, xs, md, ratingDisplay }) {
             </Box>
           </Typography>
 
-          <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
-            <Box display="flex" alignItems="center">
-              <AccessTimeIcon sx={{ mr: 1 }} />
-              Thời gian làm việc: Từ thứ {company?.start_week_day} đến{" "}
-              {company?.end_week_day <= 7
-                ? `thứ ${company?.end_week_day}`
-                : "Chủ nhật"}
-            </Box>
-          </Typography>
           {ratingDisplay && (
             <React.Fragment>
               {" "}

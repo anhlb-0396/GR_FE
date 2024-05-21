@@ -21,7 +21,7 @@ function formatDateTime(dateTimeStr) {
 function Comments({ comment }) {
   return (
     <Grid item container xs={12} md={5.5}>
-      <Card sx={{ width: "100%" }}>
+      <Card sx={{ width: "100%", borderRadius: "10px" }}>
         <CardHeader
           avatar={
             <Avatar sx={{ bgcolor: red[500] }} aria-label="user-avatar">

@@ -1,4 +1,3 @@
-// CompanyDetailsPage.jsx
 import React, { useState } from "react";
 import {
   Container,
@@ -12,27 +11,78 @@ import {
   Paper,
   Button,
   Link,
+  CircularProgress,
+  Alert,
+  Rating,
+  Tabs,
+  Tab,
 } from "@mui/material";
-import { LocationOn, Business, Web } from "@mui/icons-material";
-import StarIcon from "@mui/icons-material/Star";
+import {
+  LocationOn,
+  Web,
+  PeopleAlt as PeopleAltIcon,
+  Mail as MailIcon,
+  Flag as FlagIcon,
+} from "@mui/icons-material";
 import TitleText from "../../ui/sharedComponents/TitleText";
+import { useParams } from "react-router-dom";
+import { useCompany } from "../agents/companies/useCompany";
+import { useJobs } from "../agents/jobs/useJobs";
+import AppPagination from "../../ui/sharedComponents/AppPagination";
+import JobItem from "../jobs/JobItem";
+import CommentList from "../comments/CommentList";
 
-const companyData = {
-  name: "Công ty Cổ phần Hạ tầng Viễn thông CMC Telecom",
-  logo: "https://static.topcv.vn/avatars/RtJk2sg5FQHzmX3ecRGu_60.jpg",
-  location: "Hà Nội, Việt Nam",
-  industry: "Viễn thông",
-  employees: "200-500",
-  website: "https://cmctelecom.vn",
-  description: `CMC Telecom là một trong những công ty hàng đầu về dịch vụ viễn thông tại Việt Nam, cung cấp giải pháp dịch vụ đa dạng từ dịch vụ Internet, dịch vụ truyền dữ liệu, dịch vụ trung tâm dữ liệu, điện toán đám mây, dịch vụ tích hợp hệ thống và các dịch vụ giá trị gia tăng khác.`,
-  coverImage: "https://static.topcv.vn/company_covers/Zn7MZvydb3VlJrpboggi.jpg",
-};
+const JOB_PER_PAGE = 4;
+const DEFAULT_COVER_IMAGE =
+  "https://static.topcv.vn/v4/image/normal-company/cover/company_cover_1.jpg";
 
 const CompanyDetailsPage = () => {
   const [isFollowing, setIsFollowing] = useState(false);
+  const { id } = useParams();
+  const { company, isLoading, isError } = useCompany(id);
+  const { jobs, isLoading: isJobsLoading, isError: isJobsError } = useJobs(id);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [tabValue, setTabValue] = useState(0);
+
+  if (isLoading || isJobsLoading) {
+    return (
+      <Box
+        sx={{
+          width: "100%",
+          height: "50vh",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <CircularProgress size={80} />
+      </Box>
+    );
+  }
+
+  if (isError || isJobsError) {
+    return (
+      <Box sx={{ width: "80%", margin: "0 auto" }}>
+        <Alert severity="error">Tải dữ liệu thất bại</Alert>
+      </Box>
+    );
+  }
+
+  const startIndex = (currentPage - 1) * JOB_PER_PAGE;
+  const endIndex = currentPage * JOB_PER_PAGE;
+  const paginatedJobs = jobs.slice(startIndex, endIndex);
+  const count = Math.ceil(jobs.length / JOB_PER_PAGE);
 
   const handleFollowClick = () => {
     setIsFollowing(!isFollowing);
+  };
+
+  const handleChangePage = (event, value) => {
+    setCurrentPage(value);
+  };
+
+  const handleTabChange = (event, newValue) => {
+    setTabValue(newValue);
   };
 
   return (
@@ -42,60 +92,92 @@ const CompanyDetailsPage = () => {
           <CardMedia
             component="img"
             height="300"
-            image={companyData.coverImage}
+            image={company?.coverImage || DEFAULT_COVER_IMAGE}
             alt="Company cover image"
           />
           <CardContent sx={{ position: "relative" }}>
-            <Grid container spacing={2} alignItems="center">
-              <Grid item xs={12} md={3} sx={{ textAlign: "center" }}>
+            <Grid container spacing={2} alignItems="center" columnGap={1}>
+              <Grid item xs={12} md={5} sx={{ textAlign: "center" }}>
                 <Avatar
-                  alt={companyData.name}
-                  src={companyData.logo}
+                  alt={company.name}
+                  src={company.logo}
                   sx={{
-                    width: 120,
-                    height: 120,
+                    width: "100%",
+                    height: "250px",
                     margin: "0 auto",
-                    border: "4px solid white",
-                    boxShadow: 2,
+                    objectFit: "cover",
                   }}
+                  variant="rounded"
                 />
               </Grid>
-              <Grid item xs={12} md={9}>
+              <Grid item xs={12} md={6.5}>
                 <TitleText variant="h4" textAlign="left">
-                  {companyData.name}
+                  {company.name}
                 </TitleText>
-                <Typography
-                  variant="subtitle1"
-                  color="textSecondary"
-                  gutterBottom
-                >
-                  {companyData.industry}
-                </Typography>
+
                 <Box display="flex" alignItems="center" mt={1}>
                   <LocationOn color="action" />
-                  <Typography variant="body1" ml={1}>
-                    {companyData.location}
+                  <Typography
+                    variant="body1"
+                    ml={1}
+                    color="textSecondary"
+                    gutterBottom
+                  >
+                    {company.location}
                   </Typography>
                 </Box>
+
                 <Box display="flex" alignItems="center" mt={1}>
-                  <Business color="action" />
-                  <Typography variant="body1" ml={1}>
-                    {companyData.employees} nhân viên
+                  <MailIcon color="action" />
+                  <Typography
+                    variant="body1"
+                    ml={1}
+                    color="textSecondary"
+                    gutterBottom
+                  >
+                    {company.contact_mail}
                   </Typography>
                 </Box>
+
+                <Box display="flex" alignItems="center" mt={1}>
+                  <PeopleAltIcon color="action" />
+                  <Typography
+                    variant="body1"
+                    ml={1}
+                    color="textSecondary"
+                    gutterBottom
+                  >
+                    {company.employees} nhân viên
+                  </Typography>
+                </Box>
+
+                <Box display="flex" alignItems="center" mt={1}>
+                  <FlagIcon color="action" />
+                  <Typography
+                    variant="body1"
+                    ml={1}
+                    color="textSecondary"
+                    gutterBottom
+                  >
+                    {company.country}
+                  </Typography>
+                </Box>
+
                 <Box display="flex" alignItems="center" mt={1}>
                   <Web color="action" />
                   <Typography variant="body1" ml={1}>
                     <Link
-                      href={companyData.website}
+                      href={company.website}
                       target="_blank"
                       rel="noopener noreferrer"
-                      color="inherit"
+                      color="textSecondary"
+                      sx={{ textDecoration: "none" }}
                     >
-                      {companyData.website}
+                      {company.website}
                     </Link>
                   </Typography>
                 </Box>
+
                 <Button
                   variant="contained"
                   color={isFollowing ? "secondary" : "primary"}
@@ -110,47 +192,129 @@ const CompanyDetailsPage = () => {
         </Card>
 
         <Box mt={4}>
-          <TitleText variant="h5" textAlign="left">
-            Giới thiệu về công ty
-          </TitleText>
-          <Paper elevation={3} sx={{ padding: 3, borderRadius: 2, mt: 1 }}>
-            <Typography variant="body1">{companyData.description}</Typography>
-          </Paper>
-        </Box>
-
-        <Box mt={4}>
-          <TitleText variant="h5" textAlign="left">
-            Vị trí tuyển dụng
-          </TitleText>
-          <Paper elevation={3} sx={{ padding: 3, borderRadius: 2, mt: 1 }}>
-            {/* Job listings component can be inserted here */}
-            <Typography variant="body1">
-              Hiện tại chưa có vị trí tuyển dụng nào.
-            </Typography>
-          </Paper>
-        </Box>
-
-        <Box mt={4}>
-          <TitleText variant="h5" textAlign="left">
-            Đánh giá công ty
-          </TitleText>
-
-          <Paper elevation={3} sx={{ padding: 3, borderRadius: 2, mt: 1 }}>
-            {/* Company reviews component can be inserted here */}
-            <Box display="flex" alignItems="center" mt={1}>
-              <StarIcon color="primary" />
-              <StarIcon color="primary" />
-              <StarIcon color="primary" />
-              <StarIcon color="primary" />
-              <StarIcon color="action" />
-              <Typography variant="body1" ml={1}>
-                4.0 / 5.0
-              </Typography>
+          <Tabs value={tabValue} onChange={handleTabChange} centered>
+            <Tab label="Giới thiệu" />
+            <Tab label="Đánh giá" />
+            <Tab label="Bình luận" />
+          </Tabs>
+          {tabValue === 0 && (
+            <Box mt={4}>
+              <TitleText variant="h5" textAlign="left">
+                Giới thiệu về công ty
+              </TitleText>
+              <Paper elevation={3} sx={{ padding: 3, borderRadius: 2, mt: 1 }}>
+                <Typography
+                  dangerouslySetInnerHTML={{ __html: company.introduction }}
+                  variant="body1"
+                  color="text.secondary"
+                ></Typography>
+              </Paper>
             </Box>
-            <Typography variant="body1" mt={2}>
-              Chưa có đánh giá nào.
-            </Typography>
-          </Paper>
+          )}
+          {tabValue === 1 && (
+            <Box mt={4}>
+              <TitleText variant="h5" textAlign="left">
+                Đánh giá công ty
+              </TitleText>
+              <Paper elevation={3} sx={{ padding: 3, borderRadius: 2, mt: 1 }}>
+                <Box
+                  display="flex"
+                  alignItems="center"
+                  sx={{ mt: 1 }}
+                  justifyContent="space-between"
+                >
+                  <Typography variant="body1" color="text.secondary">
+                    Đánh giá trung bình:
+                  </Typography>
+                  <Rating
+                    name="averageRating"
+                    value={company?.average_rating}
+                    precision={0.5}
+                    readOnly
+                    sx={{ ml: 1 }}
+                  />
+                </Box>
+                <Box
+                  display="flex"
+                  alignItems="center"
+                  sx={{ mt: 1 }}
+                  justifyContent="space-between"
+                >
+                  <Typography variant="body1" color="text.secondary">
+                    Lương thưởng đãi ngộ:
+                  </Typography>
+                  <Rating
+                    name="averageRating"
+                    value={company?.average_salary_rating}
+                    precision={0.5}
+                    readOnly
+                    sx={{ ml: 1 }}
+                  />
+                </Box>
+                <Box
+                  display="flex"
+                  alignItems="center"
+                  sx={{ mt: 1 }}
+                  justifyContent="space-between"
+                >
+                  <Typography variant="body1" color="text.secondary">
+                    Môi trường làm việc:
+                  </Typography>
+                  <Rating
+                    name="averageRating"
+                    value={company?.average_working_space_rating}
+                    precision={0.5}
+                    readOnly
+                    sx={{ ml: 1 }}
+                  />
+                </Box>
+                <Box
+                  display="flex"
+                  alignItems="center"
+                  sx={{ mt: 1 }}
+                  justifyContent="space-between"
+                >
+                  <Typography variant="body1" color="text.secondary">
+                    Nhân sự:
+                  </Typography>
+                  <Rating
+                    name="averageRating"
+                    value={company?.average_colleague_rating}
+                    precision={0.5}
+                    readOnly
+                    sx={{ ml: 1 }}
+                  />
+                </Box>
+              </Paper>
+            </Box>
+          )}
+          {tabValue === 2 && (
+            <Grid item xs={12} container>
+              <Box>
+                <Grid item container xs={12} alignItems="center" mb={3}>
+                  <TitleText variant="h5">Bình luận về doanh nghiệp</TitleText>
+                </Grid>
+              </Box>
+              <CommentList companyId={company.id} isAgent />
+            </Grid>
+          )}
+        </Box>
+
+        <Box mt={4}>
+          <TitleText variant="h5" textAlign="left">
+            Công việc đăng tuyển {`(${jobs.length})`}
+          </TitleText>
+
+          <Grid container spacing={2} rowGap={4} margin="10px auto" mt={3}>
+            {paginatedJobs?.map((job) => (
+              <JobItem job={job} key={job.id} />
+            ))}
+          </Grid>
+          <AppPagination
+            onChange={handleChangePage}
+            currentPage={currentPage}
+            count={count}
+          ></AppPagination>
         </Box>
       </Box>
     </Container>

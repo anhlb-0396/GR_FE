@@ -65,7 +65,7 @@ function JobsOfCompany() {
       </Button>
       <Grid container spacing={2} rowGap={4} margin="10px auto" mt={3}>
         {paginatedJobs.map((job) => (
-          <JobItem job={job} key={job.id}></JobItem>
+          <JobItem job={job} key={job.id} />
         ))}
       </Grid>
       <AppPagination
