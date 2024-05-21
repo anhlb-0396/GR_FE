@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   Grid,
   Box,
@@ -32,6 +32,11 @@ import {
   LocalOffer as LocalOfferIcon,
   Paid as PaidIcon,
   PeopleAlt as PeopleAltIcon,
+  SupportAgent as SupportAgentIcon,
+  Chat,
+  AccessTime as AccessTimeIcon,
+  UpdateDisabled as UpdateDisabledIcon,
+  WorkHistory,
 } from "@mui/icons-material";
 
 import { toast } from "react-hot-toast";
@@ -49,6 +54,7 @@ import CompanySummaryCard from "../companies/CompanySummaryCard";
 import TitleText from "../../ui/sharedComponents/TitleText";
 import RelatedJobist from "./RelatedJobList";
 import CompanyJobList from "./CompanyJobList";
+import { useSocket } from "../../contexts/SocketContext";
 
 const initialRatings = {
   salary_rating: 0,
@@ -58,12 +64,14 @@ const initialRatings = {
 
 function JobDetails() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const { job, isLoading, isError } = useJob(id);
   const [isOpenCommentDialog, setIsOpenCommentDialog] = useState(false);
   const { currentUser, token, isAuthenticated } = useAuth();
   const { createComment, isCreating } = useCreateComment();
   const [ratings, setRatings] = useState(initialRatings);
   const [selectedTab, setSelectedTab] = useState(0);
+  const { setCurrentChatUserId, setChattingUsers } = useSocket();
 
   const handleChange = (event, newValue) => {
     setSelectedTab(newValue);
@@ -96,6 +104,30 @@ function JobDetails() {
       toast.error("Vui lòng đăng nhập để tham gia ứng tuyển công việc này !");
       return;
     }
+  };
+
+  const handleChattingWithAgent = () => {
+    const agentId = job.Company.User.id;
+    if (!agentId) {
+      toast.error("Không thể liên lạc được với HR");
+      return;
+    }
+
+    setCurrentChatUserId(agentId);
+    setChattingUsers((prev) => {
+      if (!prev.map((user) => user.id).includes(agentId)) {
+        return [
+          ...prev,
+          {
+            id: agentId,
+            name: job.Company.User.name,
+            avatar: job.Company.User.avatar,
+          },
+        ];
+      }
+      return prev;
+    });
+    navigate("/user/chats");
   };
 
   if (isLoading) {
@@ -144,38 +176,61 @@ function JobDetails() {
                   color="success"
                 />
 
-                <Chip
-                  label={`Hạn nộp hồ sơ: ${new Date(
-                    job.expired_date
-                  ).toLocaleDateString()}`}
-                  size="medium"
-                  variant="filled"
-                  color="primary"
-                />
+                <Grid container gap={2}>
+                  <Chip
+                    icon={<AccessTimeIcon />}
+                    label={`Hạn nộp hồ sơ: ${new Date(
+                      job.expired_date
+                    ).toLocaleDateString()}`}
+                    size="medium"
+                    variant="filled"
+                    color="primary"
+                  />
 
-                <Chip
-                  label={
-                    isBefore(new Date(job.expired_date), new Date())
-                      ? "Hết hạn"
-                      : "Đang tuyển dụng"
-                  }
-                  size="medium"
-                  variant="filled"
-                  color={
-                    isBefore(new Date(job.expired_date), new Date())
-                      ? "error"
-                      : "success"
-                  }
-                  sx={{ color: "white" }}
-                />
+                  <Chip
+                    icon={
+                      isBefore(new Date(job.expired_date), new Date()) ? (
+                        <UpdateDisabledIcon />
+                      ) : (
+                        <WorkHistory />
+                      )
+                    }
+                    label={
+                      isBefore(new Date(job.expired_date), new Date())
+                        ? "Đã hết hạn ứng tuyển"
+                        : "Đang tuyển dụng"
+                    }
+                    size="medium"
+                    variant="filled"
+                    color={
+                      isBefore(new Date(job.expired_date), new Date())
+                        ? "error"
+                        : "success"
+                    }
+                    sx={{ color: "white" }}
+                  />
 
-                <Chip
-                  icon={<PeopleAltIcon />}
-                  label={`${job.Applies.length} ứng viên đã ứng tuyển`}
-                  size="medium"
-                  variant="outlined"
-                  color="primary"
-                />
+                  <Chip
+                    icon={<PeopleAltIcon />}
+                    label={`${job.Applies.length} ứng viên đã ứng tuyển`}
+                    size="medium"
+                    variant="outlined"
+                    color="primary"
+                  />
+                </Grid>
+              </Grid>
+
+              <Grid>
+                <Button
+                  variant="contained"
+                  startIcon={<SupportAgentIcon />}
+                  endIcon={<Chat />}
+                  disableRipple
+                  size="small"
+                  onClick={handleChattingWithAgent}
+                >
+                  Liên hệ với nhà tuyển dụng
+                </Button>
               </Grid>
 
               <Stack
