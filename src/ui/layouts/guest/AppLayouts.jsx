@@ -2,6 +2,7 @@ import { Box } from "@mui/material";
 import { Outlet } from "react-router-dom";
 import Header from "./Header";
 import Main from "./Main";
+import Footer from "./Footer";
 
 function AppLayouts() {
   return (
@@ -10,6 +11,7 @@ function AppLayouts() {
       <Main>
         <Outlet />
       </Main>
+      <Footer />
     </Box>
   );
 }

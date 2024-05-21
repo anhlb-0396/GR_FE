@@ -32,6 +32,7 @@ import Notification from "../../../features/notifications/Notification";
 import { useSocket } from "../../../contexts/SocketContext";
 import { mainListItems, secondaryListItems } from "./listItems";
 import { useAuth } from "../../../contexts/AuthContext";
+import Footer from "../guest/Footer";
 
 function Copyright(props) {
   return (
@@ -219,6 +220,7 @@ export default function AgentLayouts() {
           />
           <Copyright sx={{ pt: 4 }} />
         </Container>
+        <Footer />
       </Box>
     </Box>
   );

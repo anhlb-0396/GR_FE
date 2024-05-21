@@ -1,5 +1,5 @@
 // CompanyDetailsPage.jsx
-import React from "react";
+import React, { useState } from "react";
 import {
   Container,
   Box,
@@ -10,12 +10,12 @@ import {
   CardContent,
   Avatar,
   Paper,
-  Divider,
-  IconButton,
+  Button,
   Link,
 } from "@mui/material";
-import { LocationOn, Business, People, Web } from "@mui/icons-material";
+import { LocationOn, Business, Web } from "@mui/icons-material";
 import StarIcon from "@mui/icons-material/Star";
+import TitleText from "../../ui/sharedComponents/TitleText";
 
 const companyData = {
   name: "Công ty Cổ phần Hạ tầng Viễn thông CMC Telecom",
@@ -29,6 +29,12 @@ const companyData = {
 };
 
 const CompanyDetailsPage = () => {
+  const [isFollowing, setIsFollowing] = useState(false);
+
+  const handleFollowClick = () => {
+    setIsFollowing(!isFollowing);
+  };
+
   return (
     <Container maxWidth="lg">
       <Box mt={4} mb={4}>
@@ -55,9 +61,9 @@ const CompanyDetailsPage = () => {
                 />
               </Grid>
               <Grid item xs={12} md={9}>
-                <Typography variant="h4" component="h1" gutterBottom>
+                <TitleText variant="h4" textAlign="left">
                   {companyData.name}
-                </Typography>
+                </TitleText>
                 <Typography
                   variant="subtitle1"
                   color="textSecondary"
@@ -90,25 +96,33 @@ const CompanyDetailsPage = () => {
                     </Link>
                   </Typography>
                 </Box>
+                <Button
+                  variant="contained"
+                  color={isFollowing ? "secondary" : "primary"}
+                  onClick={handleFollowClick}
+                  sx={{ mt: 2 }}
+                >
+                  {isFollowing ? "Following" : "Follow"}
+                </Button>
               </Grid>
             </Grid>
           </CardContent>
         </Card>
 
         <Box mt={4}>
-          <Typography variant="h5" component="h2" gutterBottom>
+          <TitleText variant="h5" textAlign="left">
             Giới thiệu về công ty
-          </Typography>
-          <Paper elevation={3} sx={{ padding: 3, borderRadius: 2 }}>
+          </TitleText>
+          <Paper elevation={3} sx={{ padding: 3, borderRadius: 2, mt: 1 }}>
             <Typography variant="body1">{companyData.description}</Typography>
           </Paper>
         </Box>
 
         <Box mt={4}>
-          <Typography variant="h5" component="h2" gutterBottom>
+          <TitleText variant="h5" textAlign="left">
             Vị trí tuyển dụng
-          </Typography>
-          <Paper elevation={3} sx={{ padding: 3, borderRadius: 2 }}>
+          </TitleText>
+          <Paper elevation={3} sx={{ padding: 3, borderRadius: 2, mt: 1 }}>
             {/* Job listings component can be inserted here */}
             <Typography variant="body1">
               Hiện tại chưa có vị trí tuyển dụng nào.
@@ -117,10 +131,11 @@ const CompanyDetailsPage = () => {
         </Box>
 
         <Box mt={4}>
-          <Typography variant="h5" component="h2" gutterBottom>
+          <TitleText variant="h5" textAlign="left">
             Đánh giá công ty
-          </Typography>
-          <Paper elevation={3} sx={{ padding: 3, borderRadius: 2 }}>
+          </TitleText>
+
+          <Paper elevation={3} sx={{ padding: 3, borderRadius: 2, mt: 1 }}>
             {/* Company reviews component can be inserted here */}
             <Box display="flex" alignItems="center" mt={1}>
               <StarIcon color="primary" />

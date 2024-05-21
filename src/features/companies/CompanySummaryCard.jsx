@@ -156,15 +156,18 @@ function CompanySummaryCard({ company, xs, md, ratingDisplay }) {
         </CardContent>
 
         <CardActions>
-          <Button
-            endIcon={<SubdirectoryArrowRightIcon />}
-            component={Link}
-            to={company.website}
-            target="_blank"
-            rel="noopener noreferrer"
+          <Box
+            sx={{ display: "flex", justifyContent: "flex-end", width: "100%" }}
           >
-            Đi đến trang web công ty
-          </Button>
+            <Button
+              endIcon={<SubdirectoryArrowRightIcon />}
+              component={Link}
+              to={`/user/companies/${company.id}`}
+              variant="contained"
+            >
+              Chi tiết
+            </Button>
+          </Box>
         </CardActions>
       </Card>
     </Grid>
