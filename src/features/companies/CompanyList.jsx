@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Grid, Box, CircularProgress, Alert } from "@mui/material";
 import AppPagination from "../../ui/sharedComponents/AppPagination";
 import TitleText from "../../ui/sharedComponents/TitleText";
@@ -7,9 +7,13 @@ import { useCompanies } from "./useCompanies";
 
 const COMPANIES_PER_PAGE = 6;
 
-function CompanyList({ ratingDisplay = true }) {
+function CompanyList({ ratingDisplay = true, searchTerm = "" }) {
   const { companies, isLoading, isError, error } = useCompanies();
   const [currentPage, setCurrentPage] = useState(1);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchTerm]);
 
   if (isLoading) {
     return (
@@ -35,10 +39,14 @@ function CompanyList({ ratingDisplay = true }) {
     );
   }
 
+  const filteredCompanies = companies?.filter((company) =>
+    company.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   const startIndex = (currentPage - 1) * COMPANIES_PER_PAGE;
   const endIndex = currentPage * COMPANIES_PER_PAGE;
-  const paginatedCompanies = companies.slice(startIndex, endIndex);
-  const count = Math.ceil(companies.length / COMPANIES_PER_PAGE);
+  const paginatedCompanies = filteredCompanies.slice(startIndex, endIndex);
+  const count = Math.ceil(filteredCompanies.length / COMPANIES_PER_PAGE);
 
   const handleChange = (event, value) => {
     setCurrentPage(value);
@@ -64,14 +72,14 @@ function CompanyList({ ratingDisplay = true }) {
           xs={12}
           md={4}
           ratingDisplay={ratingDisplay}
-        ></CompanySummaryCard>
+        />
       ))}
 
       <AppPagination
         onChange={handleChange}
         currentPage={currentPage}
         count={count}
-      ></AppPagination>
+      />
     </Grid>
   );
 }
