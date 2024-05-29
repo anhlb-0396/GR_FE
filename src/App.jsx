@@ -100,7 +100,10 @@ function App() {
                       </ProtectedRoute>
                     }
                   >
-                    <Route path="/user/home" element={<Homepage />} />
+                    <Route
+                      path="/user/home"
+                      element={<Homepage isGuest={false} />}
+                    />
                     <Route path="/user/profiles" element={<Profile />} />
                     <Route path="/user/companies" element={<CompanyPage />} />
                     <Route
