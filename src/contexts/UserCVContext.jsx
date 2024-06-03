@@ -50,16 +50,19 @@ function reducer(state, action) {
         ...state,
         skills: [...action.payload],
       };
+
     case "ADD_EDUCATION":
       return {
         ...state,
         education: [...action.payload],
       };
+
     case "ADD_EXPERIENCES":
       return {
         ...state,
         experience: [...action.payload],
       };
+
     default:
       return state;
   }

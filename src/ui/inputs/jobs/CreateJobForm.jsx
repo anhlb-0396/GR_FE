@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import {
@@ -8,57 +8,46 @@ import {
   Grid,
   MenuItem,
   Chip,
+  Autocomplete,
 } from "@mui/material";
 import TitleText from "../../sharedComponents/TitleText";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { quillModules, quillFormats } from "../../../constants/quill";
 import provinces from "../../../data/provincesData";
+import { useIndustries } from "../../../features/industries/useIndustries";
+import { useTags } from "../../../features/tags/useTags";
 
 const CreateJobForm = ({ onSubmit, isCreating, currentUser, token }) => {
   const {
     control,
     handleSubmit,
     formState: { errors },
-    getValues, // Add getValues from useForm
+    getValues,
   } = useForm();
 
-  const [tags, setTags] = useState([]);
   const [industriesList, setIndustriesList] = useState([]);
   const navigate = useNavigate();
+  const { industries, isLoading, isError } = useIndustries();
+  const {
+    tags: availableTags,
+    isLoading: isTagsLoading,
+    isError: isTagsError,
+  } = useTags();
 
-  const handleAddTag = (event) => {
-    const newTag = event.target.value.trim();
-    if (newTag && !tags.includes(newTag)) {
-      setTags([...tags, newTag]);
-      event.target.value = "";
-    }
-  };
-
-  const handleRemoveTag = (index) => {
-    const updatedTags = tags.filter((_, i) => i !== index);
-    setTags(updatedTags);
-  };
-
-  const handleAddIndustry = (event) => {
-    const newIndustry = event.target.value.trim();
-    if (newIndustry && !industriesList.includes(newIndustry)) {
-      setIndustriesList([...industriesList, newIndustry]);
-      event.target.value = "";
-    }
-  };
-
-  const handleRemoveIndustry = (index) => {
-    const updatedIndustries = industriesList.filter((_, i) => i !== index);
-    setIndustriesList(updatedIndustries);
-  };
+  if (isLoading || isTagsLoading) return <div>Loading...</div>;
+  if (isError || isTagsError) return <div>Error...</div>;
 
   const handleFormSubmit = async (data) => {
+    const transformedIndustriesList = industriesList.map((item) =>
+      typeof item === "string" ? item : item.industry
+    );
+
     const formData = {
       ...data,
-      tags,
+      tags: data.tags.map((tag) => (typeof tag === "string" ? tag : tag.tag)),
       company_id: currentUser.company_id,
-      industries: industriesList,
+      industries: transformedIndustriesList,
       token,
     };
 
@@ -178,27 +167,101 @@ const CreateJobForm = ({ onSubmit, isCreating, currentUser, token }) => {
             )}
           />
 
-          <TextField
-            fullWidth
-            margin="normal"
-            label="Ngành nghề"
-            placeholder="Enter industries and press Enter"
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                handleAddIndustry(e);
-              }
-            }}
-          />
-          <div style={{ display: "flex", flexWrap: "wrap" }}>
-            {industriesList.map((industry, index) => (
-              <Chip
-                key={index}
-                label={industry}
-                onDelete={() => handleRemoveIndustry(index)}
-                style={{ marginRight: "8px", marginBottom: "8px" }}
+          <Controller
+            name="industries"
+            control={control}
+            rules={{ required: "Ngành nghề/Lĩnh vực là bắt buộc" }}
+            render={({ field: { value, onChange, ...other } }) => (
+              <Autocomplete
+                {...other}
+                multiple
+                freeSolo
+                value={value || []}
+                onChange={(event, newValue) => {
+                  const uniqueValues = newValue.filter(
+                    (option, index, self) =>
+                      index ===
+                      self.findIndex(
+                        (t) =>
+                          (typeof t === "string" ? t : t.industry) ===
+                          (typeof option === "string"
+                            ? option
+                            : option.industry)
+                      )
+                  );
+                  setIndustriesList(uniqueValues);
+                  onChange(uniqueValues);
+                }}
+                options={industries}
+                getOptionLabel={(option) =>
+                  typeof option === "string" ? option : option.industry
+                }
+                renderTags={(value, getTagProps) =>
+                  value.map((option, index) => (
+                    <Chip
+                      key={
+                        typeof option === "string" ? option : option.id || index
+                      }
+                      label={
+                        typeof option === "string" ? option : option.industry
+                      }
+                      {...getTagProps({ index })}
+                    />
+                  ))
+                }
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label="Ngành nghề/Lĩnh vực"
+                    variant="outlined"
+                    fullWidth
+                    margin="normal"
+                    error={!!errors.industries}
+                    helperText={errors.industries?.message}
+                    onKeyDown={(event) => {
+                      if (event.key === "Enter" && event.target.value) {
+                        const newIndustry = event.target.value;
+                        const newIndustryObject = {
+                          id: newIndustry.toLowerCase().replace(/\s/g, "_"),
+                          industry: newIndustry,
+                        };
+
+                        const isDuplicate = (value || []).some(
+                          (item) =>
+                            (typeof item === "string"
+                              ? item
+                              : item.industry) === newIndustry
+                        );
+
+                        if (!isDuplicate) {
+                          const updatedValue = [
+                            ...(value || []),
+                            newIndustryObject,
+                          ];
+                          const uniqueValues = updatedValue.filter(
+                            (option, index, self) =>
+                              index ===
+                              self.findIndex(
+                                (t) =>
+                                  (typeof t === "string" ? t : t.industry) ===
+                                  (typeof option === "string"
+                                    ? option
+                                    : option.industry)
+                              )
+                          );
+                          setIndustriesList(uniqueValues);
+                          onChange(uniqueValues);
+                        }
+
+                        event.preventDefault();
+                        event.target.value = "";
+                      }
+                    }}
+                  />
+                )}
               />
-            ))}
-          </div>
+            )}
+          />
 
           <Controller
             name="working_experience"
@@ -275,7 +338,7 @@ const CreateJobForm = ({ onSubmit, isCreating, currentUser, token }) => {
           <Controller
             name="expired_date"
             control={control}
-            defaultValue={new Date().toISOString().split("T")[0]} // Set today's date as default
+            defaultValue={new Date().toISOString().split("T")[0]}
             rules={{
               required: "Expired date is required",
               validate: (value) =>
@@ -443,30 +506,89 @@ const CreateJobForm = ({ onSubmit, isCreating, currentUser, token }) => {
             )}
           />
 
-          {/* Tags field */}
-          <TextField
-            fullWidth
-            margin="normal"
-            label="Tags"
-            placeholder="Enter tags and press Enter"
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                handleAddTag(e);
-              }
-            }}
-          />
-          <div style={{ display: "flex", flexWrap: "wrap" }}>
-            {tags.map((tag, index) => (
-              <Chip
-                key={index}
-                label={tag}
-                onDelete={() => handleRemoveTag(index)}
-                style={{ marginRight: "8px", marginBottom: "8px" }}
-              />
-            ))}
-          </div>
+          <Controller
+            name="tags"
+            control={control}
+            rules={{ required: "Tags are required" }}
+            render={({ field: { value, onChange, ...other } }) => (
+              <Autocomplete
+                {...other}
+                multiple
+                freeSolo
+                value={value || []}
+                onChange={(event, newValue) => {
+                  const uniqueValues = newValue.filter(
+                    (option, index, self) =>
+                      index ===
+                      self.findIndex(
+                        (t) =>
+                          (typeof t === "string" ? t : t.tag) ===
+                          (typeof option === "string" ? option : option.tag)
+                      )
+                  );
+                  onChange(uniqueValues);
+                }}
+                options={availableTags}
+                getOptionLabel={(option) =>
+                  typeof option === "string" ? option : option.tag
+                }
+                renderTags={(value, getTagProps) =>
+                  value.map((option, index) => (
+                    <Chip
+                      key={
+                        typeof option === "string" ? option : option.id || index
+                      }
+                      label={typeof option === "string" ? option : option.tag}
+                      {...getTagProps({ index })}
+                    />
+                  ))
+                }
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label="Tags"
+                    variant="outlined"
+                    fullWidth
+                    margin="normal"
+                    error={!!errors.tags}
+                    helperText={errors.tags?.message}
+                    onKeyDown={(event) => {
+                      if (event.key === "Enter" && event.target.value) {
+                        const newTag = event.target.value.trim();
+                        if (newTag) {
+                          const isDuplicate = (value || []).some(
+                            (item) =>
+                              (typeof item === "string" ? item : item.tag) ===
+                              newTag
+                          );
 
-          {/* Image upload field */}
+                          if (!isDuplicate) {
+                            const updatedValue = [...(value || []), newTag];
+                            const uniqueValues = updatedValue.filter(
+                              (option, index, self) =>
+                                index ===
+                                self.findIndex(
+                                  (t) =>
+                                    (typeof t === "string" ? t : t.tag) ===
+                                    (typeof option === "string"
+                                      ? option
+                                      : option.tag)
+                                )
+                            );
+                            onChange(uniqueValues);
+                          }
+
+                          event.preventDefault();
+                          event.target.value = "";
+                        }
+                      }
+                    }}
+                  />
+                )}
+              />
+            )}
+          />
+
           <Controller
             name="images"
             control={control}
