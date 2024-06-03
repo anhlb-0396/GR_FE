@@ -84,7 +84,7 @@ const UpdateJobForm = ({ onSubmit, isUpdating, currentUser, token, job }) => {
         start_week_day: job.start_week_day || 2,
         end_week_day: job.end_week_day || 6,
         degree: job.degree || "",
-        gender: job.gender || "",
+        gender: !job.gender ? "Tất cả" : job.gender === "male" ? "Nam" : "Nữ",
         province_id: job.Province.id || "",
         industries: job.Industries.map((industry) => industry.industry) || [],
         tags: job.Tags.map((tag) => tag.tag) || [],
@@ -107,21 +107,20 @@ const UpdateJobForm = ({ onSubmit, isUpdating, currentUser, token, job }) => {
       typeof item === "string" ? item : item.tag
     );
 
-    console.log(transformedIndustriesList);
-    console.log(transformedTagsList);
-
     const formData = {
       ...data,
       tags: transformedTagsList,
       industries: transformedIndustriesList,
       company_id: currentUser.company_id,
       job_id: job.id,
+      gender:
+        data.gender === "Tất cả"
+          ? null
+          : data.gender === "Nam"
+          ? "male"
+          : "female",
       token,
     };
-
-    console.log(formData);
-
-    return;
 
     await onSubmit(formData);
     navigate("/agent/jobs");
@@ -132,6 +131,8 @@ const UpdateJobForm = ({ onSubmit, isUpdating, currentUser, token, job }) => {
       e.preventDefault();
     }
   };
+
+  console.log(job);
 
   if (isIndustriesLoading || isTagsLoading) return <div>Loading...</div>;
   if (isIndustriesError || isTagsError) return <div>Error...</div>;
@@ -267,7 +268,7 @@ const UpdateJobForm = ({ onSubmit, isUpdating, currentUser, token, job }) => {
           <Controller
             name="working_method"
             control={control}
-            defaultValue="offline"
+            defaultValue={job ? job.working_method : "offline"}
             render={({ field }) => (
               <TextField
                 {...field}
@@ -292,7 +293,7 @@ const UpdateJobForm = ({ onSubmit, isUpdating, currentUser, token, job }) => {
           <Controller
             name="working_type"
             control={control}
-            defaultValue="fulltime"
+            defaultValue={job ? job.working_type : "fulltime"}
             render={({ field }) => (
               <TextField
                 {...field}
@@ -403,7 +404,7 @@ const UpdateJobForm = ({ onSubmit, isUpdating, currentUser, token, job }) => {
           <Controller
             name="degree"
             control={control}
-            defaultValue="Nhân viên"
+            defaultValue={job ? job.degree : "Nhân viên"}
             rules={{ required: "Degree is required" }}
             render={({ field }) => (
               <TextField
@@ -433,7 +434,9 @@ const UpdateJobForm = ({ onSubmit, isUpdating, currentUser, token, job }) => {
           <Controller
             name="gender"
             control={control}
-            defaultValue=""
+            defaultValue={
+              !job.gender ? "Tất cả" : job.gender === "male" ? "Nam" : "Nữ"
+            }
             rules={{ required: "Gender is required" }}
             render={({ field }) => (
               <TextField
@@ -445,7 +448,7 @@ const UpdateJobForm = ({ onSubmit, isUpdating, currentUser, token, job }) => {
                 error={!!errors.gender}
                 helperText={errors.gender ? errors.gender.message : ""}
               >
-                {["male", "female"].map((option) => (
+                {["Nam", "Nữ", "Tất cả"].map((option) => (
                   <MenuItem key={option} value={option}>
                     {option}
                   </MenuItem>
@@ -458,28 +461,36 @@ const UpdateJobForm = ({ onSubmit, isUpdating, currentUser, token, job }) => {
             name="province_id"
             control={control}
             rules={{ required: "Province is required" }}
-            render={({ field }) => (
-              <TextField
-                {...field}
-                select
-                fullWidth
-                margin="normal"
-                label="Province"
-                error={!!errors.province_id}
-                helperText={
-                  errors.province_id ? errors.province_id.message : ""
-                }
-              >
-                {provinces.map((province) => (
-                  <MenuItem
-                    key={province.province_id}
-                    value={province.province_id}
-                  >
-                    {province.province_name}
-                  </MenuItem>
-                ))}
-              </TextField>
-            )}
+            defaultValue={job ? job.province_id : ""}
+            render={({ field }) => {
+              const selectedProvince = provinces.find(
+                (province) => province.province_id === field.value
+              );
+
+              return (
+                <TextField
+                  {...field}
+                  select
+                  fullWidth
+                  margin="normal"
+                  label="Province"
+                  error={!!errors.province_id}
+                  helperText={
+                    errors.province_id ? errors.province_id.message : ""
+                  }
+                >
+                  {provinces.map((province) => (
+                    <MenuItem
+                      key={province.province_id}
+                      value={province.province_id}
+                      selected={job && job.province_id === province.province_id}
+                    >
+                      {province.province_name}
+                    </MenuItem>
+                  ))}
+                </TextField>
+              );
+            }}
           />
 
           {/* Industries field */}
