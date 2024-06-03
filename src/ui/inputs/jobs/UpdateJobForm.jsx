@@ -8,11 +8,14 @@ import {
   Grid,
   MenuItem,
   Chip,
+  Autocomplete,
 } from "@mui/material";
 import TitleText from "../../sharedComponents/TitleText";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import provincesData from "../../../data/provincesData";
+import { useTags } from "../../../features/tags/useTags";
+import { useIndustries } from "../../../features/industries/useIndustries";
 
 const provinces = provincesData.map((province) => ({
   province_id: Number(province.province_id),
@@ -47,12 +50,21 @@ const UpdateJobForm = ({ onSubmit, isUpdating, currentUser, token, job }) => {
     handleSubmit,
     reset,
     formState: { errors },
-    getValues, // Add getValues from useForm
+    getValues,
   } = useForm();
-
-  const [tags, setTags] = useState([]);
-  const [industries, setIndustries] = useState([]);
+  const [industriesList, setIndustriesList] = useState([]);
+  const [tagsList, setTagsList] = useState([]);
   const navigate = useNavigate();
+  const {
+    industries,
+    isLoading: isIndustriesLoading,
+    isError: isIndustriesError,
+  } = useIndustries();
+  const {
+    tags: availableTags,
+    isLoading: isTagsLoading,
+    isError: isTagsError,
+  } = useTags();
 
   useEffect(() => {
     if (job) {
@@ -66,51 +78,42 @@ const UpdateJobForm = ({ onSubmit, isUpdating, currentUser, token, job }) => {
         max_salary: job.max_salary || "",
         recruitment_number: job.recruitment_number || "",
         working_experience: job.working_experience || "",
-        working_method: job.working_method || "offline", // Set default value if not provided
-        working_type: job.working_type || "fulltime", // Set default value if not provided
+        working_method: job.working_method || "offline",
+        working_type: job.working_type || "fulltime",
         expired_date: formattedExpiredDate,
         start_week_day: job.start_week_day || 2,
         end_week_day: job.end_week_day || 6,
         degree: job.degree || "",
         gender: job.gender || "",
         province_id: job.Province.id || "",
+        industries: job.Industries.map((industry) => industry.industry) || [],
+        tags: job.Tags.map((tag) => tag.tag) || [],
       });
-      setTags(job.Tags.map((tag) => tag.tag) || []);
-      setIndustries(job.Industries.map((industry) => industry.industry) || []);
+
+      // Set the initial values for industriesList and tagsList
+      setIndustriesList(
+        job.Industries.map((industry) => industry.industry) || []
+      );
+      setTagsList(job.Tags.map((tag) => tag.tag) || []);
     }
   }, [job, reset]);
 
-  const handleAddTag = (event) => {
-    const newTag = event.target.value.trim();
-    if (newTag && !tags.includes(newTag)) {
-      setTags([...tags, newTag]);
-      event.target.value = "";
-    }
-  };
-
-  const handleRemoveTag = (index) => {
-    const updatedTags = tags.filter((_, i) => i !== index);
-    setTags(updatedTags);
-  };
-
-  const handleAddIndustry = (event) => {
-    const newIndustry = event.target.value.trim();
-    if (newIndustry && !industries.includes(newIndustry)) {
-      setIndustries([...industries, newIndustry]);
-      event.target.value = "";
-    }
-  };
-
-  const handleRemoveIndustry = (index) => {
-    const updatedIndustries = industries.filter((_, i) => i !== index);
-    setIndustries(updatedIndustries);
-  };
-
   const handleFormSubmit = async (data) => {
+    const transformedIndustriesList = industriesList.map((item) =>
+      typeof item === "string" ? item : item.industry
+    );
+
+    const transformedTagsList = tagsList.map((item) =>
+      typeof item === "string" ? item : item.tag
+    );
+
+    console.log(transformedIndustriesList);
+    console.log(transformedTagsList);
+
     const formData = {
       ...data,
-      tags,
-      industries,
+      tags: transformedTagsList,
+      industries: transformedIndustriesList,
       company_id: currentUser.company_id,
       job_id: job.id,
       token,
@@ -129,6 +132,9 @@ const UpdateJobForm = ({ onSubmit, isUpdating, currentUser, token, job }) => {
       e.preventDefault();
     }
   };
+
+  if (isIndustriesLoading || isTagsLoading) return <div>Loading...</div>;
+  if (isIndustriesError || isTagsError) return <div>Error...</div>;
 
   return (
     <Container maxWidth="sm">
@@ -236,29 +242,6 @@ const UpdateJobForm = ({ onSubmit, isUpdating, currentUser, token, job }) => {
             )}
           />
 
-          {/* Tags field */}
-          <TextField
-            fullWidth
-            margin="normal"
-            label="Ngành nghề"
-            placeholder="Nhập và nhấn enter"
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                handleAddIndustry(e);
-              }
-            }}
-          />
-          <div style={{ display: "flex", flexWrap: "wrap" }}>
-            {industries.map((industry, index) => (
-              <Chip
-                key={index}
-                label={industry}
-                onDelete={() => handleRemoveIndustry(index)}
-                style={{ marginRight: "8px", marginBottom: "8px" }}
-              />
-            ))}
-          </div>
-
           <Controller
             name="working_experience"
             control={control}
@@ -334,7 +317,7 @@ const UpdateJobForm = ({ onSubmit, isUpdating, currentUser, token, job }) => {
           <Controller
             name="expired_date"
             control={control}
-            defaultValue={new Date().toISOString().split("T")[0]} // Set today's date as default
+            defaultValue={new Date().toISOString().split("T")[0]}
             rules={{
               required: "Expired date is required",
               validate: (value) =>
@@ -499,28 +482,192 @@ const UpdateJobForm = ({ onSubmit, isUpdating, currentUser, token, job }) => {
             )}
           />
 
-          {/* Tags field */}
-          <TextField
-            fullWidth
-            margin="normal"
-            label="Tags"
-            placeholder="Enter tags and press Enter"
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                handleAddTag(e);
-              }
-            }}
-          />
-          <div style={{ display: "flex", flexWrap: "wrap" }}>
-            {tags.map((tag, index) => (
-              <Chip
-                key={index}
-                label={tag}
-                onDelete={() => handleRemoveTag(index)}
-                style={{ marginRight: "8px", marginBottom: "8px" }}
+          {/* Industries field */}
+          <Controller
+            name="industries"
+            control={control}
+            defaultValue={
+              job ? job.Industries.map((industry) => industry.industry) : []
+            }
+            rules={{ required: "Industries are required" }}
+            render={({ field: { value, onChange, ...other } }) => (
+              <Autocomplete
+                {...other}
+                multiple
+                freeSolo
+                value={value || []}
+                onChange={(event, newValue) => {
+                  const uniqueValues = newValue.filter(
+                    (option, index, self) =>
+                      index ===
+                      self.findIndex(
+                        (t) =>
+                          (typeof t === "string" ? t : t.industry) ===
+                          (typeof option === "string"
+                            ? option
+                            : option.industry)
+                      )
+                  );
+                  onChange(uniqueValues);
+                  setIndustriesList(uniqueValues);
+                }}
+                options={industries}
+                getOptionLabel={(option) =>
+                  typeof option === "string" ? option : option.industry
+                }
+                renderTags={(value, getTagProps) =>
+                  value.map((option, index) => (
+                    <Chip
+                      key={
+                        typeof option === "string" ? option : option.id || index
+                      }
+                      label={
+                        typeof option === "string" ? option : option.industry
+                      }
+                      {...getTagProps({ index })}
+                    />
+                  ))
+                }
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label="Industries"
+                    variant="outlined"
+                    fullWidth
+                    margin="normal"
+                    error={!!errors.industries}
+                    helperText={errors.industries?.message}
+                    onKeyDown={(event) => {
+                      if (event.key === "Enter" && event.target.value) {
+                        const newIndustry = event.target.value;
+                        const newIndustryObject = {
+                          id: newIndustry.toLowerCase().replace(/\s/g, "_"),
+                          industry: newIndustry,
+                        };
+
+                        const isDuplicate = (value || []).some(
+                          (item) =>
+                            (typeof item === "string"
+                              ? item
+                              : item.industry) === newIndustry
+                        );
+
+                        if (!isDuplicate) {
+                          const updatedValue = [
+                            ...(value || []),
+                            newIndustryObject,
+                          ];
+                          const uniqueValues = updatedValue.filter(
+                            (option, index, self) =>
+                              index ===
+                              self.findIndex(
+                                (t) =>
+                                  (typeof t === "string" ? t : t.industry) ===
+                                  (typeof option === "string"
+                                    ? option
+                                    : option.industry)
+                              )
+                          );
+                          onChange(uniqueValues);
+                          setIndustriesList(uniqueValues);
+                        }
+
+                        event.preventDefault();
+                        event.target.value = "";
+                      }
+                    }}
+                  />
+                )}
               />
-            ))}
-          </div>
+            )}
+          />
+
+          {/* Tags field */}
+          <Controller
+            name="tags"
+            control={control}
+            defaultValue={job ? job.Tags.map((tag) => tag.tag) : []}
+            rules={{ required: "Tags are required" }}
+            render={({ field: { value, onChange, ...other } }) => (
+              <Autocomplete
+                {...other}
+                multiple
+                freeSolo
+                value={value || []}
+                onChange={(event, newValue) => {
+                  const uniqueValues = newValue.filter(
+                    (option, index, self) =>
+                      index ===
+                      self.findIndex(
+                        (t) =>
+                          (typeof t === "string" ? t : t.tag) ===
+                          (typeof option === "string" ? option : option.tag)
+                      )
+                  );
+                  onChange(uniqueValues);
+                  setTagsList(uniqueValues);
+                }}
+                options={availableTags}
+                getOptionLabel={(option) =>
+                  typeof option === "string" ? option : option.tag
+                }
+                renderTags={(value, getTagProps) =>
+                  value.map((option, index) => (
+                    <Chip
+                      key={
+                        typeof option === "string" ? option : option.id || index
+                      }
+                      label={typeof option === "string" ? option : option.tag}
+                      {...getTagProps({ index })}
+                    />
+                  ))
+                }
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label="Tags"
+                    variant="outlined"
+                    fullWidth
+                    margin="normal"
+                    error={!!errors.tags}
+                    helperText={errors.tags?.message}
+                    onKeyDown={(event) => {
+                      if (event.key === "Enter" && event.target.value) {
+                        const newTag = event.target.value.trim();
+                        if (newTag) {
+                          const isDuplicate = (value || []).some(
+                            (item) =>
+                              (typeof item === "string" ? item : item.tag) ===
+                              newTag
+                          );
+
+                          if (!isDuplicate) {
+                            const updatedValue = [...(value || []), newTag];
+                            const uniqueValues = updatedValue.filter(
+                              (option, index, self) =>
+                                index ===
+                                self.findIndex(
+                                  (t) =>
+                                    (typeof t === "string" ? t : t.tag) ===
+                                    (typeof option === "string"
+                                      ? option
+                                      : option.tag)
+                                )
+                            );
+                            onChange(uniqueValues);
+                            setTagsList(uniqueValues);
+                          }
+
+                          event.preventDefault();
+                          event.target.value = "";
+                        }
+                      }
+                    }}
+                  />
+                )}
+              />
+            )}
+          />
 
           {/* Image upload field */}
           <Controller

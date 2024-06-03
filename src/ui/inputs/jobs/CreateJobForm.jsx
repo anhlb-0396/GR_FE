@@ -49,6 +49,12 @@ const CreateJobForm = ({ onSubmit, isCreating, currentUser, token }) => {
       company_id: currentUser.company_id,
       industries: transformedIndustriesList,
       token,
+      gender:
+        data.gender === "Tất cả"
+          ? null
+          : data.gender === "Nam"
+          ? "male"
+          : "female",
     };
 
     await onSubmit(formData);
@@ -468,7 +474,7 @@ const CreateJobForm = ({ onSubmit, isCreating, currentUser, token }) => {
                 error={!!errors.gender}
                 helperText={errors.gender ? errors.gender.message : ""}
               >
-                {["male", "female"].map((option) => (
+                {["Nam", "Nữ", "Tất cả"].map((option) => (
                   <MenuItem key={option} value={option}>
                     {option}
                   </MenuItem>
@@ -509,7 +515,7 @@ const CreateJobForm = ({ onSubmit, isCreating, currentUser, token }) => {
           <Controller
             name="tags"
             control={control}
-            rules={{ required: "Tags are required" }}
+            defaultValue={[]} // Add a default value here
             render={({ field: { value, onChange, ...other } }) => (
               <Autocomplete
                 {...other}
