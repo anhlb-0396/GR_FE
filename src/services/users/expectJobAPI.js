@@ -8,7 +8,7 @@ export async function fetchAllExpectJobsDataByUserId(userId) {
     throw new Error(response.data.message);
   }
 
-  return response.data.data.expectJobs;
+  return response.data.data;
 }
 
 export async function createExpectJob(expectJobObject) {

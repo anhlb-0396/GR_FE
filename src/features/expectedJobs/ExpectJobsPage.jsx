@@ -6,6 +6,7 @@ import { useCreateExpectJobs } from "./userCreateExpectJobs";
 import TitleText from "../../ui/sharedComponents/TitleText";
 import ExpectJobFormDialog from "./ExpectJobFormDialog";
 import ExpectJobsList from "./ExpectJobsList";
+import ExpectJobUpdateFormDialog from "./ExpectJobUpdateFormDialog";
 
 function ExpectJobsPage() {
   const { currentUser, token } = useAuth();
@@ -13,9 +14,7 @@ function ExpectJobsPage() {
   const { createNewExpectJob, isCreating } = useCreateExpectJobs(
     currentUser.id
   );
-  const { expectations, isLoading, isError, error } = useExpectJobs(
-    currentUser.id
-  );
+  const { expectations, isLoading, isError } = useExpectJobs(currentUser.id);
 
   const handleOpenDialog = () => {
     setOpenDialog(true);
@@ -28,6 +27,10 @@ function ExpectJobsPage() {
   const handleSubmitForm = (formData) => {
     createNewExpectJob({ ...formData, user_id: currentUser.id, token });
     setOpenDialog(false);
+  };
+
+  const handleUpdateForm = (formData) => {
+    console.log(formData);
   };
 
   if (isLoading || isCreating) {
@@ -66,13 +69,14 @@ function ExpectJobsPage() {
   return (
     <Box sx={{ width: "80%", margin: "0 auto" }}>
       <TitleText>Gợi ý việc làm</TitleText>
-      <Button onClick={handleOpenDialog}>Thiết lập gợi ý</Button>
-      <ExpectJobFormDialog
+      <Button onClick={handleOpenDialog}>Sửa lại thiết lập gợi ý</Button>
+      <ExpectJobUpdateFormDialog
         open={openDialog}
         onClose={handleCloseDialog}
-        onSubmit={handleSubmitForm}
+        requirement={expectations?.requirement}
+        onSubmit={handleUpdateForm}
       />
-      <ExpectJobsList expectations={expectations} />
+      <ExpectJobsList expectations={expectations?.expectJobs} />
     </Box>
   );
 }
