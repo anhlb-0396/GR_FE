@@ -79,7 +79,7 @@ function ExpectJobUpdateFormDialog({ open, onClose, onSubmit, requirement }) {
       data.working_type === "tất cả" ? null : data.working_type;
 
     onSubmit(data);
-    // onClose();
+    onClose();
   };
 
   return (
@@ -242,36 +242,32 @@ function ExpectJobUpdateFormDialog({ open, onClose, onSubmit, requirement }) {
                 render={({ field }) => {
                   const selectedProvince = provinces?.find(
                     (province) =>
-                      parseInt(province.province_id) === parseInt(field.value)
+                      Number(province.province_id) === Number(field.value)
                   );
 
                   return (
-                    <TextField
+                    <Autocomplete
                       {...field}
-                      select
-                      fullWidth
-                      margin="normal"
-                      label="Province"
-                      error={!!errors.province_id}
-                      helperText={
-                        errors.province_id ? errors.province_id.message : ""
-                      }
-                    >
-                      {provinces.map((province) => (
-                        <MenuItem
-                          key={province.province_id}
-                          value={province.province_id}
-                          selected={
-                            selectedProvince
-                              ? selectedProvince.province_id ===
-                                province.province_id
-                              : false
+                      options={provinces}
+                      getOptionLabel={(option) => option.province_name}
+                      value={selectedProvince || null}
+                      onChange={(event, newValue) => {
+                        field.onChange(newValue ? newValue.province_id : "");
+                      }}
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          label="Province"
+                          variant="outlined"
+                          fullWidth
+                          margin="normal"
+                          error={!!errors.province_id}
+                          helperText={
+                            errors.province_id ? errors.province_id.message : ""
                           }
-                        >
-                          {province.province_name}
-                        </MenuItem>
-                      ))}
-                    </TextField>
+                        />
+                      )}
+                    />
                   );
                 }}
               />
