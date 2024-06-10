@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -26,6 +27,9 @@ function ExpectJobFormDialog({ open, onClose, onSubmit, initialValues = {} }) {
   });
 
   const { industries, isLoading, isError } = useIndustries();
+  const [industriesList, setIndustriesList] = useState(
+    initialValues.industries || []
+  );
 
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error...</div>;
@@ -35,7 +39,6 @@ function ExpectJobFormDialog({ open, onClose, onSubmit, initialValues = {} }) {
   );
 
   const onSubmitForm = (data) => {
-    // Convert selected working_experience to number
     data.industries = data.industries.map((industry) => industry.id).join(",");
     data.working_experience = parseInt(data.working_experience);
     data.min_salary = parseInt(data.min_salary);
@@ -80,7 +83,6 @@ function ExpectJobFormDialog({ open, onClose, onSubmit, initialValues = {} }) {
                 )}
               />
             </Grid>
-
             <Grid item xs={12}>
               <Controller
                 name="industries"
@@ -92,17 +94,37 @@ function ExpectJobFormDialog({ open, onClose, onSubmit, initialValues = {} }) {
                     multiple
                     value={value || []}
                     onChange={(event, newValue) => {
-                      onChange(newValue);
+                      const uniqueValues = newValue.filter(
+                        (option, index, self) =>
+                          index ===
+                          self.findIndex(
+                            (t) =>
+                              (typeof t === "string" ? t : t.industry) ===
+                              (typeof option === "string"
+                                ? option
+                                : option.industry)
+                          )
+                      );
+                      setIndustriesList(uniqueValues);
+                      onChange(uniqueValues);
                     }}
                     options={industries}
                     getOptionLabel={(option) =>
-                      `${option.id} - ${option.industry}`
+                      typeof option === "string" ? option : option.industry
                     }
                     renderTags={(value, getTagProps) =>
                       value.map((option, index) => (
                         <Chip
-                          key={option.id || index}
-                          label={option.industry}
+                          key={
+                            typeof option === "string"
+                              ? option
+                              : option.id || index
+                          }
+                          label={
+                            typeof option === "string"
+                              ? option
+                              : option.industry
+                          }
                           {...getTagProps({ index })}
                         />
                       ))
@@ -112,8 +134,8 @@ function ExpectJobFormDialog({ open, onClose, onSubmit, initialValues = {} }) {
                         {...params}
                         label="Ngành nghề/Lĩnh vực"
                         variant="outlined"
-                        size="small"
                         fullWidth
+                        margin="normal"
                         error={!!errors.industries}
                         helperText={errors.industries?.message}
                       />
@@ -134,7 +156,6 @@ function ExpectJobFormDialog({ open, onClose, onSubmit, initialValues = {} }) {
               error={!!errors.working_experience}
               helperText={errors.working_experience?.message}
             />
-            {/* Add similar validation for other fields */}
             <CustomAutoComplete
               name="working_method"
               control={control}
@@ -147,7 +168,6 @@ function ExpectJobFormDialog({ open, onClose, onSubmit, initialValues = {} }) {
               error={!!errors.working_method}
               helperText={errors.working_method?.message}
             />
-            {/* Add similar validation for other fields */}
             <CustomAutoComplete
               name="working_type"
               control={control}
@@ -160,7 +180,6 @@ function ExpectJobFormDialog({ open, onClose, onSubmit, initialValues = {} }) {
               error={!!errors.working_type}
               helperText={errors.working_type?.message}
             />
-            {/* Add similar validation for other fields */}
             <CustomAutoComplete
               name="province_id"
               control={control}
@@ -173,7 +192,6 @@ function ExpectJobFormDialog({ open, onClose, onSubmit, initialValues = {} }) {
               error={!!errors.province_id}
               helperText={errors.province_id?.message}
             />
-            {/* Add similar validation for other fields */}
             <Grid item xs={12}>
               <Controller
                 name="skills"
