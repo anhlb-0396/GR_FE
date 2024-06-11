@@ -1,18 +1,19 @@
 import { useState, useEffect } from "react";
 import { Chip, TextField } from "@mui/material";
 
-function TagsInput({ control, setValue, initialSkills }) {
-  const [tags, setTags] = useState(initialSkills || []);
+function TagsInput({ value, onChange, error, helperText, label }) {
+  const [tags, setTags] = useState(value || []);
 
   useEffect(() => {
-    setTags(initialSkills || []);
-  }, [initialSkills]);
+    setTags(value || []);
+  }, [value]);
 
   const handleAddTag = (event) => {
     const newTag = event.target.value.trim();
     if (newTag && !tags.includes(newTag)) {
-      setTags([...tags, newTag]);
-      setValue("skills", [...tags, newTag].join(", "));
+      const updatedTags = [...tags, newTag];
+      setTags(updatedTags);
+      onChange(updatedTags);
       event.target.value = "";
     }
   };
@@ -20,7 +21,7 @@ function TagsInput({ control, setValue, initialSkills }) {
   const handleRemoveTag = (index) => {
     const updatedTags = tags.filter((_, i) => i !== index);
     setTags(updatedTags);
-    setValue("skills", updatedTags.join(", "));
+    onChange(updatedTags);
   };
 
   return (
@@ -28,8 +29,10 @@ function TagsInput({ control, setValue, initialSkills }) {
       <TextField
         fullWidth
         margin="normal"
-        label="Kỹ năng"
+        label={label}
         placeholder="Nhập kỹ năng và nhấn Enter"
+        error={!!error}
+        helperText={helperText}
         onKeyDown={(e) => {
           if (e.key === "Enter") {
             e.preventDefault();

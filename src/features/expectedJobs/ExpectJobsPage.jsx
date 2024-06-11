@@ -3,15 +3,19 @@ import { Box, CircularProgress, Alert, Button } from "@mui/material";
 import { useAuth } from "../../contexts/AuthContext";
 import { useExpectJobs } from "./useExpectJobs";
 import { useCreateExpectJobs } from "./userCreateExpectJobs";
-import TitleText from "../../ui/sharedComponents/TitleText";
+import { useUpdateExpectJobs } from "./userUpdateExpectJobs";
 import ExpectJobFormDialog from "./ExpectJobFormDialog";
 import ExpectJobsList from "./ExpectJobsList";
 import ExpectJobUpdateFormDialog from "./ExpectJobUpdateFormDialog";
+import TitleText from "../../ui/sharedComponents/TitleText";
 
 function ExpectJobsPage() {
   const { currentUser, token } = useAuth();
   const [openDialog, setOpenDialog] = useState(false);
   const { createNewExpectJob, isCreating } = useCreateExpectJobs(
+    currentUser.id
+  );
+  const { updateExistingExpectJob, isUpdating } = useUpdateExpectJobs(
     currentUser.id
   );
   const { expectations, isLoading, isError } = useExpectJobs(currentUser.id);
@@ -30,10 +34,11 @@ function ExpectJobsPage() {
   };
 
   const handleUpdateForm = (formData) => {
-    console.log(formData);
+    updateExistingExpectJob({ ...formData, user_id: currentUser.id, token });
+    setOpenDialog(false);
   };
 
-  if (isLoading || isCreating) {
+  if (isLoading || isCreating || isUpdating) {
     return (
       <Box
         sx={{

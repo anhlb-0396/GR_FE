@@ -21,8 +21,10 @@ function ExpectJobUpdateFormDialog({ open, onClose, onSubmit, requirement }) {
     control,
     handleSubmit,
     reset,
-    formState: { errors },
-  } = useForm();
+    formState: { errors, isValid },
+  } = useForm({
+    mode: "onChange",
+  });
 
   const { industries, isLoading, isError } = useIndustries();
   const [industriesList, setIndustriesList] = useState([]);
@@ -78,8 +80,9 @@ function ExpectJobUpdateFormDialog({ open, onClose, onSubmit, requirement }) {
     data.working_type =
       data.working_type === "tất cả" ? null : data.working_type;
 
+    data.skills = data.skills.join(",");
+
     onSubmit(data);
-    onClose();
   };
 
   return (
@@ -272,12 +275,34 @@ function ExpectJobUpdateFormDialog({ open, onClose, onSubmit, requirement }) {
                 }}
               />
             </Grid>
+
+            {/* Skills Field */}
+            <Grid item xs={12}>
+              <Controller
+                name="skills"
+                control={control}
+                defaultValue={requirement ? requirement.skills.split(",") : []}
+                render={({ field }) => (
+                  <TagsInput
+                    value={field.value}
+                    onChange={field.onChange}
+                    error={!!errors.skills}
+                    helperText={errors.skills?.message}
+                    label="Kỹ năng"
+                  />
+                )}
+              />
+            </Grid>
           </Grid>
         </form>
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose}>Hủy</Button>
-        <Button type="submit" onClick={handleSubmit(onSubmitForm)}>
+        <Button
+          type="submit"
+          onClick={handleSubmit(onSubmitForm)}
+          disabled={!isValid} // Disable button if form is invalid
+        >
           Lưu
         </Button>
       </DialogActions>

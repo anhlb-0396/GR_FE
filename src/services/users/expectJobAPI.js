@@ -25,8 +25,8 @@ export async function createExpectJob(expectJobObject) {
 }
 
 export async function updateExpectJob(expectJobObject) {
-  const response = await axios.put(
-    `${BASE_URL}/expectations/${expectJobObject.id}`,
+  const response = await axios.patch(
+    `${BASE_URL}/users/${expectJobObject.user_id}/expectations`,
     expectJobObject
   );
 
