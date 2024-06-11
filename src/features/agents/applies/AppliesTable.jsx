@@ -168,6 +168,7 @@ export default function AppliesTable() {
         response: acceptedDescription,
         sender_id: currentUser.id,
         receiver_id: row.userId,
+        job_id: row.jobId,
         message:
           row.status === "pending"
             ? `✅ Công ty ${row.companyName} đã chấp nhận duyệt hồ sơ ứng tuyển của bạn với công việc ${row.jobTitle}`
@@ -180,6 +181,7 @@ export default function AppliesTable() {
         response: acceptedDescription,
         sender_id: currentUser.id,
         receiver_id: row.userId,
+        job_id: row.jobId,
         message:
           row.status === "pending"
             ? `✅ Công ty ${row.companyName} đã chấp nhận duyệt hồ sơ ứng tuyển của bạn với công việc ${row.jobTitle}`
@@ -216,6 +218,7 @@ export default function AppliesTable() {
       status: "rejected",
       sender_id: currentUser.id,
       receiver_id: row.userId,
+      job_id: row.jobId,
       message: `❌ Công ty ${row.companyName} đã từ chối ứng tuyển của bạn với công việc ${row.jobTitle}`,
     });
     await createNewNotification(notificationObject);

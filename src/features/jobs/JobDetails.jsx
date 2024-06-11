@@ -252,14 +252,20 @@ function JobDetails() {
                     </Button>
                   )}
 
-                {isAuthenticated && (
-                  <Apply
-                    job={job}
-                    currentUser={currentUser}
-                    token={token}
-                    isAuthenticated={isAuthenticated}
-                  ></Apply>
-                )}
+                {isAuthenticated &&
+                  (!isBefore(new Date(job.expired_date), new Date()) &&
+                  job.recruitment_number > 0 ? (
+                    <Apply
+                      job={job}
+                      currentUser={currentUser}
+                      token={token}
+                      isAuthenticated={isAuthenticated}
+                    ></Apply>
+                  ) : (
+                    <Button>
+                      Đã hết hạn ứng tuyển hoặc đã đủ số lượng tuyển dụng
+                    </Button>
+                  ))}
 
                 {!isAuthenticated && (
                   <IconButton>
