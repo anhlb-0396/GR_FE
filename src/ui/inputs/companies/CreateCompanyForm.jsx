@@ -35,7 +35,7 @@ const CreateCompanyForm = ({ onSubmit, isCreating, currentUser, token }) => {
   return (
     <Container maxWidth="sm">
       <TitleText variant="h4" gutterBottom>
-        Tạo công việc mới
+        Tạo doanh nghiệp mới
       </TitleText>
       <Grid container spacing={2} style={{ marginTop: "16px" }}>
         <form
@@ -52,7 +52,7 @@ const CreateCompanyForm = ({ onSubmit, isCreating, currentUser, token }) => {
                 {...field}
                 fullWidth
                 margin="normal"
-                label="Tên công ty"
+                label="Tên doanh nghiệp"
                 error={!!errors.name}
                 helperText={errors.name ? errors.name.message : ""}
               />
@@ -69,7 +69,7 @@ const CreateCompanyForm = ({ onSubmit, isCreating, currentUser, token }) => {
                 {...field}
                 fullWidth
                 margin="normal"
-                label="Địa chỉ công ty"
+                label="Địa chỉ doanh nghiệp"
                 error={!!errors.location}
                 helperText={errors.location ? errors.location.message : ""}
               />
@@ -138,7 +138,7 @@ const CreateCompanyForm = ({ onSubmit, isCreating, currentUser, token }) => {
                 {...field}
                 fullWidth
                 margin="normal"
-                label="Website công ty"
+                label="Website doanh nghiệp"
                 error={!!errors.website}
                 helperText={errors.website ? errors.website.message : ""}
               />
@@ -155,7 +155,7 @@ const CreateCompanyForm = ({ onSubmit, isCreating, currentUser, token }) => {
                 {...field}
                 fullWidth
                 margin="normal"
-                label="Email công ty"
+                label="Email doanh nghiệp"
                 error={!!errors.contact_mail}
                 helperText={
                   errors.contact_mail ? errors.contact_mail.message : ""
@@ -175,7 +175,7 @@ const CreateCompanyForm = ({ onSubmit, isCreating, currentUser, token }) => {
                 select
                 fullWidth
                 margin="normal"
-                label="Province"
+                label="Tỉnh thành"
                 error={!!errors.province_id}
                 helperText={
                   errors.province_id ? errors.province_id.message : ""
@@ -205,7 +205,7 @@ const CreateCompanyForm = ({ onSubmit, isCreating, currentUser, token }) => {
                 InputLabelProps={{ shrink: true }}
                 inputProps={{ accept: "image/*" }}
                 onChange={(e) => field.onChange(e.target.files[0])}
-                label="Logo công ty"
+                label="Logo doanh nghiệp"
                 error={!!errors.logo}
                 helperText={errors.logo ? errors.logo.message : ""}
               />
@@ -224,7 +224,7 @@ const CreateCompanyForm = ({ onSubmit, isCreating, currentUser, token }) => {
                 InputLabelProps={{ shrink: true }}
                 inputProps={{ accept: "image/*" }}
                 onChange={(e) => field.onChange(e.target.files[0])}
-                label="Ảnh bìa công ty"
+                label="Ảnh bìa doanh nghiệp"
                 error={!!errors.cover_image}
                 helperText={
                   errors.cover_image ? errors.cover_image.message : ""

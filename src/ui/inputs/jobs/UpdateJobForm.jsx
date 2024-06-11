@@ -473,7 +473,7 @@ const UpdateJobForm = ({ onSubmit, isUpdating, currentUser, token, job }) => {
                   select
                   fullWidth
                   margin="normal"
-                  label="Province"
+                  label="Tỉnh thành"
                   error={!!errors.province_id}
                   helperText={
                     errors.province_id ? errors.province_id.message : ""
