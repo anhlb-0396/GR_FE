@@ -1,8 +1,9 @@
 import { Grid, Box, Button, Alert } from "@mui/material";
 import { Add as AddIcon } from "@mui/icons-material";
 import { useAuth } from "../../../contexts/AuthContext";
+import { Link } from "react-router-dom";
 import TitleText from "../../../ui/sharedComponents/TitleText";
-import CompanyDetails from "./CompanyDetails";
+import CompanyDetails from "../../companies/CompanyDetails";
 
 function AgentCompany() {
   const { currentUser, isAgent } = useAuth();
@@ -23,8 +24,10 @@ function AgentCompany() {
           color="primary"
           startIcon={<AddIcon />}
           sx={{ color: "white" }}
+          component={Link}
+          to="/agent/companies/create"
         >
-          Tạo công ty
+          Tạo công ty mới
         </Button>
       </Box>
     );

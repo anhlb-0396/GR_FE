@@ -36,11 +36,15 @@ const JOB_PER_PAGE = 4;
 const DEFAULT_COVER_IMAGE =
   "https://static.topcv.vn/v4/image/normal-company/cover/company_cover_1.jpg";
 
-const CompanyDetailsPage = () => {
+const CompanyDetailsPage = ({ companyId }) => {
   const [isFollowing, setIsFollowing] = useState(false);
   const { id } = useParams();
-  const { company, isLoading, isError } = useCompany(id);
-  const { jobs, isLoading: isJobsLoading, isError: isJobsError } = useJobs(id);
+  const { company, isLoading, isError } = useCompany(id || companyId);
+  const {
+    jobs,
+    isLoading: isJobsLoading,
+    isError: isJobsError,
+  } = useJobs(id || companyId);
   const [currentPage, setCurrentPage] = useState(1);
   const [tabValue, setTabValue] = useState(0);
 

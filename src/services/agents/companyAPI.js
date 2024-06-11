@@ -10,3 +10,13 @@ export async function fetchCompanyById(companyId) {
 
   return response.data.data.company;
 }
+
+export async function createCompany(companyDataObject) {
+  const response = await axios.post(`${BASE_URL}/companies`, companyDataObject);
+
+  if (response.data.status >= 400) {
+    throw new Error(response.data.message);
+  }
+
+  return response.data.data.company;
+}

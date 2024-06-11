@@ -37,6 +37,7 @@ import UserLayouts from "./ui/layouts/user/UserLayouts";
 import CompanyPage from "./features/companies/CompanyPage";
 import CompanyDetails from "./features/companies/CompanyDetails";
 import BookmarkJobList from "./features/bookmarks/BookmarkJobList";
+import CreateCompany from "./features/agents/companies/CreateCompany";
 
 const queryClient = new QueryClient();
 const theme = createTheme({
@@ -142,6 +143,10 @@ function App() {
                     <Route
                       path="/agent/jobs/:id/update"
                       element={<UpdateJob />}
+                    />
+                    <Route
+                      path="/agent/companies/create"
+                      element={<CreateCompany />}
                     />
                     <Route
                       path="/agent/statistics"
