@@ -8,7 +8,9 @@ export function useCreateCompany() {
   const { mutate: createNewCompany, isPending: isCreating } = useMutation({
     mutationFn: createCompany,
     onSuccess: () => {
-      toast.success("Tạo doanh nghiệp mới thành công");
+      toast.success(
+        "Tạo doanh nghiệp mới thành công ! Vui lòng đăng đăng nhập lại để đồng bộ dữ liệu !"
+      );
       queryClient.invalidateQueries({
         queryKey: ["companies"],
       });

@@ -8,7 +8,13 @@ import "react-quill/dist/quill.snow.css";
 import { quillModules, quillFormats } from "../../../constants/quill";
 import provinces from "../../../data/provincesData";
 
-const CreateCompanyForm = ({ onSubmit, isCreating, currentUser, token }) => {
+const CreateCompanyForm = ({
+  onSubmit,
+  isCreating,
+  currentUser,
+  token,
+  handleLogout,
+}) => {
   const {
     control,
     handleSubmit,
@@ -32,8 +38,7 @@ const CreateCompanyForm = ({ onSubmit, isCreating, currentUser, token }) => {
     formData.append("agent_id", currentUser.id);
 
     await onSubmit(formData);
-
-    navigate("/agent/company");
+    handleLogout();
   };
 
   const handleFormKeyDown = (e) => {

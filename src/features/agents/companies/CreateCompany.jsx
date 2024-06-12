@@ -4,7 +4,7 @@ import { useCreateCompany } from "./agentCreateCompany";
 import CreateCompanyForm from "../../../ui/inputs/companies/CreateCompanyForm";
 
 function CreateCompany() {
-  const { currentUser, token } = useAuth();
+  const { currentUser, token, handleLogout } = useAuth();
   const { createNewCompany, isCreating } = useCreateCompany();
 
   return (
@@ -21,6 +21,7 @@ function CreateCompany() {
         isCreating={isCreating}
         currentUser={currentUser}
         token={token}
+        handleLogout={handleLogout}
       />
     </Paper>
   );
