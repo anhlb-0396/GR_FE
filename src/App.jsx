@@ -20,6 +20,7 @@ import ResumePage from "./pages/ResumePage";
 import ResumeDisplayPage from "./pages/ResumeDisplayPage";
 import AgentLayouts from "./ui/layouts/agent/AgentLayouts";
 import AppliesTable from "./features/agents/applies/AppliesTable";
+import UserAppliesTable from "./features/applies/AppliesTable";
 import Unauthorize from "./pages/Unauthorize";
 import JobsOfCompany from "./features/agents/jobs/JobsOfCompany";
 import CreateJob from "./features/agents/jobs/CreateJob";
@@ -132,6 +133,10 @@ function App() {
                     <Route
                       path="/user/jobs/expectations"
                       element={<ExpectJobsPage />}
+                    ></Route>
+                    <Route
+                      path="/user/applies"
+                      element={<UserAppliesTable />}
                     ></Route>
                   </Route>
 

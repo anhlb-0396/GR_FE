@@ -35,8 +35,6 @@ function JobItem({ job }) {
   const navigate = useNavigate();
   const { currentUser, isAuthenticated, token, isAgent } = useAuth();
 
-  // console.log(job);
-
   const handleNotLoginBookmark = () => {
     toast.error("Vui lòng đăng nhập để lưu công việc");
     navigate("/login", { state: { from: "/" } });
