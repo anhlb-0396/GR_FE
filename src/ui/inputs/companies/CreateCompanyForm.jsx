@@ -13,16 +13,26 @@ const CreateCompanyForm = ({ onSubmit, isCreating, currentUser, token }) => {
     control,
     handleSubmit,
     formState: { errors },
-    getValues,
   } = useForm();
 
   const navigate = useNavigate();
 
   const handleFormSubmit = async (data) => {
-    // Handle the form submission, including transforming data if necessary
-    // await onSubmit(data);
-    console.log(data);
-    return;
+    const formData = new FormData();
+    formData.append("name", data.name);
+    formData.append("location", data.location);
+    formData.append("country", data.country);
+    formData.append("introduction", data.introduction);
+    formData.append("employees", data.employees);
+    formData.append("website", data.website);
+    formData.append("contact_mail", data.contact_mail);
+    formData.append("province_id", data.province_id);
+    formData.append("logo", data.logo);
+    formData.append("cover_image", data.cover_image);
+    formData.append("agent_id", currentUser.id);
+
+    await onSubmit(formData);
+
     navigate("/agent/company");
   };
 
@@ -121,9 +131,7 @@ const CreateCompanyForm = ({ onSubmit, isCreating, currentUser, token }) => {
                 label="Số lượng nhân viên"
                 type="number"
                 error={!!errors.employees}
-                helperText={
-                  errors.employees ? errors.recruitment_number.employees : ""
-                }
+                helperText={errors.employees ? errors.employees.message : ""}
               />
             )}
           />

@@ -39,7 +39,14 @@ import CompanyDetails from "./features/companies/CompanyDetails";
 import BookmarkJobList from "./features/bookmarks/BookmarkJobList";
 import CreateCompany from "./features/agents/companies/CreateCompany";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      retry: 0,
+    },
+  },
+});
 const theme = createTheme({
   palette: {
     primary: {

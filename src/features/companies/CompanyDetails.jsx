@@ -96,7 +96,7 @@ const CompanyDetailsPage = ({ companyId }) => {
           <CardMedia
             component="img"
             height="300"
-            image={company?.coverImage || DEFAULT_COVER_IMAGE}
+            image={company?.cover_image || DEFAULT_COVER_IMAGE}
             alt="Company cover image"
           />
           <CardContent sx={{ position: "relative" }}>

@@ -12,6 +12,7 @@ export async function fetchCompanyById(companyId) {
 }
 
 export async function createCompany(companyDataObject) {
+  console.log(companyDataObject);
   const response = await axios.post(`${BASE_URL}/companies`, companyDataObject);
 
   if (response.data.status >= 400) {
