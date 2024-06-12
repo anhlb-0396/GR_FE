@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Grid, Box, Alert, CircularProgress } from "@mui/material";
 import JobItem from "../jobs/JobItem";
 import AppPagination from "../../ui/sharedComponents/AppPagination";

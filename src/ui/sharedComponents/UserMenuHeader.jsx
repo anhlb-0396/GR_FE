@@ -14,6 +14,7 @@ import {
   Button,
   Badge,
 } from "@mui/material";
+import { useAuth } from "../../contexts/AuthContext";
 
 function UserMenuHeader({
   toggleNotificationMenu,
@@ -24,7 +25,14 @@ function UserMenuHeader({
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
   const settings = [
-    { label: "Profile", to: "/" },
+    {
+      label: "Quản lý",
+      to: `${
+        currentUser && currentUser.role === "agent"
+          ? "/agent/applies"
+          : "/user/home"
+      }`,
+    },
     { label: "Account", to: "/" },
   ];
 
@@ -38,13 +46,13 @@ function UserMenuHeader({
 
   return (
     <Box display="flex">
-      <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+      {/* <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
         <IconButton sx={{ p: 0, mr: 3 }} size="medium">
           <Badge badgeContent={4} color="error">
             <MarkChatUnreadIcon sx={{ color: "white" }} />
           </Badge>
         </IconButton>
-      </Box>
+      </Box> */}
 
       <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
         <IconButton
