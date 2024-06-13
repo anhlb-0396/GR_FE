@@ -39,6 +39,7 @@ import CompanyPage from "./features/companies/CompanyPage";
 import CompanyDetails from "./features/companies/CompanyDetails";
 import BookmarkJobList from "./features/bookmarks/BookmarkJobList";
 import CreateCompany from "./features/agents/companies/CreateCompany";
+import Dashboard from "./features/dashboard/Dashboard";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -137,6 +138,10 @@ function App() {
                     <Route
                       path="/user/applies"
                       element={<UserAppliesTable />}
+                    ></Route>
+                    <Route
+                      path="/user/dashboard"
+                      element={<Dashboard />}
                     ></Route>
                   </Route>
 

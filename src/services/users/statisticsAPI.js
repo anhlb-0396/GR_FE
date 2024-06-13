@@ -10,3 +10,13 @@ export async function fetchStatisticsByIndustries() {
 
   return response.data.data.statistics;
 }
+
+export async function fetchStatisticsByUserId(userId) {
+  const response = await axios.get(`${BASE_URL}/users/${userId}/statistics`);
+
+  if (response.data.status >= 400) {
+    throw new Error(response.data.message);
+  }
+
+  return response.data.data.statistics;
+}

@@ -21,7 +21,7 @@ ChartJS.register(
   Legend
 );
 
-function Chart({ data }) {
+function Chart({ data, hasTitle = true }) {
   const limitedData = {
     ...data,
     labels: data.labels.slice(0, 60),
@@ -37,15 +37,17 @@ function Chart({ data }) {
       sx={{ width: { xs: "100%", md: "90%" }, mt: "2rem", margin: "0 auto" }}
       justifyContent="center"
     >
-      <Typography
-        variant="h4"
-        fontWeight="bold"
-        textAlign="center"
-        color="primary"
-        sx={{ mb: 2 }}
-      >
-        Thống kê tổng số việc làm theo ngành nghề
-      </Typography>
+      {hasTitle && (
+        <Typography
+          variant="h4"
+          fontWeight="bold"
+          textAlign="center"
+          color="primary"
+          sx={{ mb: 2 }}
+        >
+          Thống kê tổng số việc làm theo ngành nghề
+        </Typography>
+      )}
       <div style={{ overflowX: "auto", width: "100%" }}>
         <div style={{ width: "1500px" }}>
           <Bar options={options} data={limitedData} height="100px" />
