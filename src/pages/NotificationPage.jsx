@@ -14,48 +14,42 @@ import {
   Box,
   Badge,
   useTheme,
+  Chip,
 } from "@mui/material";
 import {
-  Notifications,
+  ChatBubble,
   Delete,
-  Email,
-  Update,
-  Build,
+  HowToReg,
+  Notifications,
+  Cancel,
 } from "@mui/icons-material";
+import { useSocket } from "../contexts/SocketContext";
+import TitleText from "../ui/sharedComponents/TitleText";
+import { changeDateTimeFormat } from "../utils/helpers";
 
-const notifications = [
-  {
-    id: 1,
-    title: "New Message",
-    description: "You have received a new message from John.",
-    timestamp: "2 hours ago",
-    icon: <Email />,
-  },
-  {
-    id: 2,
-    title: "Update Available",
-    description: "A new update is available for your software.",
-    timestamp: "1 day ago",
-    icon: <Update />,
-  },
-  {
-    id: 3,
-    title: "Server Maintenance",
-    description: "Scheduled maintenance will occur at 2 AM.",
-    timestamp: "3 days ago",
-    icon: <Build />,
-  },
-];
+const displayNotificationIcon = (notificationType) => {
+  switch (notificationType) {
+    case "chat":
+      return <ChatBubble />;
+    case "job_reject":
+      return <Cancel />;
+    case "job_accept":
+      return <HowToReg />;
+    default:
+      return <Notifications />;
+  }
+};
 
 const NotificationPage = () => {
   const theme = useTheme();
+  const { notifications } = useSocket();
+
+  console.log(notifications);
 
   return (
     <Container maxWidth="md" sx={{ mt: 4, mb: 4 }}>
-      <Typography variant="h4" component="h1" gutterBottom>
-        Notifications
-      </Typography>
-      <Card sx={{ boxShadow: theme.shadows[3] }}>
+      <TitleText>Tất cả thông báo</TitleText>
+      <Card sx={{ boxShadow: theme.shadows[3], mt: 2 }}>
         <CardContent>
           <List>
             {notifications.map((notification) => (
@@ -70,7 +64,9 @@ const NotificationPage = () => {
                 >
                   <ListItemAvatar>
                     <Badge badgeContent={notification.id} color="primary">
-                      <Avatar>{notification.icon}</Avatar>
+                      <Avatar>
+                        {displayNotificationIcon(notification.type)}
+                      </Avatar>
                     </Badge>
                   </ListItemAvatar>
                   <ListItemText
@@ -81,15 +77,19 @@ const NotificationPage = () => {
                     }
                     secondary={
                       <Box component="span" sx={{ display: "block" }}>
+                        <Chip
+                          label={changeDateTimeFormat(notification.createdAt)}
+                          size="small"
+                          variant="rounded"
+                          color="primary"
+                        ></Chip>
                         <Typography
-                          component="span"
                           variant="body2"
-                          color="text.primary"
-                          sx={{ marginRight: 1 }}
+                          color="text.secondary"
+                          mt={1}
                         >
-                          {notification.timestamp}
+                          {notification.message}
                         </Typography>
-                        {notification.description}
                       </Box>
                     }
                   />

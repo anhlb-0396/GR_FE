@@ -176,7 +176,7 @@ function App() {
                     />
                     <Route
                       path="/agent/notifications"
-                      element={<Notification />}
+                      element={<NotificationPage />}
                     />
                     <Route path="/agent/company" element={<AgentCompany />} />
                   </Route>
