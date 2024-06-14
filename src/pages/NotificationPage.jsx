@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Container,
   Typography,
@@ -12,9 +12,10 @@ import {
   ListItemText,
   Avatar,
   Box,
-  Badge,
   useTheme,
   Chip,
+  Pagination,
+  Button,
 } from "@mui/material";
 import {
   ChatBubble,
@@ -22,10 +23,13 @@ import {
   HowToReg,
   Notifications,
   Cancel,
+  Send as SendIcon,
 } from "@mui/icons-material";
 import { useSocket } from "../contexts/SocketContext";
 import TitleText from "../ui/sharedComponents/TitleText";
 import { changeDateTimeFormat } from "../utils/helpers";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
 
 const displayNotificationIcon = (notificationType) => {
   switch (notificationType) {
@@ -40,11 +44,38 @@ const displayNotificationIcon = (notificationType) => {
   }
 };
 
+const routingToDetail = (notification, role) => {
+  switch (notification.type) {
+    case "chat":
+      return role === "agent" ? "/agent/chats" : "/user/chats";
+    default:
+      return role === "agent" ? "/agent/applies" : "/user/applies";
+  }
+};
+
 const NotificationPage = () => {
   const theme = useTheme();
-  const { notifications } = useSocket();
+  const navigate = useNavigate();
+  const { currentUser } = useAuth();
+  const { notifications, setCurrentChatUserId } = useSocket();
+  const [page, setPage] = useState(1);
+  const itemsPerPage = 5;
 
-  console.log(notifications);
+  const handlePageChange = (event, value) => {
+    setPage(value);
+  };
+
+  const handleClickDetail = (notification, role) => {
+    if (notification.type === "chat") {
+      setCurrentChatUserId(notification.sender_id);
+    }
+    navigate(routingToDetail(notification, role));
+  };
+
+  const paginatedNotifications = notifications.slice(
+    (page - 1) * itemsPerPage,
+    page * itemsPerPage
+  );
 
   return (
     <Container maxWidth="md" sx={{ mt: 4, mb: 4 }}>
@@ -52,7 +83,7 @@ const NotificationPage = () => {
       <Card sx={{ boxShadow: theme.shadows[3], mt: 2 }}>
         <CardContent>
           <List>
-            {notifications.map((notification) => (
+            {paginatedNotifications.map((notification) => (
               <React.Fragment key={notification.id}>
                 <ListItem
                   alignItems="flex-start"
@@ -63,11 +94,9 @@ const NotificationPage = () => {
                   }}
                 >
                   <ListItemAvatar>
-                    <Badge badgeContent={notification.id} color="primary">
-                      <Avatar>
-                        {displayNotificationIcon(notification.type)}
-                      </Avatar>
-                    </Badge>
+                    <Avatar>
+                      {displayNotificationIcon(notification.type)}
+                    </Avatar>
                   </ListItemAvatar>
                   <ListItemText
                     primary={
@@ -93,10 +122,23 @@ const NotificationPage = () => {
                       </Box>
                     }
                   />
+
+                  <IconButton
+                    edge="end"
+                    aria-label="detail"
+                    sx={{ color: theme.palette.primary.main }}
+                    size="small"
+                    onClick={() =>
+                      handleClickDetail(notification, currentUser.role)
+                    }
+                  >
+                    <SendIcon />
+                  </IconButton>
                   <IconButton
                     edge="end"
                     aria-label="delete"
                     sx={{ color: theme.palette.error.main }}
+                    size="small"
                   >
                     <Delete />
                   </IconButton>
@@ -105,6 +147,13 @@ const NotificationPage = () => {
               </React.Fragment>
             ))}
           </List>
+          <Pagination
+            count={Math.ceil(notifications.length / itemsPerPage)}
+            page={page}
+            onChange={handlePageChange}
+            sx={{ mt: 2 }}
+            color="primary"
+          />
         </CardContent>
       </Card>
     </Container>
