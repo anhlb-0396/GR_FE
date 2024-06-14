@@ -40,6 +40,7 @@ import CompanyDetails from "./features/companies/CompanyDetails";
 import BookmarkJobList from "./features/bookmarks/BookmarkJobList";
 import CreateCompany from "./features/agents/companies/CreateCompany";
 import Dashboard from "./features/dashboard/Dashboard";
+import NotificationPage from "./pages/NotificationPage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -142,6 +143,10 @@ function App() {
                     <Route
                       path="/user/dashboard"
                       element={<Dashboard />}
+                    ></Route>
+                    <Route
+                      path="/user/notifications"
+                      element={<NotificationPage />}
                     ></Route>
                   </Route>
 
