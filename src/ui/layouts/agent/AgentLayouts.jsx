@@ -101,8 +101,9 @@ const Drawer = styled(MuiDrawer, {
 export default function AgentLayouts() {
   const [open, setOpen] = React.useState(true);
   const [isNotificationOpen, setIsNotificationOpen] = React.useState(false);
-  const { notifications, handleReadAllNotifications } = useSocket();
-  const { handleLogout } = useAuth();
+  const { notifications, handleReadAllNotifications, setCurrentChatUserId } =
+    useSocket();
+  const { handleLogout, currentUser } = useAuth();
 
   const toggleDrawer = () => {
     setOpen(!open);
@@ -217,6 +218,8 @@ export default function AgentLayouts() {
             onClose={toggleNotificationMenu}
             notifications={notifications}
             handleReadAllNotifications={handleReadAllNotifications}
+            setCurrentChatUserId={setCurrentChatUserId}
+            currentUser={currentUser}
           />
           <Copyright sx={{ pt: 4 }} />
         </Container>

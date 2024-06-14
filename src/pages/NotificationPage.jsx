@@ -79,7 +79,7 @@ const NotificationPage = () => {
 
   return (
     <Container maxWidth="md" sx={{ mt: 4, mb: 4 }}>
-      <TitleText>Tất cả thông báo</TitleText>
+      <TitleText>Tất cả thông báo ({notifications.length})</TitleText>
       <Card sx={{ boxShadow: theme.shadows[3], mt: 2 }}>
         <CardContent>
           <List>

@@ -10,10 +10,22 @@ import {
 } from "@mui/material";
 import TitleText from "../../ui/sharedComponents/TitleText";
 import { changeDateTimeFormat } from "../../utils/helpers";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../contexts/AuthContext";
+import { useSocket } from "../../contexts/SocketContext";
 
 const menuItemStyles = {
   whiteSpace: "normal",
   wordWrap: "break-word",
+};
+
+const routingToDetail = (notification, role) => {
+  switch (notification.type) {
+    case "chat":
+      return role === "agent" ? "/agent/chats" : "/user/chats";
+    default:
+      return role === "agent" ? "/agent/applies" : "/user/applies";
+  }
 };
 
 export default function Notification({
@@ -21,7 +33,18 @@ export default function Notification({
   onClose,
   notifications,
   handleReadAllNotifications,
+  setCurrentChatUserId,
+  currentUser,
 }) {
+  const navigate = useNavigate();
+
+  const handleClickDetail = (notification, role) => {
+    if (notification.type === "chat") {
+      setCurrentChatUserId(notification.sender_id);
+    }
+    navigate(routingToDetail(notification, role));
+  };
+
   return (
     <Menu
       anchorOrigin={{
@@ -59,7 +82,10 @@ export default function Notification({
 
       <Divider />
       {notifications?.map((notification, index) => (
-        <Box key={notification.id}>
+        <Box
+          key={notification.id}
+          onClick={() => handleClickDetail(notification, currentUser.role)}
+        >
           <MenuItem onClick={onClose} sx={menuItemStyles}>
             <Box>
               <Typography variant="body2" color="text.secondary">
