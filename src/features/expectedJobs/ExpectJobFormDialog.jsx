@@ -197,14 +197,14 @@ function ExpectJobFormDialog({ open, onClose, onSubmit, initialValues = {} }) {
                 name="skills"
                 control={control}
                 defaultValue=""
-                rules={{ required: "Kỹ năng là bắt buộc" }}
+                // rules={{ required: "Kỹ năng là bắt buộc" }}
                 render={() => (
                   <TagsInput
                     control={control}
                     setValue={setValue}
                     initialSkills={initialValues.skills}
-                    error={!!errors.skills}
-                    helperText={errors.skills?.message}
+                    // error={!!errors.skills}
+                    // helperText={errors.skills?.message}
                   />
                 )}
               />

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Box, CircularProgress, Alert, Button } from "@mui/material";
+import { Settings } from "@mui/icons-material";
 import { useAuth } from "../../contexts/AuthContext";
 import { useExpectJobs } from "./useExpectJobs";
 import { useCreateExpectJobs } from "./userCreateExpectJobs";
@@ -61,7 +62,13 @@ function ExpectJobsPage() {
         <Alert severity="error">
           Không có dữ liệu ! Vui lòng thiết lập gợi ý công việc
         </Alert>
-        <Button onClick={handleOpenDialog}>Thiết lập gợi ý</Button>
+        <Button
+          onClick={handleOpenDialog}
+          variant="outlined"
+          startIcon={<Settings />}
+        >
+          Thiết lập gợi ý
+        </Button>
         <ExpectJobFormDialog
           open={openDialog}
           onClose={handleCloseDialog}
@@ -73,8 +80,14 @@ function ExpectJobsPage() {
 
   return (
     <Box sx={{ width: "80%", margin: "0 auto" }}>
-      <TitleText>Gợi ý việc làm</TitleText>
-      <Button onClick={handleOpenDialog}>Sửa lại thiết lập gợi ý</Button>
+      <TitleText>Gợi ý việc làm cho bạn</TitleText>
+      <Button
+        onClick={handleOpenDialog}
+        variant="outlined"
+        startIcon={<Settings />}
+      >
+        Sửa lại thiết lập gợi ý
+      </Button>
       <ExpectJobUpdateFormDialog
         open={openDialog}
         onClose={handleCloseDialog}
